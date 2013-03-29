@@ -1,4 +1,4 @@
 <?
-require "{$_SERVER['DOCUMENT_ROOT']}/lib/controller.php";
-$app = new Controller(rtrim($_GET['url'], '/'));
+require "{$_SERVER['DOCUMENT_ROOT']}/lib/application.php";
+$app = new Application(isset($_GET['url'])?rtrim($_GET['url']):null, '/');
 ?>

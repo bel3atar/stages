@@ -1,13 +1,17 @@
 <?
 class StudentModel extends Model {
+	function __construct()
+	{
+		parent::__construct();
+	}
 	function find($id)
 	{
 	}
 	function findAll()
 	{
-		$users = [];
-		foreach(query('SELECT * FORM students') as $r)
-			$users[] = $r;
-		return $users;
+		$students = [];
+		foreach($this->db->query('SELECT * FROM students') as $r)
+			$students[] = $r;
+		return $students;
 	}
 };
