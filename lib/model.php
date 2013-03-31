@@ -1,6 +1,7 @@
 <?
 class Model extends PDO {
 	protected $db;
+	protected $model;
 	function __construct() {
 		$host = 'localhost'; 
 		$engine = 'mysql'; 

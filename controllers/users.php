@@ -1,15 +1,16 @@
 <?
-class Students extends Controller {
+class Users extends Controller {
 	function __construct()
 	{
 		parent::__construct();
-		require "{$_SERVER['DOCUMENT_ROOT']}/models/student.php";
-		$this->model = new StudentModel();
+		require "{$_SERVER['DOCUMENT_ROOT']}/models/user.php";
+		$this->model = new UserModel();
 	}
 	function index()
 	{
+		$this->view->title = 'Liste des étudinats';
 		$this->view->liste = $this->model->findAll();
-		$this->view->render('students/index');
+		$this->view->render('users/index');
 	}
 	function show($id)
 	{

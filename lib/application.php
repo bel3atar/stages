@@ -2,6 +2,7 @@
 class Application {
 	function __construct($url)
 	{
+		define('BOOTSTRAP_PATH', "assets/bootstrap/css/bootstrap.css");
 		require_once 'lib/model.php';
 		require_once 'lib/view.php';
 		require_once 'lib/controller.php';
@@ -18,8 +19,7 @@ class Application {
 					if (isset($bits[2])) {
 						if ($bits[2] == 'edit')
 							$controller->edit($bits[1]);
-					}
-					else
+					} else
 						$controller->show($bits[1]);
 				else if ($bits[1] == 'new')
 					$controller->add();

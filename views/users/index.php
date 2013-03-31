@@ -1,4 +1,4 @@
-<table border="0">
+<table class="table table-condensed table-hover" border="0">
 	<thead>
 		<tr>
 			<th>Matricule</th>
