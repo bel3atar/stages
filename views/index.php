@@ -25,3 +25,4 @@
 		<? endforeach ?>
 	</tbody>
 </table>
+<a href="/stages/new" class="btn button-primary">Nouveau</a>

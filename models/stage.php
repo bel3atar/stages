@@ -4,6 +4,10 @@ class StageModel extends Model {
 	{
 		parent::__construct();
 	}
+	function fetchEntreprises()
+	{
+		return $this->db->query('SELECT nom FROM entreprises');
+	}
 	function findAll($page = 0)
 	{
 		return $this->db->query("
