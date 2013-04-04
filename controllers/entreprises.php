@@ -12,4 +12,10 @@ class Entreprises extends Controller {
 		$this->view->title = $this->view->entreprise['nom'];
 		$this->view->render('entreprises/show');
 	}
+	function index()
+	{
+		$this->view->title = 'Liste des entreprises';
+		$this->view->liste = $this->model->findAll();
+		$this->view->render('entreprises/index');
+	}
 };

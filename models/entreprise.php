@@ -7,7 +7,7 @@ class EntrepriseModel extends Model {
 	function findAll()
 	{
 		return $this->db->query('
-			SELECT nom, adresse, tel, logo, cities.nom FROM entreprises
+			SELECT id, nom, tel, logo FROM entreprises
 		');
 	}
 	function find($id)
