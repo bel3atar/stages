@@ -4,6 +4,10 @@
 			<th>Matricule</th>
 			<th>Nom</th>
 			<th>Prénom</th>
+			<th>Sexe</th>
+			<th>Né(e) le</th>
+			<th>Opt.</th>
+			<th>Téléphone</th>
 			<th>Email</th>
 		</tr>
 	</thead>
@@ -13,6 +17,10 @@
 				<td><?= $etd['id']; ?></td>
 				<td><?= $etd['nom']; ?></td>
 				<td><?= $etd['prenom']; ?></td>
+				<td><?= $etd['sex'] ? 'M' : 'F' ?></td>
+				<td><?= $etd['ne_le']; ?></td>
+				<td><?= $etd['opt']; ?></td>
+				<td><?= $etd['tel']; ?></td>
 				<td><?= $etd['email']; ?></td>
 			</tr>
 		<? endforeach ?>

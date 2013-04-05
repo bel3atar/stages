@@ -20,9 +20,9 @@ class StageModel extends Model {
 				countries.nom as pays,
 				GROUP_CONCAT(technologies.nom SEPARATOR ', ') as techs
 			FROM stages
-				JOIN people ON stages.proposer_id = people.id
-				JOIN entreprises ON entreprises.id = people.entreprise_id
-				JOIN cities ON stages.city_id = cities.id
+				JOIN branches ON stages.branch_id = branches.id
+				JOIN entreprises ON entreprises.id = branches.entreprise_id
+				JOIN cities ON branches.city_id = cities.id
 				JOIN countries ON cities.country_id = countries.id
 				JOIN technology_stage ON technology_stage.stage_id = stages.id
 				JOIN technologies ON technology_stage.technology_id = technologies.id

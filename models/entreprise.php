@@ -4,26 +4,26 @@ class EntrepriseModel extends Model {
 	{
 		parent::__construct();
 	}
-	function findAll()
+	function find_all()
 	{
-		return $this->db->query('
-			SELECT id, nom, tel, logo FROM entreprises
-		');
+		return $this->db->query('SELECT id, nom FROM entreprises');
 	}
 	function find($id)
 	{
 		return $this->db->query("
-			SELECT 
-				entreprises.nom, 
-				adresse, 
-				tel, 
-				logo,
-				GROUP_CONCAT(cities.nom SEPARATOR ', ') as villes
+			SELECT nom, site, logo
 			FROM entreprises
-				JOIN cities ON entreprises.city_id = cities.id
-				JOIN countries ON cities.country_id = countries.id
 			WHERE entreprises.id = $id
 			LIMIT 1
 		")->fetch();
+	}
+	function branches($id)
+	{
+		return $this->db->query("
+			SELECT tel, adr, cities.nom as ville
+				FROM branches
+				JOIN cities ON cities.id = branches.city_id
+				WHERE entreprise_id = $id
+		");
 	}
 };
