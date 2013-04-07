@@ -9,6 +9,7 @@
 			<th>Opt.</th>
 			<th>Téléphone</th>
 			<th>Email</th>
+			<th>Stages</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -22,6 +23,7 @@
 				<td><?= $etd['opt']; ?></td>
 				<td><?= $etd['tel']; ?></td>
 				<td><?= $etd['email']; ?></td>
+				<td><?= $etd['stages']; ?></td>
 			</tr>
 		<? endforeach ?>
 	</tbody>

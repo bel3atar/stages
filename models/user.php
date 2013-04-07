@@ -18,9 +18,12 @@ class UserModel extends Model {
 				tel, 
 				sex, 
 				ne_le, 
-				options.nom as opt
+				options.nom as opt,
+				COUNT(stages.id) AS stages
 			FROM users
-			JOIN options ON options.id = users.option_id
+				JOIN options ON options.id = users.option_id
+				JOIN stages  ON stages.student_id = users.id
+			GROUP BY users.id
 		');
 	}
 };

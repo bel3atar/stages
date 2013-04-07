@@ -12,6 +12,10 @@
 		<ul class="nav">
 			<li><a href="/users">Etudiants</a>
 			<li><a href="/entreprises">Entreprises</a>
+			<li><a href="/people">Personnel</a>
+			<li><a href="/cities">Ville</a>
+			<li><a href="/technologies">Technologies</a>
+			<li><a href="/options">Options</a>
 		</ul>
 	</div>
 </div>
