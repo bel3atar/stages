@@ -23,5 +23,10 @@ class Technologies extends Controller {
 		$this->view->title = 'Nouvelle technologie';
 		$this->view->render('technologies/new');
 	}
+	function create()
+	{
+		$this->model->create();
+		header('Location: /technologies');
+	}
 };
 ?>

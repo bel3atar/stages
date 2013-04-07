@@ -11,13 +11,13 @@ class UserModel extends Model {
 	{
 		return $this->db->query('
 			SELECT 
-				users.id, 
-				users.nom as nom, 
-				prenom, 
-				email, 
-				tel, 
-				sex, 
-				ne_le, 
+				users.id,
+				users.nom as nom,
+				prenom,
+				email,
+				tel,
+				sex,
+				ne_le,
 				options.nom as opt,
 				COUNT(stages.id) AS stages
 			FROM users

@@ -1,6 +1,6 @@
 <legend><?= $this->entreprise['nom'] ?></legend>
 <img src="<?= $this->entreprise['logo'] ?>" class="img-polaroid">
-<table>
+<table class="table table-condensed table-striped table-hover">
 	<thead>
 		<tr>
 			<th>Téléphone</th>

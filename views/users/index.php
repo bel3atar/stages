@@ -1,4 +1,4 @@
-<table class="table table-condensed table-hover" border="0">
+<table class="table table-condensed table-striped table-hover">
 	<thead>
 		<tr>
 			<th>Matricule</th>
@@ -28,4 +28,4 @@
 		<? endforeach ?>
 	</tbody>
 </table>
-
+<a href="/users/new" class="btn">Nouveau</a>

@@ -1,5 +1,5 @@
 <legend>Liste des technologies</legend>
-<table class="table table-condensed table-striped">
+<table class="table table-condensed table-striped table-hover">
 	<thead>
 		<tr>
 			<th>Nom</th>
@@ -10,9 +10,13 @@
 		<? foreach ($this->list as $t): ?>
 			<tr>
 				<td>
-					<a href="/technologies/<?= $t['id'] ?>">
+					<? if ($t['stages']): ?>
+						<a href="/technologies/<?= $t['id'] ?>">
+							<?= $t['nom'] ?>
+						</a>
+					<? else: ?>
 						<?= $t['nom'] ?>
-					</a>
+					<? endif ?>
 				</td>
 				<td>
 					<?= $t['stages'] ?>
@@ -21,3 +25,4 @@
 		<? endforeach ?>
 	</tbody>
 </table>
+<a href="/technologies/new" class="btn btn-primary">Nouvelle</a>

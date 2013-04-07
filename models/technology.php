@@ -38,10 +38,11 @@ class TechnologyModel extends Model {
 			WHERE technologies.id = $id
 		");
 	}
-	function add($name)
+	function create()
 	{
-		return $this->db->query('
-			INSERT INTO technologies VALUES(NULL, $name)
-		');
+		//TODO: sanitize
+		return $this->db->query("
+			INSERT INTO technologies VALUES(NULL, '{$_GET['nom']}')
+		");
 	}
 };
