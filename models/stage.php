@@ -12,13 +12,13 @@ class StageModel extends Model {
 	{
 		return $this->db->query("
 			SELECT
-				entreprises.id as eid,
-				entreprises.nom as entreprise,
-				stages.date as date,
-				stages.duree as duree,
-				cities.nom as ville,
-				countries.nom as pays,
-				GROUP_CONCAT(technologies.nom SEPARATOR ', ') as techs
+				entreprises.id AS eid,
+				entreprises.nom AS entreprise,
+				stages.date AS date,
+				stages.duree * 15 AS duree,
+				cities.nom AS ville,
+				countries.nom AS pays,
+				GROUP_CONCAT(technologies.nom SEPARATOR ', ') AS techs
 			FROM stages
 				JOIN branches ON stages.branch_id = branches.id
 				JOIN entreprises ON entreprises.id = branches.entreprise_id

@@ -18,7 +18,7 @@
 					</a>
 				</td>
 				<td><?= $stage['date'] ?></td>
-				<td><?= $stage['duree'] * 15 ?></td>
+				<td><?= $stage['duree'] ?></td>
 				<td><?= $stage['ville'] ?></td>
 				<td><?= $stage['techs'] ?></td>
 			</tr>
