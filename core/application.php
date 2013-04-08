@@ -2,9 +2,9 @@
 class Application {
 	function __construct($url)
 	{
-		require_once 'lib/model.php';
-		require_once 'lib/view.php';
-		require_once 'lib/controller.php';
+		require_once 'model.php';
+		require_once 'view.php';
+		require_once 'controller.php';
 		if (empty($url)) {
 			require_once "{$_SERVER['DOCUMENT_ROOT']}/controllers/index.php";
 			$controller = new Index();
