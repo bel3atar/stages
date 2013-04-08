@@ -16,4 +16,4 @@
 		<? endforeach ?>
 	</tbody>
 </table>
-
+<a href="/cities/new" class="btn">Nouvelle</a>

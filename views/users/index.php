@@ -1,3 +1,4 @@
+<legend>Liste des étudiants</legend>
 <table class="table table-condensed table-striped table-hover">
 	<thead>
 		<tr>

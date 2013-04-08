@@ -19,8 +19,19 @@
 				</td>
 				<td><?= $stage['date'] ?></td>
 				<td><?= $stage['duree'] ?></td>
-				<td><?= $stage['ville'] ?></td>
-				<td><?= $stage['techs'] ?></td>
+				<td>
+					<a href="/cities/<?= $stage['idville'] ?>">
+						<?= $stage['ville'] ?>
+					</a>
+				</td>
+				<td>
+					<? $ts = explode(',', $stage['techs']) ?>
+					<? $tids = explode(',', $stage['techids']) ?>
+					<? for ($i = sizeof($ts) - 1; $i >= 0; --$i): ?>
+						<a href="/technologies/<?= $tids[$i] ?>">
+						<?= $ts[$i] ?></a><?= $i ? ', ' : null ?>
+					<? endfor ?>
+				</td>
 			</tr>
 		<? endforeach ?>
 	</tbody>

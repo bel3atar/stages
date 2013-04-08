@@ -14,3 +14,4 @@
 		<? endforeach ?>
 	</tbody>
 </table>
+<a href="/options/new" class="btn">Nouvelle</a>

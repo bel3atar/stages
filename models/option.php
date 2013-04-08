@@ -9,9 +9,15 @@
 			SELECT 
 				options.id, options.nom, COUNT(users.id) AS etudiants
 			FROM options
-				JOIN users ON users.option_id = options.id
+				LEFT JOIN users ON users.option_id = options.id
 			GROUP BY options.id
 		');
+	}
+	function create()
+	{
+		return $this->db->query("
+			INSERT INTO options VALUES(NULL, '{$_GET['nom']}');
+		");
 	}
 };
 

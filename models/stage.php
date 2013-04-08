@@ -17,13 +17,13 @@ class StageModel extends Model {
 				stages.date AS date,
 				stages.duree * 15 AS duree,
 				cities.nom AS ville,
-				countries.nom AS pays,
-				GROUP_CONCAT(technologies.nom SEPARATOR ', ') AS techs
+				cities.id AS idville,
+				GROUP_CONCAT(technologies.nom SEPARATOR ',') AS techs,
+				GROUP_CONCAT(technologies.id SEPARATOR ',') AS techids
 			FROM stages
 				JOIN branches ON stages.branch_id = branches.id
 				JOIN entreprises ON entreprises.id = branches.entreprise_id
 				JOIN cities ON branches.city_id = cities.id
-				JOIN countries ON cities.country_id = countries.id
 				JOIN technology_stage ON technology_stage.stage_id = stages.id
 				JOIN technologies ON technology_stage.technology_id = technologies.id
 			GROUP BY stages.id

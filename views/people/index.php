@@ -1,4 +1,5 @@
-<table class="table table-condensed table-striped">
+<legend>Liste des responsables</legend>
+<table class="table table-condensed table-striped table-hover">
 	<thead>
 		<tr>
 			<th>Nom</th>
@@ -26,3 +27,4 @@
 		<? endforeach ?>
 	</tbody>
 </table>
+<a href="/people/new" class="btn">Nouveau</a>

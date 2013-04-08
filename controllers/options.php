@@ -11,4 +11,14 @@
 		$this->view->list  = $this->model->find_all();
 		$this->view->render('options/index');
 	}
+	function add()
+	{
+		$this->view->title = 'Nouvelle option';
+		$this->view->render('options/new');
+	}
+	function create()
+	{
+		$this->model->create();
+		header('Location: /options');
+	}
 };

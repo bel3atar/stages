@@ -1,4 +1,5 @@
-<table class="table table-condensed table-striped">
+<legend>Liste des entreprises</legend>
+<table class="table table-condensed table-striped table-hover">
 	<thead>
 		<tr>
 			<th>Nom</th>
@@ -18,3 +19,4 @@
 		<? endforeach ?>
 	</tbody>
 </table>
+<a href="/entreprises/new" class="btn">Nouvelle</a>
