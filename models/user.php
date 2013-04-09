@@ -12,13 +12,14 @@ class UserModel extends Model {
 		return $this->db->query('
 			SELECT 
 				users.id,
-				users.nom as nom,
+				users.nom AS nom,
 				prenom,
 				email,
 				tel,
-				sex,
+				IF(sex, \'M\', \'F\') AS sex,
 				ne_le,
-				options.nom as opt,
+				options.nom AS opt,
+				options.id AS optid,
 				COUNT(stages.id) AS stages
 			FROM users
 				JOIN options ON options.id = users.option_id

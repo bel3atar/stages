@@ -8,7 +8,13 @@
 	<tbody>
 		<? foreach ($this->list as $option): ?>
 			<tr>
-				<td><?= $option['nom'] ?></td>
+				<td>
+					<? if ($option['etudiants']): ?>
+						<a href="/options/<?= $option['id'] ?>"><?= $option['nom'] ?></a>
+					<? else: ?>
+						<?= $option['nom'] ?>
+					<? endif ?>
+				</td>
 				<td><?= $option['etudiants'] ?></td>
 			</tr>
 		<? endforeach ?>

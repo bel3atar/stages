@@ -16,15 +16,17 @@
 	<tbody>
 		<? foreach ($this->liste as $etd): ?>
 			<tr>
-				<td><?= $etd['id']; ?></td>
-				<td><?= $etd['nom']; ?></td>
-				<td><?= $etd['prenom']; ?></td>
-				<td><?= $etd['sex'] ? 'M' : 'F' ?></td>
-				<td><?= $etd['ne_le']; ?></td>
-				<td><?= $etd['opt']; ?></td>
-				<td><?= $etd['tel']; ?></td>
-				<td><?= $etd['email']; ?></td>
-				<td><?= $etd['stages']; ?></td>
+				<td><?= $etd['id'] ?></td>
+				<td><?= $etd['nom'] ?></td>
+				<td><?= $etd['prenom'] ?></td>
+				<td><?= $etd['sex'] ?></td>
+				<td><?= $etd['ne_le'] ?></td>
+				<td>
+					<a href="/options/<?= $etd['optid'] ?>"><?= $etd['opt'] ?></a>
+				</td>
+				<td><?= $etd['tel'] ?></td>
+				<td><?= $etd['email'] ?></td>
+				<td><?= $etd['stages'] ?></td>
 			</tr>
 		<? endforeach ?>
 	</tbody>
