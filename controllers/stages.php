@@ -12,5 +12,11 @@ class Stages extends Controller {
 		$this->view->entreprises = $this->model->fetchEntreprises();
 		$this->view->render('stages/new');
 	}
+	function index()
+	{
+		$this->view->title = 'Liste des stages';
+		$this->view->list  = $this->model->find_all();
+		$this->view->render('stages/index');
+	}
 };
 	

@@ -6,8 +6,9 @@ class Application {
 		require_once 'view.php';
 		require_once 'controller.php';
 		if (empty($url)) {
-			require_once 'controllers/index.php';
-			$controller = new Index();
+			require_once 'controllers/stages.php';
+			$controller = new Stages();
+			$controller->index();
 		} else {
 			/* bits    0     1    2
 			 * -----------------------------

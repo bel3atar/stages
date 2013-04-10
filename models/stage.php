@@ -8,7 +8,7 @@ class StageModel extends Model {
 	{
 		return $this->db->query('SELECT nom FROM entreprises');
 	}
-	function findAll($page = 0)
+	function find_all($page = 0)
 	{
 		return $this->db->query("
 			SELECT
@@ -27,6 +27,8 @@ class StageModel extends Model {
 				JOIN technology_stage ON technology_stage.stage_id = stages.id
 				JOIN technologies ON technology_stage.technology_id = technologies.id
 			GROUP BY stages.id
+			LIMIT 30
+			OFFSET $page
 		");
 	}
 };	
