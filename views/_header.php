@@ -11,6 +11,7 @@
 	<div class="navbar-inner">
 		<a class="brand" href="/">Archive de stages</a>
 		<ul class="nav">
+			<li><a href="/stages">Stages</a>
 			<li><a href="/users">Etudiants</a>
 			<li><a href="/entreprises">Entreprises</a>
 			<li><a href="/people">Personnel</a>

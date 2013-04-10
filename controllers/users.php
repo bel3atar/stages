@@ -21,6 +21,7 @@ class Users extends Controller {
 	function add()
 	{
 		$this->view->title = 'Nouvel étudiant';
+		$this->view->lastID = $this->model->last_id() + 1;
 		$this->require_model('option');
 		$opmodel = new OptionModel();
 		$this->view->options = $opmodel->find_all();

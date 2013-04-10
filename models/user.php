@@ -55,4 +55,8 @@ class UserModel extends Model {
 		$q->execute([$id]);
 		return $q->fetchAll();
 	}
+	function last_id()
+	{
+		return $this->db->query('SELECT MAX(id) AS id FROM users')->fetch()['id'];
+	}
 };

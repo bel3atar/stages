@@ -19,4 +19,12 @@ class Entreprises extends Controller {
 		$this->view->liste = $this->model->find_all();
 		$this->view->render('entreprises/index');
 	}
+	function add()
+	{
+		$this->view->title = 'Nouvelle entreprise';
+		$this->require_model('city');
+		$c = new CityModel();
+		$this->view->villes = $c->find_all();
+		$this->view->render('entreprises/new');
+	}
 };
