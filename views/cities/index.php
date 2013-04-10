@@ -11,13 +11,27 @@
 			<tr>
 				<td>
 					<? if ($ville['stages']): ?>
-						<a href="/cities/<?= $ville['id'] ?>"><?= $ville['nom'] ?></a>
+						<a href="/cities/<?= $ville['id'] ?>/stages"><?= $ville['nom'] ?></a>
 					<? else: ?>
 						<?= $ville['nom'] ?>
 					<? endif ?>
 				</td>
-				<td><?= $ville['stages'] ?></td>
-				<td><?= $ville['entreprises'] ?></td>
+				<td>
+					<? if ($ville['stages']): ?>
+						<a href="/cities/<?= $ville['id'] ?>/stages"><?= $ville['stages'] ?></a>
+					<? else: ?>
+						<?= $ville['stages'] ?>
+					<? endif ?>
+				</td>
+				<td>
+					<? if ($ville['entreprises']): ?>
+						<a href="/cities/<?= $ville['id'] ?>/entreprises">
+							<?= $ville['entreprises'] ?>
+						</a>
+					<? else: ?>
+						<?= $ville['entreprises'] ?>
+					<? endif ?>
+				</td>
 			</tr>
 		<? endforeach ?>
 	</tbody>

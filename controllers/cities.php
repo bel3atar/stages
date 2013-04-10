@@ -22,11 +22,20 @@ class Cities extends Controller {
 		$this->model->create();
 		header('Location: /cities');
 	}
-	function show($id)
+	function stages($id)
 	{
-		$this->view->title = $this->model->find($id);
-		$this->view->ville = $this->model->find($id);
+		$name = $this->model->find($id);
+		$this->view->title = "Stages à $name";
+		$this->view->ville = $name;
 		$this->view->list  = $this->model->stages($id);
-		$this->view->render('cities/show');
+		$this->view->render('cities/stages');
+	}
+	function entreprises($id)
+	{
+		$name = $this->model->find($id);
+		$this->view->title = "Entreprises à $name";
+		$this->view->ville = $name;
+		$this->view->list  = $this->model->entreprises($id);
+		$this->view->render('cities/entreprises');
 	}
 };

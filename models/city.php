@@ -52,4 +52,20 @@ class CityModel extends Model {
 		$q->execute([$id]);
 		return $q->fetchAll();
 	}
+	function entreprises($id)
+	{
+		$q = $this->db->prepare('
+			SELECT
+				entreprises.id AS eid,
+				entreprises.nom AS nom,
+				branches.adr AS adr,
+				branches.tel AS tel
+			FROM entreprises
+				JOIN branches ON branches.entreprise_id = entreprises.id
+			WHERE branches.city_id = ?
+			GROUP BY entreprises.id
+		');
+		$q->execute([$id]);
+		return $q->fetchAll();	
+	}
 };
