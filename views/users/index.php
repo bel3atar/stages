@@ -26,7 +26,15 @@
 				</td>
 				<td><?= $etd['tel'] ?></td>
 				<td><?= $etd['email'] ?></td>
-				<td><?= $etd['stages'] ?></td>
+				<td>
+					<? if ($etd['stages']): ?>
+						<a href="/users/<?= $etd['id'] ?>/stages">
+							<?= $etd['stages'] ?>
+						</a>
+					<? else: ?>
+						0
+					<? endif ?>
+				</td>
 			</tr>
 		<? endforeach ?>
 	</tbody>

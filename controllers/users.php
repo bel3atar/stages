@@ -12,13 +12,11 @@ class Users extends Controller {
 		$this->view->liste = $this->model->findAll();
 		$this->view->render('users/index');
 	}
-	function show($id)
+	function stages($id)
 	{
-		echo "show $id";
-	}
-	function edit($id)
-	{
-		echo "edit $id";
+		$this->view->nom = $this->view->title = $this->model->full_name($id);
+		$this->view->list  = $this->model->stages($id);
+		$this->view->render('users/stages');
 	}
 	function add()
 	{

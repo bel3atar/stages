@@ -4,8 +4,14 @@ class UserModel extends Model {
 	{
 		parent::__construct();
 	}
-	function find($id)
+	function full_name($id)
 	{
+		$q = $this->db->prepare('
+			SELECT nom, prenom FROM users WHERE id = ? LIMIT 1
+		');
+		$q->execute([$id]);
+		$q = $q->fetch();
+		return "{$q['nom']} {$q['prenom']}";
 	}
 	function findAll()
 	{
@@ -26,5 +32,27 @@ class UserModel extends Model {
 				JOIN stages  ON stages.student_id = users.id
 			GROUP BY users.id
 		');
+	}
+	function stages($id)
+	{
+		$q = $this->db->prepare('
+			SELECT
+				entreprises.id AS eid,
+				entreprises.nom AS e,
+				stages.date AS date,
+				stages.duree * 15 AS duree,
+				GROUP_CONCAT(technologies.id SEPARATOR \',\') AS techids,
+				GROUP_CONCAT(technologies.nom SEPARATOR \',\') AS techs
+			FROM stages
+				JOIN branches ON branches.id = stages.branch_id
+				JOIN entreprises ON entreprises.id = branches.entreprise_id
+				JOIN technology_stage ON technology_stage.stage_id = stages.id
+				JOIN technologies ON technologies.id = technology_stage.technology_id
+				JOIN cities ON cities.id = branches.city_id
+			WHERE stages.student_id = ?
+			GROUP BY stages.id
+		');
+		$q->execute([$id]);
+		return $q->fetchAll();
 	}
 };
