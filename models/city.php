@@ -6,9 +6,9 @@ class CityModel extends Model {
 	}
 	function find($id)
 	{
-		return $this->db->query("
-			SELECT nom FROM cities WHERE id = $id
-		")->fetch()['nom'];
+		$q = $this->db->prepare('SELECT nom FROM cities WHERE id = ?');
+		$q->execute([$id]);
+		return $q->fetch()['nom'];
 	}
 	function find_all()
 	{
@@ -27,13 +27,12 @@ class CityModel extends Model {
 	}
 	function create()
 	{
-		return $this->db->query("
-			INSERT INTO cities VALUES(NULL, '{$_GET['nom']}')
-		");
+		$q = $this->db->prepare('INSERT INTO cities(nom) VALUES(?)');
+		return $q->execute([$_GET['nom']]);
 	}
 	function stages($id)
 	{
-		return $this->db->query("
+		$q = $this->db->prepare("
 			SELECT
 				entreprises.nom AS entreprise,
 				entreprises.id AS entrepriseid,
@@ -47,8 +46,10 @@ class CityModel extends Model {
 				JOIN technology_stage ON technology_stage.stage_id = stages.id
 				JOIN technologies ON technologies.id = technology_stage.technology_id
 				JOIN cities ON cities.id = branches.city_id
-			WHERE cities.id = $id
+			WHERE cities.id = ?
 			GROUP BY cities.id
 		");
+		$q->execute([$id]);
+		return $q->fetchAll();
 	}
 };

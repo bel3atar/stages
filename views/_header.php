@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title><?= $this->title ?></title>
 	<link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.css">
+	<link rel="icon" href="/assets/favicon.ico">
 </head>
 <body>
 <div class="navbar">

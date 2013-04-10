@@ -8,7 +8,8 @@ class Model extends PDO {
 		$db = 'stages'; 
 		$user = 'root'; 
 		$pass = '1234'; 
-		$dsn = "{$engine}:dbname={$db};host={$host}"; //data source name
+		//date source name
+		$dsn = "{$engine}:dbname={$db};host={$host};charset=utf8";
 		$this->db = new PDO($dsn, $user, $pass);
 		$this->db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 	}

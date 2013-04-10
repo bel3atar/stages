@@ -26,20 +26,21 @@ class EntrepriseModel extends Model {
 	}
 	function find($id)
 	{
-		return $this->db->query("
-			SELECT nom, site, logo
-			FROM entreprises
-			WHERE entreprises.id = $id
-			LIMIT 1
-		")->fetch();
+		$q = $this->db->prepare('
+			SELECT nom, site, logo FROM entreprises WHERE entreprises.id = ? LIMIT 1
+		');
+		$q->execute([$id]);
+		return $q->fetch();
 	}
 	function branches($id)
 	{
-		return $this->db->query("
+		$q = $this->db->prepare('
 			SELECT tel, adr, cities.nom AS ville
 			FROM branches
 				JOIN cities ON cities.id = branches.city_id
-			WHERE entreprise_id = $id
-		");
+			WHERE entreprise_id = ?
+		');
+		$q->execute([$id]);
+		return $q->fetchAll();
 	}
 };
