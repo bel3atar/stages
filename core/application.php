@@ -20,6 +20,8 @@ class Application {
 			$bits = explode('/', $url);
 			$target = "controllers/{$bits[0]}.php";
 			try {
+				if (!file_exists($target))
+					throw new Exception();
 				require_once $target;
 				$controller = $bits[0];
 				$controller = new $controller();

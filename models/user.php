@@ -18,11 +18,9 @@ class UserModel extends Model {
 		return $this->db->query('
 			SELECT 
 				users.id,
-				users.nom AS nom,
-				prenom,
+				CONCAT_WS(\' \', users.nom, prenom) AS nom,
 				email,
 				tel,
-				IF(sex, \'M\', \'F\') AS sex,
 				ne_le,
 				options.nom AS opt,
 				options.id AS optid,

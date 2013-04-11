@@ -18,6 +18,8 @@ class StageModel extends Model {
 				stages.duree * 15 AS duree,
 				cities.nom AS ville,
 				cities.id AS idville,
+				users.id AS uid,
+				CONCAT_WS(' ', users.nom, users.prenom) AS nom,
 				GROUP_CONCAT(technologies.nom SEPARATOR ',') AS techs,
 				GROUP_CONCAT(technologies.id SEPARATOR ',') AS techids
 			FROM stages
@@ -26,6 +28,7 @@ class StageModel extends Model {
 				JOIN cities ON branches.city_id = cities.id
 				JOIN technology_stage ON technology_stage.stage_id = stages.id
 				JOIN technologies ON technology_stage.technology_id = technologies.id
+				JOIN users ON stages.student_id = users.id
 			GROUP BY stages.id
 			LIMIT 30
 			OFFSET $page

@@ -68,4 +68,14 @@ class CityModel extends Model {
 		$q->execute([$id]);
 		return $q->fetchAll();	
 	}
+	function update($params)
+	{
+		$q = $this->db->prepare('UPDATE cities SET nom = ? WHERE id = ? LIMIT 1');
+		return $q->execute([$params['nom'], $params['id']]);
+	}
+	function destroy($id)
+	{
+		$q = $this->db->prepare('DELETE FROM cities WHERE id = ? LIMIT 1');
+		return $q->execute([$id]);
+	}
 };

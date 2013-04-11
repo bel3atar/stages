@@ -28,5 +28,21 @@ class Technologies extends Controller {
 		$this->model->create();
 		header('Location: /technologies');
 	}
+	function edit($id)
+	{
+		$this->view->id  = $id;
+		$this->view->nom = $this->model->find_name($id);
+		$this->view->render('technologies/edit');
+	}
+	function update()
+	{
+		$this->model->update($_GET);
+		header('Location: /technologies');
+	}
+	function destroy($id)
+	{
+		$this->model->destroy($id);
+		header('Location: /technologies');
+	}
 };
 ?>

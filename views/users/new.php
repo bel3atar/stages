@@ -23,16 +23,6 @@
 	</div>
 
 	<div class="control-group">
-		<label class="control-label">Sexe</label>
-		<div class="controls">
-			<label class="radio">
-				<input type="radio" name="sex" id="m" value="m" checked><label for="m">Male</label>
-				<input type="radio" name="sex" id="f" value="f"><label for="f">Femelle</label>
-			</label>
-		</div>
-	</div>
-
-	<div class="control-group">
 		<label for="email" class="control-label">Email</label>
 		<div class="controls">
 			<input id="email" type="email" name="email" required pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">

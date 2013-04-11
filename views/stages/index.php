@@ -2,6 +2,7 @@
 <table class="table table-condensed table-hover">
 	<thead>
 		<tr>
+			<th>Etudiant</th>
 			<th>Entreprise</th>
 			<th>Date</th>
 			<th>Durée</th>
@@ -13,14 +14,19 @@
 		<? foreach ($this->list as $stage): ?>
 			<tr>
 				<td>
-					<a href="entreprises/<?= $stage['eid'] ?>">
+					<a href="/users/<?= $stage['uid'] ?>/stages">
+						<?= $stage['nom'] ?>
+					</a>
+				</td>
+				<td>
+					<a href="/entreprises/<?= $stage['eid'] ?>">
 						<?= $stage['entreprise'] ?>
 					</a>
 				</td>
 				<td><?= $stage['date'] ?></td>
 				<td><?= $stage['duree'] ?></td>
 				<td>
-					<a href="/cities/<?= $stage['idville'] ?>">
+					<a href="/cities/<?= $stage['idville'] ?>/stages">
 						<?= $stage['ville'] ?>
 					</a>
 				</td>

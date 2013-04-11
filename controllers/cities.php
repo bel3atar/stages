@@ -38,4 +38,21 @@ class Cities extends Controller {
 		$this->view->list  = $this->model->entreprises($id);
 		$this->view->render('cities/entreprises');
 	}
+	function edit($id)
+	{
+		$this->view->nom   = $this->model->find($id);
+		$this->view->id    = $id;
+		$this->view->title = 'Modifier une ville';
+		$this->view->render('cities/edit');
+	}
+	function update()
+	{
+		$this->model->update($_GET);
+		header('Location: /cities');
+	}
+	function destroy($id)
+	{
+		$this->model->destroy($id);
+		header('Location: /cities');
+	}
 };

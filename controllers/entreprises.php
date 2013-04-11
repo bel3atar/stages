@@ -27,4 +27,9 @@ class Entreprises extends Controller {
 		$this->view->villes = $c->find_all();
 		$this->view->render('entreprises/new');
 	}
+	function branches_json($id)
+	{
+		header('Content-Type: application/json');
+		echo json_encode($this->model->branches($id));
+	}
 };

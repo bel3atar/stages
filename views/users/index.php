@@ -2,10 +2,8 @@
 <table class="table table-condensed table-striped table-hover">
 	<thead>
 		<tr>
-			<th>Matricule</th>
-			<th>Nom</th>
-			<th>Prénom</th>
-			<th>Sexe</th>
+			<th>#</th>
+			<th>Nom complet</th>
 			<th>Né(e) le</th>
 			<th>Opt.</th>
 			<th>Téléphone</th>
@@ -17,9 +15,11 @@
 		<? foreach ($this->liste as $etd): ?>
 			<tr>
 				<td><?= $etd['id'] ?></td>
-				<td><?= $etd['nom'] ?></td>
-				<td><?= $etd['prenom'] ?></td>
-				<td><?= $etd['sex'] ?></td>
+				<td>
+					<a href="/users/<?= $etd['id'] ?>/stages">
+						<?= $etd['nom'] ?>
+					</a>
+				</td>
 				<td><?= $etd['ne_le'] ?></td>
 				<td>
 					<a href="/options/<?= $etd['optid'] ?>"><?= $etd['opt'] ?></a>

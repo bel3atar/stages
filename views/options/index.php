@@ -1,8 +1,9 @@
-<table class="table table-condensed table-striped">
+<table class="table table-hover table-condensed table-striped">
 	<thead>
 		<tr>
 			<th>Nom</th>
 			<th>Etudiants</th>
+			<th>Action</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -10,14 +11,28 @@
 			<tr>
 				<td>
 					<? if ($option['etudiants']): ?>
-						<a href="/options/<?= $option['id'] ?>"><?= $option['nom'] ?></a>
+						<a href="/options/<?= $option['id'] ?>">
+							<?= $option['nom'] ?>
+						</a>
 					<? else: ?>
 						<?= $option['nom'] ?>
 					<? endif ?>
 				</td>
 				<td><?= $option['etudiants'] ?></td>
+				<td>
+					<div class="btn-group">
+						<a href="/options/<?= $option['id'] ?>/edit" class="btn btn-warning btn-mini">
+							<i class="icon-white icon-edit"></i>
+						</a>
+						<? if ($option['etudiants'] == 0): ?>
+							<a href="/options/<?= $option['id'] ?>/destroy" class="btn btn-danger btn-mini">
+								<i class="icon-white icon-trash"></i>
+							</a>
+						<? endif ?>
+					</div>
+				</td>
 			</tr>
 		<? endforeach ?>
 	</tbody>
 </table>
-<a href="/options/new" class="btn">Nouvelle</a>
+<a href="/options/new" class="btn btn-primary">Nouvelle</a>

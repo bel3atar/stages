@@ -28,4 +28,21 @@
 		$this->view->list  = $this->model->find($id);
 		$this->view->render('options/show');
 	}
+	function edit($id)
+	{
+		$this->view->nom   = $this->model->name($id);
+		$this->view->id    = $id;
+		$this->view->title = "Modifier une option";
+		$this->view->render('options/edit');
+	}
+	function update($id)
+	{
+		$this->model->update($_GET);
+		header('Location: /options');
+	}
+	function destroy($id)
+	{
+		$this->model->delete($id);
+		header('Location: /options');
+	}
 };

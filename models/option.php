@@ -30,15 +30,23 @@
 		return $this->db->query("
 			SELECT
 				id,
-				nom,
-				prenom,
-				IF(sex, 'M', 'F') AS sex,
+				CONCAT_WS(' ', nom, prenom) AS nom,
 				ne_le,
 				tel,
 				email
 			FROM users
 			WHERE users.option_id = $id
 		");
+	}
+	function update($params)
+	{
+		$q = $this->db->prepare('UPDATE options SET nom = ? WHERE id = ? LIMIT 1');
+		return $q->execute([$params['nom'], $params['id']]);
+	}
+	function delete($id)
+	{
+		$q = $this->db->prepare('DELETE FROM options WHERE id = ? LIMIT 1');
+		return $q->execute([$id]);
 	}
 };
 

@@ -40,9 +40,19 @@ class TechnologyModel extends Model {
 	}
 	function create()
 	{
-		//TODO: sanitize
-		return $this->db->query("
-			INSERT INTO technologies VALUES(NULL, '{$_GET['nom']}')
-		");
+		$q = $this->db->prepare('INSERT INTO technologies (nom) VALUES(?)');
+		return $q->execute([$_GET['nom']]);
+	}
+	function destroy($id)
+	{
+		$q = $this->db->prepare('DELETE FROM technologies WHERE id = ? LIMIT 1');
+		return $q->execute([$id]);
+	}
+	function update($params)
+	{
+		$q = $this->db->prepare('
+			UPDATE technologies SET nom = ? WHERE id = ? LIMIT 1
+		');
+		return $q->execute([$params['nom'], $params['id']]);
 	}
 };

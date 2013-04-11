@@ -4,6 +4,7 @@
 		<tr>
 			<th>Nom</th>
 			<th>Stages</th>
+			<th>Action</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -20,6 +21,18 @@
 				</td>
 				<td>
 					<?= $t['stages'] ?>
+				</td>
+				<td>
+					<div class="btn-group">
+						<a href="/technologies/<?= $t['id'] ?>/edit" class="btn btn-warning btn-mini">
+							<i class="icon-white icon-edit"></i>
+						</a>
+						<? if ($t['stages'] == 0): ?>
+							<a href="/technologies/<?= $t['id'] ?>/destroy" class="btn btn-danger btn-mini">
+								<i class="icon-white icon-trash"></i>
+							</a>
+						<? endif ?>
+					</div>
 				</td>
 			</tr>
 		<? endforeach ?>
