@@ -8,8 +8,7 @@ class EntrepriseModel extends Model {
 	{
 		return $this->db->query('
 			SELECT
-				entreprises.id AS eid,
-				entreprises.nom,
+				entreprises.id AS eid, entreprises.nom,
 				COUNT(branches.id) AS branches,
 				(
 					SELECT COUNT(*) 
