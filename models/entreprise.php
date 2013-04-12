@@ -10,16 +10,13 @@ class EntrepriseModel extends Model {
 			SELECT
 				entreprises.id AS eid, entreprises.nom,
 				COUNT(branches.id) AS branches,
-				(
-					SELECT COUNT(*) 
-					FROM stages 
-						JOIN branches ON stages.branch_id = branches.id
-						JOIN entreprises ON branches.entreprise_id = entreprises.id
-					WHERE entreprises.id = eid AND stages.branch_id = branches.id
-				) AS stages,
+				COUNT(stages.id) AS stages,
+				COUNT(people.id) AS personnel,
 				COUNT(DISTINCT branches.city_id) AS villes
 			FROM entreprises
-				JOIN branches ON branches.entreprise_id = entreprises.id
+				LEFT JOIN branches ON branches.entreprise_id = entreprises.id
+				LEFT JOIN people   ON people.entreprise_id   = entreprises.id
+				LEFT JOIN stages   ON stages.branch_id       = branches.id
 			GROUP BY entreprises.id
 		');
 	}
@@ -44,30 +41,25 @@ class EntrepriseModel extends Model {
 	}
 	function create($params)
 	{
-		try {
-			$this->db->beginTransaction();
-			$q = $this->db->prepare('
-				INSERT INTO entreprises (nom, logo, site) VALUES (:nom, :logo, :site)
-			');
-			$q->execute([
-				':nom'  => $params['nom'],
-				':logo' => $params['logo'],
-				':site' => $params['site']
-			]);
-			$q = $this->db->prepare('
-					INSERT INTO branches (entreprise_id, city_id, adr, tel)
-					VALUES (:e, :ct, :adr, :tel)
-			');
-			$q->execute([
-				':e'   => $this->db->lastInsertId(),
-				':ct'  => $params['ville'],
-				':adr' => $params['adr'],
-				':tel' => $params['tel']
-			]);
-			$this->db->commit();
-		} catch (PDOException $e) {
-			echo 'ERRR';
-			sleep(3);
-		}
+		$this->db->beginTransaction();
+		$q = $this->db->prepare('
+			INSERT INTO entreprises (nom, logo, site) VALUES (:nom, :logo, :site)
+		');
+		$q->execute([
+			':nom'  => $params['nom'],
+			':logo' => $params['logo'],
+			':site' => $params['site']
+		]);
+		$q = $this->db->prepare('
+				INSERT INTO branches (entreprise_id, city_id, adr, tel)
+				VALUES (:e, :ct, :adr, :tel)
+		');
+		$q->execute([
+			':e'   => $this->db->lastInsertId(),
+			':ct'  => $params['ville'],
+			':adr' => $params['adr'],
+			':tel' => $params['tel']
+		]);
+		$this->db->commit();
 	}
 };
