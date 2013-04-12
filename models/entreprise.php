@@ -17,7 +17,7 @@ class EntrepriseModel extends Model {
 						JOIN entreprises ON branches.entreprise_id = entreprises.id
 					WHERE entreprises.id = eid AND stages.branch_id = branches.id
 				) AS stages,
-				COUNT(DISTINCT branches.city_id) as villes
+				COUNT(DISTINCT branches.city_id) AS villes
 			FROM entreprises
 				JOIN branches ON branches.entreprise_id = entreprises.id
 			GROUP BY entreprises.id
@@ -41,5 +41,33 @@ class EntrepriseModel extends Model {
 		');
 		$q->execute([$id]);
 		return $q->fetchAll();
+	}
+	function create($params)
+	{
+		try {
+			$this->db->beginTransaction();
+			$q = $this->db->prepare('
+				INSERT INTO entreprises (nom, logo, site) VALUES (:nom, :logo, :site)
+			');
+			$q->execute([
+				':nom'  => $params['nom'],
+				':logo' => $params['logo'],
+				':site' => $params['site']
+			]);
+			$q = $this->db->prepare('
+					INSERT INTO branches (entreprise_id, city_id, adr, tel)
+					VALUES (:e, :ct, :adr, :tel)
+			');
+			$q->execute([
+				':e'   => $this->db->lastInsertId(),
+				':ct'  => $params['ville'],
+				':adr' => $params['adr'],
+				':tel' => $params['tel']
+			]);
+			$this->db->commit();
+		} catch (PDOException $e) {
+			echo 'ERRR';
+			sleep(3);
+		}
 	}
 };

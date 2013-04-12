@@ -32,4 +32,9 @@ class Entreprises extends Controller {
 		header('Content-Type: application/json');
 		echo json_encode($this->model->branches($id));
 	}
+	function create()
+	{
+		$this->model->create($_GET);
+		header('Location: /entreprises');
+	}
 };

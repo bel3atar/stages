@@ -3,7 +3,7 @@
 	<thead>
 		<tr>
 			<th>Nom</th>
-			<th>Branches</th>
+			<th>Agences</th>
 			<th>Villes</th>
 			<th>Stages</th>
 		</tr>
@@ -19,4 +19,7 @@
 		<? endforeach ?>
 	</tbody>
 </table>
-<a href="/entreprises/new" class="btn">Nouvelle</a>
+<a href="/entreprises/new" class="btn btn-primary">
+	<i class="icon-white icon-plus-sign"></i>
+	Nouvelle
+</a>

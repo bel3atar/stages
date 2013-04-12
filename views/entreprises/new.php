@@ -27,7 +27,19 @@
 	<div class="control-group">
 		<label class="control-label" for="tel">Téléphone</label>
 		<div class="controls">
-			<input type="text" name="tel" id="tel" required>
+			<input type="tel" name="tel" id="tel" required>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="site">Site web</label>
+		<div class="controls">
+			<input type="url" name="site" id="site" required value="http://">
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="logo">URL logo</label>
+		<div class="controls">
+			<input type="url" name="logo" id="logo" required value="http://">
 		</div>
 	</div>
 	<div class="control-group">
