@@ -8,15 +8,15 @@ class EntrepriseModel extends Model {
 	{
 		return $this->db->query('
 			SELECT
-				entreprises.id AS eid, entreprises.nom,
-				COUNT(branches.id) AS branches,
+				entreprises.id AS id,
+				entreprises.nom,
+				COUNT(cities.id) AS villes,
 				COUNT(stages.id) AS stages,
-				COUNT(people.id) AS personnel,
-				COUNT(DISTINCT branches.city_id) AS villes
+				COUNT(people.id) AS personnel
 			FROM entreprises
-				LEFT JOIN branches ON branches.entreprise_id = entreprises.id
-				LEFT JOIN people   ON people.entreprise_id   = entreprises.id
-				LEFT JOIN stages   ON stages.branch_id       = branches.id
+				LEFT JOIN stages ON stages.entreprise_id = entreprises.id
+				LEFT JOIN people ON people.entreprise_id = entreprises.id
+				LEFT JOIN cities ON stages.city_id       = cities.id
 			GROUP BY entreprises.id
 		');
 	}
@@ -61,5 +61,24 @@ class EntrepriseModel extends Model {
 			':tel' => $params['tel']
 		]);
 		$this->db->commit();
+	}
+	function destroy($id)
+	{
+		$q = $this->db->prepare('DELETE FROM entreprises WHERE id = ?');
+		return $q->execute([$id]);
+	}
+	function people($id)
+	{
+		$q = $this->db->prepare('
+			SELECT
+				people.id AS id,
+				CONCAT_WS(\' \', people.nom, people.prenom) AS nom,
+				people.email AS email
+			FROM people
+				JOIN entreprises ON people.entreprise_id = entreprises.id
+			WHERE entreprises.id = ?
+		');
+		$q->execute([$id]);
+		return $q->fetchAll();
 	}
 };

@@ -42,4 +42,7 @@
 		<? endforeach ?>
 	</tbody>
 </table>
-<a href="/stages/new" class="btn button-primary">Nouveau</a>
+<a href="/stages/new" class="btn btn-primary">
+	<i class="icon-plus-sign icon-white"></i>
+	Nouveau
+</a>

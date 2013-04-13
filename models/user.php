@@ -42,11 +42,10 @@ class UserModel extends Model {
 				GROUP_CONCAT(technologies.id SEPARATOR \',\') AS techids,
 				GROUP_CONCAT(technologies.nom SEPARATOR \',\') AS techs
 			FROM stages
-				JOIN branches ON branches.id = stages.branch_id
-				JOIN entreprises ON entreprises.id = branches.entreprise_id
+				JOIN entreprises ON entreprises.id = stages.entreprise_id
 				JOIN technology_stage ON technology_stage.stage_id = stages.id
 				JOIN technologies ON technologies.id = technology_stage.technology_id
-				JOIN cities ON cities.id = branches.city_id
+				JOIN cities ON cities.id = stages.city_id
 			WHERE stages.student_id = ?
 			GROUP BY stages.id
 		');

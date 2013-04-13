@@ -4,35 +4,42 @@ class StageModel extends Model {
 	{
 		parent::__construct();
 	}
-	function fetchEntreprises()
+	function entreprises()
 	{
-		return $this->db->query('SELECT nom FROM entreprises');
+		return $this->db->query('SELECT id, nom FROM entreprises');
 	}
-	function find_all($page = 0)
+	function users()
 	{
-		return $this->db->query("
+		return $this->db->query('
+			SELECT id, CONCAT_WS(\' \', nom, prenom) AS nom FROM users
+		');
+	}
+	function cities()
+	{
+		return $this->db->query('SELECT id, nom FROM cities');
+	}
+	function find_all()
+	{
+		return $this->db->query('
 			SELECT
-				entreprises.id AS eid,
+				GROUP_CONCAT(technologies.id  SEPARATOR \',\') AS techids,
+				GROUP_CONCAT(technologies.nom SEPARATOR \',\') AS techs,
+				CONCAT_WS(\' \', users.nom, users.prenom) AS nom,
 				entreprises.nom AS entreprise,
-				stages.date AS date,
 				stages.duree * 15 AS duree,
-				cities.nom AS ville,
+				entreprises.id AS eid,
 				cities.id AS idville,
-				users.id AS uid,
-				CONCAT_WS(' ', users.nom, users.prenom) AS nom,
-				GROUP_CONCAT(technologies.nom SEPARATOR ',') AS techs,
-				GROUP_CONCAT(technologies.id SEPARATOR ',') AS techids
+				stages.date AS date,
+				cities.nom AS ville,
+				users.id AS uid
 			FROM stages
-				JOIN branches ON stages.branch_id = branches.id
-				JOIN entreprises ON entreprises.id = branches.entreprise_id
-				JOIN cities ON branches.city_id = cities.id
-				JOIN technology_stage ON technology_stage.stage_id = stages.id
-				JOIN technologies ON technology_stage.technology_id = technologies.id
-				JOIN users ON stages.student_id = users.id
+				JOIN cities        ON    stages.city_id     =             cities.id
+				JOIN users          ON   stages.student_id     =           users.id
+				JOIN entreprises     ON  stages.entreprise_id     =  entreprises.id
+				JOIN technology_stage ON technology_stage.stage_id   =    stages.id
+				JOIN technologies      ON technology_stage.technology_id=technologies.id
 			GROUP BY stages.id
-			LIMIT 30
-			OFFSET $page
-		");
+		');
 	}
 };	
 

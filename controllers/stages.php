@@ -9,7 +9,9 @@ class Stages extends Controller {
 	function add()
 	{
 		$this->view->title = 'Nouveau stage';
-		$this->view->entreprises = $this->model->fetchEntreprises();
+		$this->view->entreprises = $this->model->entreprises();
+		$this->view->villes      = $this->model->cities();
+		$this->view->etudiants   = $this->model->users();
 		$this->view->render('stages/new');
 	}
 	function index()

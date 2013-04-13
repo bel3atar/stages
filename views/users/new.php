@@ -52,7 +52,10 @@
 
 	<div class="control-group">
 		<div class="controls">
-			<input type="submit" class="btn btn-primary">
+			<button type="submit" class="btn btn-primary">
+				<i class="icon-ok icon-white"></i>
+				Enregistrer
+			</button>
 		</div>
 	</div>
 

@@ -37,4 +37,16 @@ class Entreprises extends Controller {
 		$this->model->create($_GET);
 		header('Location: /entreprises');
 	}
+	function destroy($id)
+	{
+		$this->model->destroy($id);
+		header('Location: /entreprises');
+	}
+	function people($id)
+	{
+		$this->view->entreprise = $this->model->find($id)['nom'];
+		$this->view->title = "{$this->view->entreprise} | Responsables";
+		$this->view->people = $this->model->people($id);
+		$this->view->render('entreprises/people');
+	}
 };

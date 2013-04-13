@@ -35,4 +35,7 @@
 		<? endforeach ?>
 	</tbody>
 </table>
-<a href="/options/new" class="btn btn-primary">Nouvelle</a>
+<a href="/options/new" class="btn btn-primary">
+	<i class="icon-plus-sign icon-white"></i>
+	Nouvelle
+</a>

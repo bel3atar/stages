@@ -39,4 +39,7 @@
 		<? endforeach ?>
 	</tbody>
 </table>
-<a href="/users/new" class="btn">Nouveau</a>
+<a href="/users/new" class="btn btn-primary">
+	<i class="icon-white icon-plus-sign"></i>
+	Nouveau
+</a>

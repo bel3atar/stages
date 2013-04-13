@@ -2,5 +2,8 @@
 <form method="get" class="form-inline" action="/cities/create">
 	<label for="nom" />
 	<input id="nom" type="text" name="nom" required autofocus placeholder="Nom de la ville">
-	<input type="submit" class="btn-primary btn">
+	<button type="submit" class="btn btn-primary">
+		<i class="icon-ok icon-white"></i>
+		Enregistrer
+	</button>
 </form>
