@@ -12,11 +12,11 @@ class Technologies extends Controller {
 		$this->view->list  = $this->model->find_all();
 		$this->view->render('technologies/index');
 	}
-	function show($id)
+	function stages($id)
 	{
-		$this->view->list = $this->model->find_stages($id);
+		$this->view->list = $this->model->stages($id);
 		$this->view->title = $this->model->find_name($id);
-		$this->view->render('technologies/show');
+		$this->view->render('technologies/stages');
 	}
 	function add()
 	{

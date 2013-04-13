@@ -20,23 +20,28 @@ class TechnologyModel extends Model {
 			SELECT nom FROM technologies WHERE id = $id
 		")->fetch()['nom'];
 	}
-	function find_stages($id)
+	function stages($id)
 	{
-		return $this->db->query("
+		$q = $this->db->prepare('
 			SELECT
 				entreprises.id AS eid,
 				entreprises.nom AS entreprise, 
 				stages.duree * 15 AS duree,
 				stages.date AS date,
-				cities.nom AS ville
+				cities.nom AS ville,
+				cities.id  AS ctid,
+				CONCAT_WS(\' \', users.nom, users.prenom) AS etudiant,
+				users.id AS uid
 			FROM technologies
-				JOIN technology_stage ON technology_stage.technology_id=technologies.id
+				JOIN technology_stage ON technology_stage.technology_id= technologies.id
 				JOIN stages ON stages.id = technology_stage.stage_id
-				JOIN branches ON branches.id = stages.branch_id
-				JOIN cities ON cities.id = branches.city_id
-				JOIN entreprises ON entreprises.id = branches.entreprise_id
-			WHERE technologies.id = $id
-		");
+				JOIN users  ON  users.id = stages.student_id
+				JOIN cities ON cities.id = stages.city_id
+				JOIN entreprises ON entreprises.id = stages.entreprise_id
+			WHERE technologies.id = ?
+		');
+		$q->execute([$id]);
+		return $q->fetchAll();
 	}
 	function create()
 	{

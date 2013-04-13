@@ -21,12 +21,12 @@
 		$this->model->create();
 		header('Location: /options');
 	}
-	function show($id)
+	function students($id)
 	{
 		$name = $this->model->name($id);
 		$this->view->title = "Etudiants pour $name";
 		$this->view->list  = $this->model->find($id);
-		$this->view->render('options/show');
+		$this->view->render('options/students');
 	}
 	function edit($id)
 	{

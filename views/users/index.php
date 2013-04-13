@@ -22,7 +22,7 @@
 				</td>
 				<td><?= $etd['ne_le'] ?></td>
 				<td>
-					<a href="/options/<?= $etd['optid'] ?>"><?= $etd['opt'] ?></a>
+					<a href="/options/<?= $etd['optid'] ?>/students"><?= $etd['opt'] ?></a>
 				</td>
 				<td><?= $etd['tel'] ?></td>
 				<td><?= $etd['email'] ?></td>

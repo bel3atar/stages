@@ -12,7 +12,7 @@
 			<tr>
 				<td>
 					<? if ($t['stages']): ?>
-						<a href="/technologies/<?= $t['id'] ?>">
+						<a href="/technologies/<?= $t['id'] ?>/stages">
 							<?= $t['nom'] ?>
 						</a>
 					<? else: ?>

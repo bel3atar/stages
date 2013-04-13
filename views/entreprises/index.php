@@ -4,7 +4,6 @@
 		<tr>
 			<th>Nom</th>
 			<th>Personnel</th>
-			<th>Villes</th>
 			<th>Stages</th>
 			<th>Action</th>
 		</tr>
@@ -12,7 +11,15 @@
 	<tbody>
 		<? foreach ($this->liste as $e): ?>
 			<tr>
-				<td><a href="/entreprises/<?= $e['id'] ?>"><?= $e['nom'] ?></a></td>
+				<td>
+					<? if ($e['stages']): ?>
+						<a href="/entreprises/<?= $e['id'] ?>/stages">
+							<?= $e['nom'] ?>
+						</a>
+					<? else: ?>
+						<?= $e['nom'] ?>
+					<? endif ?>
+				</td>
 				<td>
 					<? if ($e['personnel']): ?>
 						<a href="/entreprises/<?= $e['id'] ?>/people">
@@ -22,8 +29,15 @@
 							<?= $e['personnel'] ?>
 					<? endif ?>
 				</td>
-				<td><?= $e['villes'] ?></td>
-				<td><?= $e['stages'] ?></td>
+				<td>
+					<? if ($e['stages']): ?>
+						<a href="/entreprises/<?= $e['id'] ?>/stages">
+							<?= $e['stages'] ?>
+						</a>
+					<? else: ?>
+						<?= $e['stages'] ?>
+					<? endif ?>
+				</td>
 				<td>
 					<div class="btn-group">
 						<a href="/entreprises/<?= $e['id'] ?>/edit" class="btn btn-warning btn-mini">

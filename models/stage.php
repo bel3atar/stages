@@ -39,6 +39,7 @@ class StageModel extends Model {
 				JOIN technology_stage ON technology_stage.stage_id   =    stages.id
 				JOIN technologies      ON technology_stage.technology_id=technologies.id
 			GROUP BY stages.id
+			ORDER BY stages.date DESC
 		');
 	}
 };	

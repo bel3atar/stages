@@ -19,7 +19,7 @@
 					</a>
 				</td>
 				<td>
-					<a href="/entreprises/<?= $stage['eid'] ?>">
+					<a href="/entreprises/<?= $stage['eid'] ?>/stages">
 						<?= $stage['entreprise'] ?>
 					</a>
 				</td>
@@ -34,7 +34,7 @@
 					<? $ts = explode(',', $stage['techs']) ?>
 					<? $tids = explode(',', $stage['techids']) ?>
 					<? for ($i = sizeof($ts) - 1; $i >= 0; --$i): ?>
-						<a href="/technologies/<?= $tids[$i] ?>">
+						<a href="/technologies/<?= $tids[$i] ?>/stages">
 						<?= $ts[$i] ?></a><?= $i ? ', ' : null ?>
 					<? endfor ?>
 				</td>

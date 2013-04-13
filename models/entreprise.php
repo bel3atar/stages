@@ -10,7 +10,6 @@ class EntrepriseModel extends Model {
 			SELECT
 				entreprises.id AS id,
 				entreprises.nom,
-				COUNT(cities.id) AS villes,
 				COUNT(stages.id) AS stages,
 				COUNT(people.id) AS personnel
 			FROM entreprises
@@ -77,6 +76,37 @@ class EntrepriseModel extends Model {
 			FROM people
 				JOIN entreprises ON people.entreprise_id = entreprises.id
 			WHERE entreprises.id = ?
+		');
+		$q->execute([$id]);
+		return $q->fetchAll();
+	}
+	function stages($id)
+	{
+		$q = $this->db->prepare('
+			SELECT
+				stages.date AS date,
+				stages.duree * 15 AS duree,
+				cities.nom AS ville,
+				(
+					SELECT CONCAT_WS(\' \', nom, prenom)
+					FROM people WHERE id = stages.supervisor_id LIMIT 1
+				) AS supervisor,
+				(
+					SELECT CONCAT_WS(\' \', nom, prenom)
+					FROM people WHERE id = stages.proposer_id LIMIT 1
+				) AS proposer,
+				CONCAT_WS(\' \', users.nom, users.prenom) AS student,
+				users.id AS uid,
+				cities.id AS ctid,
+				GROUP_CONCAT(technologies.id SEPARATOR \',\') AS tids,
+				GROUP_CONCAT(technologies.nom SEPARATOR \',\') AS ts
+			FROM stages
+				JOIN cities ON cities.id = stages.city_id
+				JOIN users  ON  users.id = stages.student_id
+				JOIN technology_stage ON technology_stage.stage_id = stages.id
+				JOIN technologies ON technologies.id = technology_stage.technology_id
+			WHERE entreprise_id = ?
+			GROUP BY stages.id
 		');
 		$q->execute([$id]);
 		return $q->fetchAll();

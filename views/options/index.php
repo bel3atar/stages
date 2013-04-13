@@ -11,14 +11,22 @@
 			<tr>
 				<td>
 					<? if ($option['etudiants']): ?>
-						<a href="/options/<?= $option['id'] ?>">
+						<a href="/options/<?= $option['id'] ?>/students">
 							<?= $option['nom'] ?>
 						</a>
 					<? else: ?>
 						<?= $option['nom'] ?>
 					<? endif ?>
 				</td>
-				<td><?= $option['etudiants'] ?></td>
+				<td>
+					<? if ($option['etudiants']): ?>
+						<a href="/options/<?= $option['id'] ?>/students">
+							<?= $option['etudiants'] ?>
+						</a>
+					<? else: ?>
+						<?= $option['etudiants'] ?>
+					<? endif ?>
+				</td>
 				<td>
 					<div class="btn-group">
 						<a href="/options/<?= $option['id'] ?>/edit" class="btn btn-warning btn-mini">

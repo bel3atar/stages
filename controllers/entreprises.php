@@ -6,13 +6,6 @@ class Entreprises extends Controller {
 		$this->require_model('entreprise');
 		$this->model = new EntrepriseModel();
 	}
-	function show($id)
-	{
-		$this->view->entreprise = $this->model->find($id);
-		$this->view->title = $this->view->entreprise['nom'];
-		$this->view->branches   = $this->model->branches($id);
-		$this->view->render('entreprises/show');
-	}
 	function index()
 	{
 		$this->view->title = 'Liste des entreprises';
@@ -41,6 +34,13 @@ class Entreprises extends Controller {
 	{
 		$this->model->destroy($id);
 		header('Location: /entreprises');
+	}
+	function stages($id)
+	{
+		$this->view->entreprise = $this->model->find($id)['nom'];
+		$this->view->title = "{$this->view->entreprise} | Stages";
+		$this->view->stages = $this->model->stages($id);
+		$this->view->render('entreprises/stages');
 	}
 	function people($id)
 	{
