@@ -27,7 +27,7 @@
 		<div class="controls">
 			<select required name="entreprise">
 				<? foreach ($this->entreprises as $e): ?>
-					<option value="<?= $e['eid'] ?>"><?= $e['nom'] ?></option>
+					<option value="<?= $e['id'] ?>"><?= $e['nom'] ?></option>
 				<? endforeach ?>
 			</select>
 		</div>

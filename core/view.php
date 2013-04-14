@@ -1,11 +1,21 @@
 <?
 class View {
-	function render($view, $edges = true)
+	private $controllers = [
+		'stages'       => 'Stages',
+	 	'entreprises'  => 'Entreprises',
+		'users'        => 'Etudiants',
+		'people'       => 'Responsables',
+		'technologies' => 'Technologies',
+		'options'      => 'Options',
+		'cities'       => 'Villes'
+	];
+	function render($view, $edges = TRUE)
 	{
-		if ($edges)
-			require_once "{$_SERVER['DOCUMENT_ROOT']}/views/_header.php";
-		require_once "{$_SERVER['DOCUMENT_ROOT']}/views/{$view}.php";
-		if ($edges)
-			require_once "{$_SERVER['DOCUMENT_ROOT']}/views/_footer.php";
+		if ($edges) {
+			require_once "views/_header.php";
+			require_once "views/{$view}.php";
+			require_once "views/_footer.php";
+		} else 
+			require_once "views/{$view}.php";
 	}
 };

@@ -4,6 +4,7 @@
 		parent::__construct();
 		$this->require_model('person');
 		$this->model = new PersonModel();
+		$this->view->controller = 'people';
 	}
 	function index()
 	{
@@ -21,7 +22,7 @@
 	}
 	function create()
 	{
-		$this->model->create();
+		$this->model->create($_GET);
 		header('Location: /people');
 	}
 	function destroy($id)

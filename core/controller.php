@@ -8,6 +8,6 @@ class Controller {
 	}
 	function require_model($n)
 	{
-		require_once "{$_SERVER['DOCUMENT_ROOT']}/models/{$n}.php";
+		require_once "models/{$n}.php";
 	}
 };

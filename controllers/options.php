@@ -4,6 +4,7 @@
 		parent::__construct();
 		$this->require_model('option');
 		$this->model = new OptionModel();
+		$this->view->controller = 'options';
 	}
 	function index()
 	{

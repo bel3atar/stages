@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="fr">
 <head>
 	<meta charset="UTF-8">
 	<title><?= $this->title ?></title>
@@ -11,14 +11,19 @@
 	<div class="navbar-inner">
 		<a class="brand" href="/">Archive de stages</a>
 		<ul class="nav">
-			<li><a href="/stages">Stages</a>
-			<li><a href="/users">Etudiants</a>
-			<li><a href="/entreprises">Entreprises</a>
-			<li><a href="/people">Responsables</a>
-			<li><a href="/cities">Villes</a>
-			<li><a href="/technologies">Technologies</a>
-			<li><a href="/options">Options</a>
+			<li class="pull-right"><a href="#">Se connecter</a>
 		</ul>
 	</div>
 </div>
-<div class="container">
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span2">
+			<ul class="nav nav-pills nav-stacked">
+				<? foreach ($this->controllers as $k => $v): ?>
+					<li class="<?= $k === $this->controller ? 'active' : '' ?>">
+						<a href="/<?= $k ?>"><?= $v ?></a>
+					</li>
+				<? endforeach ?>
+			</ul>
+		</div>
+		<div class="span10">

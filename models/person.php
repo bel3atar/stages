@@ -56,18 +56,19 @@
 			':id'     => $id
 		]);
 	}
-	function create()
+	function create($params)
 	{
 		$q = $this->db->prepare('
 			INSERT INTO people
 				(nom, prenom, email, entreprise_id)
 				VALUES(:nom, :prenom, :email, :eid)
 		');
+		extract($params);
 		return $q->execute([
-			':nom'    => $_GET['nom'],
-			':email'  => $_GET['email'],
-			':prenom' => $_GET['prenom'],
-			':eid'    => $_GET['entreprise']
+			':nom'    => $nom,
+			':email'  => $email,
+			':prenom' => $prenom,
+			':eid'    => $entreprise
 		]);
 	}
 };

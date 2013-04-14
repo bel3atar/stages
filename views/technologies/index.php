@@ -20,7 +20,13 @@
 					<? endif ?>
 				</td>
 				<td>
-					<?= $t['stages'] ?>
+					<? if ($t['stages']): ?>
+						<a href="/technologies/<?= $t['id'] ?>/stages">
+							<?= $t['stages'] ?>
+						</a>
+					<? else: ?>
+						<?= $t['stages'] ?>
+					<? endif ?>
 				</td>
 				<td>
 					<div class="btn-group">

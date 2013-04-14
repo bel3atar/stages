@@ -5,6 +5,7 @@ class Cities extends Controller {
 		parent::__construct();
 		$this->require_model('city');
 		$this->model = new CityModel();
+		$this->view->controller = 'cities';
 	}
 	function index()
 	{

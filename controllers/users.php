@@ -5,6 +5,7 @@ class Users extends Controller {
 		parent::__construct();
 		$this->require_model('user');
 		$this->model = new UserModel();
+		$this->view->controller = 'users';
 	}
 	function index()
 	{
@@ -26,5 +27,10 @@ class Users extends Controller {
 		$opmodel = new OptionModel();
 		$this->view->options = $opmodel->find_all();
 		$this->view->render('users/new');
+	}
+	function create()
+	{
+		$this->model->create($_GET);
+		header('Location: /users');
 	}
 };

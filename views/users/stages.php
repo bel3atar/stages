@@ -11,14 +11,14 @@
 	<tbody>
 		<tr>
 			<? foreach ($this->list as $s): ?>
-				<td><a href="/entreprises/<?= $s['eid'] ?>"><?= $s['e'] ?></a></td>
+				<td><a href="/entreprises/<?= $s['eid'] ?>/stages"><?= $s['e'] ?></a></td>
 				<td><?= $s['date'] ?></td>
 				<td><?= $s['duree'] ?></td>
 				<td>
 					<? $ts   = explode(',', $s['techs']   ) ?>
 					<? $tids = explode(',', $s['techids'] ) ?>
 					<? for ($i = sizeof($ts) - 1; $i >= 0; --$i): ?>
-						<a href="/technologies/<?= $tids[$i] ?>">
+						<a href="/technologies/<?= $tids[$i] ?>/stages">
 						<?= $ts[$i] ?></a><?= $i ? ', ' : '' ?>
 					<? endfor ?>
 				</td>	

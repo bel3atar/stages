@@ -27,7 +27,7 @@ class UserModel extends Model {
 				COUNT(stages.id) AS stages
 			FROM users
 				JOIN options ON options.id = users.option_id
-				JOIN stages  ON stages.student_id = users.id
+				LEFT JOIN stages  ON stages.student_id = users.id
 			GROUP BY users.id
 		');
 	}
@@ -55,5 +55,21 @@ class UserModel extends Model {
 	function last_id()
 	{
 		return $this->db->query('SELECT MAX(id) AS id FROM users')->fetch()['id'];
+	}
+	function create($params)
+	{
+		$q = $this->db->prepare('
+			INSERT INTO users (nom, prenom, email, tel, pass, option_id)
+			           VALUES (:n, :pn, :email, :tel, MD5(:pass), :optn)
+		');
+		extract($params);
+		return $q->execute([
+			':pass'  => $password,
+			':optn'  => $option,
+			':pn'    => $prenom,
+			':email' => $email,
+			':n'     => $nom,
+			':tel'   => $tel
+		]);
 	}
 };

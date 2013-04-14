@@ -5,13 +5,15 @@ class Stages extends Controller {
 		parent::__construct();
 		$this->require_model('stage');
 		$this->model = new StageModel();
+		$this->view->controller = 'stages';
 	}
 	function add()
 	{
 		$this->view->title = 'Nouveau stage';
 		$this->view->entreprises = $this->model->entreprises();
-		$this->view->villes      = $this->model->cities();
-		$this->view->etudiants   = $this->model->users();
+		$this->view->users       = $this->model->users();
+		$this->view->people      = $this->model->people();
+		$this->view->cities      = $this->model->cities();
 		$this->view->render('stages/new');
 	}
 	function index()
@@ -19,6 +21,11 @@ class Stages extends Controller {
 		$this->view->title = 'Liste des stages';
 		$this->view->list  = $this->model->find_all();
 		$this->view->render('stages/index');
+	}
+	function create()
+	{
+		$this->model->create($_GET);
+		header('Location: /stages');
 	}
 };
 	

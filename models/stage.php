@@ -4,6 +4,10 @@ class StageModel extends Model {
 	{
 		parent::__construct();
 	}
+	function cities()
+	{
+		return $this->db->query('SELECT id, nom FROM cities');
+	}
 	function entreprises()
 	{
 		return $this->db->query('SELECT id, nom FROM entreprises');
@@ -14,9 +18,11 @@ class StageModel extends Model {
 			SELECT id, CONCAT_WS(\' \', nom, prenom) AS nom FROM users
 		');
 	}
-	function cities()
+	function people()
 	{
-		return $this->db->query('SELECT id, nom FROM cities');
+		return $this->db->query('
+			SELECT id, CONCAT_WS(\' \', nom, prenom) AS nom FROM people
+		')->fetchAll();
 	}
 	function find_all()
 	{
@@ -41,6 +47,23 @@ class StageModel extends Model {
 			GROUP BY stages.id
 			ORDER BY stages.date DESC
 		');
+	}
+	function create($params)
+	{
+		$q = $this->db->prepare('
+			INSERT INTO stages 
+				VALUES (NULL, :date, :duree, :ent, :pro, :sup, :stdnt, :ctid)
+		');
+		extract($params);
+		$q->execute([
+			':sup'   => $supervisor,
+			':ent'   => $entreprise,
+			':pro'   => $proposer,
+			':duree' => $duree / 15,
+			':ctid'  => $ville,
+			':date'  => $date,
+			':stdnt' => $user
+		]);
 	}
 };	
 

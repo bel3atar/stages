@@ -5,6 +5,7 @@ class Technologies extends Controller {
 		parent::__construct();
 		$this->require_model('technology');
 		$this->model = new TechnologyModel();
+		$this->view->controller = 'technologies';
 	}
 	function index()
 	{

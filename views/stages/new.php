@@ -16,7 +16,7 @@
 		<label for="ville" class="control-label">Ville</label>
 		<div class="controls">
 			<select id="ville" name="ville" required>
-				<? foreach ($this->villes as $v): ?>
+				<? foreach ($this->cities as $v): ?>
 					<option value="<?= $v['id'] ?>"><?= $v['nom'] ?></option>
 				<? endforeach ?>
 			</select>
@@ -33,26 +33,38 @@
 	<div class="control-group">
 		<label for="duree" class="control-label">Durée</label>
 		<div class="controls">
-			<input id="duree" type="range" min="15" max="90" step="15" value="30" name="date">
+			<input id="duree" type="number" min="15" max="90" step="15" value="30" name="duree">
 		</div>
 	</div>
 
 	<div class="control-group">
-		<label for="password" class="control-label">Mot de passe</label>
+		<label class="control-label">Etudiant</label>
 		<div class="controls">
-			<div class="input-append">
-				<input id="password" type="text" name="password" required pattern=".{4,}">
-				<button type="button" class="btn" onclick="generate()">Générer</button>
-			</div>
+			<select required name="user">
+				<? foreach ($this->users as $u): ?>
+					<option value="<?= $u['id'] ?>"><?= $u['nom'] ?></option>
+				<? endforeach ?>
+			</select>
 		</div>
 	</div>
 
 	<div class="control-group">
-		<label class="control-label">Option</label>
+		<label class="control-label">Proposé par</label>
 		<div class="controls">
-			<select required name="prop">
-				<? foreach ($this->options as $o): ?>
-					<option value="<?= $o['id'] ?>"><?= $o['nom'] ?></option>
+			<select name="proposer">
+				<option value=""></option>
+				<? foreach ($this->people as $p): ?>
+					<option value="<?= $p['id'] ?>"><?= $p['nom'] ?></option>
+				<? endforeach ?>
+			</select>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label">Supervisé par</label>
+		<div class="controls">
+			<select required name="supervisor">
+				<? foreach ($this->people as $p): ?>
+					<option value="<?= $p['id'] ?>"><?= $p['nom'] ?></option>
 				<? endforeach ?>
 			</select>
 		</div>

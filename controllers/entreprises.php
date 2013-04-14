@@ -5,6 +5,7 @@ class Entreprises extends Controller {
 		parent::__construct();
 		$this->require_model('entreprise');
 		$this->model = new EntrepriseModel();
+		$this->view->controller = 'entreprises';
 	}
 	function index()
 	{
