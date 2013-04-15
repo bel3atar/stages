@@ -24,9 +24,7 @@
 					<? $ts   = explode(',', $s['ts'])   ?>
 					<? $tids = explode(',', $s['tids']) ?>
 					<? for ($i = sizeof($ts) - 1; $i >= 0; --$i): ?>
-						<a href="/technologies/<?= $tids[$i] ?>">
-							<?= $ts[$i] ?><?= $i ? ', ' : '' ?>
-						</a>
+						<a href="/technologies/<?= $tids[$i] ?>/stages"><?= $ts[$i] ?></a><?= $i ? ', ' : '' ?>
 					<? endfor ?>
 				</td>
 			</tr>	

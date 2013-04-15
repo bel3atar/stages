@@ -20,6 +20,12 @@ class TechnologyModel extends Model {
 			SELECT nom FROM technologies WHERE id = $id
 		")->fetch()['nom'];
 	}
+	function find_id($name)
+	{
+		$q = $this->db->prepare('SELECT id FROM technologies WHERE nom = ? LIMIT 1');
+		$q->execute([$name]);
+		return $q->fetch()['id'];
+	}
 	function stages($id)
 	{
 		$q = $this->db->prepare('

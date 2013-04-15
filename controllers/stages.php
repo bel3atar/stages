@@ -10,11 +10,12 @@ class Stages extends Controller {
 	function add()
 	{
 		$this->view->title = 'Nouveau stage';
-		$this->view->entreprises = $this->model->entreprises();
-		$this->view->users       = $this->model->users();
-		$this->view->people      = $this->model->people();
-		$this->view->cities      = $this->model->cities();
-		$this->view->render('stages/new');
+		$this->view->entreprises  = $this->model->entreprises();
+		$this->view->technologies = $this->model->technologies();
+		$this->view->users        = $this->model->users();
+		$this->view->people       = $this->model->people();
+		$this->view->cities       = $this->model->cities();
+		$this->view->render('stages/new', FALSE, FALSE);
 	}
 	function index()
 	{
@@ -24,6 +25,8 @@ class Stages extends Controller {
 	}
 	function create()
 	{
+		//print_t($_GET);
+		//exit;
 		$this->model->create($_GET);
 		header('Location: /stages');
 	}

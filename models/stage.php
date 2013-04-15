@@ -12,6 +12,10 @@ class StageModel extends Model {
 	{
 		return $this->db->query('SELECT id, nom FROM entreprises');
 	}
+	function technologies()
+	{
+		return $this->db->query('SELECT id, nom FROM technologies')->fetchAll();
+	}
 	function users()
 	{
 		return $this->db->query('
@@ -39,31 +43,45 @@ class StageModel extends Model {
 				cities.nom AS ville,
 				users.id AS uid
 			FROM stages
-				JOIN cities        ON    stages.city_id     =             cities.id
-				JOIN users          ON   stages.student_id     =           users.id
-				JOIN entreprises     ON  stages.entreprise_id     =  entreprises.id
-				JOIN technology_stage ON technology_stage.stage_id   =    stages.id
-				JOIN technologies      ON technology_stage.technology_id=technologies.id
+				     JOIN cities        ON    stages.city_id     =             cities.id
+				     JOIN users          ON   stages.student_id     =           users.id
+				     JOIN entreprises     ON  stages.entreprise_id     =  entreprises.id
+				LEFT JOIN technology_stage ON technology_stage.stage_id   =    stages.id
+				LEFT JOIN technologies ON technology_stage.technology_id=technologies.id
 			GROUP BY stages.id
 			ORDER BY stages.date DESC
 		');
 	}
 	function create($params)
 	{
-		$q = $this->db->prepare('
-			INSERT INTO stages 
-				VALUES (NULL, :date, :duree, :ent, :pro, :sup, :stdnt, :ctid)
-		');
-		extract($params);
-		$q->execute([
-			':sup'   => $supervisor,
-			':ent'   => $entreprise,
-			':pro'   => $proposer,
-			':duree' => $duree / 15,
-			':ctid'  => $ville,
-			':date'  => $date,
-			':stdnt' => $user
-		]);
+		try {
+			$this->db->beginTransaction();
+			$q = $this->db->prepare('
+				INSERT INTO stages 
+					VALUES (NULL, :date, :duree, :ent, :pro, :sup, :stdnt, :ctid)
+			');
+			extract($params);
+			$q->execute([
+				':sup'   => $supervisor,
+				':ent'   => $entreprise,
+				':pro'   => $proposer,
+				':duree' => $duree / 15,
+				':ctid'  => $ville,
+				':date'  => $date,
+				':stdnt' => $user
+			]);
+			$id = $this->db->lastInsertId();
+			require_once 'models/technology.php';
+			$t = new TechnologyModel();
+			$q = $this->db->prepare('
+				INSERT INTO technology_stage (technology_id, stage_id) VALUES (?, ?)
+			');
+			foreach (split(',', $formTags) as $tag)
+				$q->execute([$t->find_id($tag), $id]);
+			$this->db->commit();
+		} catch (PDOException $e) {
+			$this->db->rollback();
+		}
 	}
 };	
 

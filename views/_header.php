@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title><?= $this->title ?></title>
-	<link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
 	<link rel="icon" href="/assets/favicon.ico">
 </head>
 <body>
@@ -18,7 +18,8 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="span2">
-			<ul class="nav nav-pills nav-stacked">
+			<ul class="nav nav-list">
+				<li class="nav-header">Menu</li>
 				<? foreach ($this->controllers as $k => $v): ?>
 					<li class="<?= $k === $this->controller ? 'active' : '' ?>">
 						<a href="/<?= $k ?>"><?= $v ?></a>

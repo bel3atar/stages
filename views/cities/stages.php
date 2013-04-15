@@ -12,7 +12,7 @@
 		<? foreach ($this->list as $s): ?>
 			<tr>
 				<td>
-					<a href="/entreprises/<?= $s['entrepriseid'] ?>">
+					<a href="/entreprises/<?= $s['entrepriseid'] ?>/stages">
 						<?= $s['entreprise'] ?>
 					</a>
 				</td>
@@ -22,7 +22,7 @@
 				<? $tids = explode(',', $s['tids']) ?>
 				<td>
 					<? for ($i = sizeof($ts) - 1; $i >= 0; --$i): ?>
-							<a href="/technologies/<?= $tids[$i] ?>">
+							<a href="/technologies/<?= $tids[$i] ?>/stages">
 							<?= $ts[$i] ?></a><?= $i ? ', ' : null ?>
 					<? endfor ?>
 				</td>

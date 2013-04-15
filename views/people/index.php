@@ -16,7 +16,7 @@
 				<td><?= $p['nom'] ?></td>
 				<td><?= $p['email'] ?></td>
 				<td>
-					<a href="/entreprises/<?= $p['eid'] ?>">
+					<a href="/entreprises/<?= $p['eid'] ?>/stages">
 						<?= $p['entreprise'] ?>
 					</a>
 				</td>
