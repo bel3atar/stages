@@ -1,6 +1,6 @@
 <?
 class Controller {
-	protected $model;
+	public $model;
 	protected $view;
 	function __construct()
 	{

@@ -50,4 +50,16 @@ class Entreprises extends Controller {
 		$this->view->people = $this->model->people($id);
 		$this->view->render('entreprises/people');
 	}
+	function edit($id)
+	{
+		$this->view->entreprise = $this->model->find($id);
+		$this->view->title = "{$this->view->entreprise['nom']} | Modifier";
+		$this->view->title = 'Modifer une entreprise';
+		$this->view->render('entreprises/edit');
+	}
+	function update()
+	{
+		$this->model->update($_GET);
+		header('Location: /entreprises');
+	}
 };

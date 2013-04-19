@@ -4,6 +4,11 @@ class TechnologyModel extends Model {
 	{
 		parent::__construct();
 	}
+	function find($id)
+	{
+		$q = $this->db->prepare('SELECT id FROM technologies WHERE id = ? LIMIT 1');
+		return $q->execute([$id]);
+	}
 	function find_all()
 	{
 		return $this->db->query('
@@ -13,6 +18,14 @@ class TechnologyModel extends Model {
 					ON technology_stage.technology_id = technologies.id
 			GROUP BY technologies.id
 		');
+	}
+	function exists($id)
+	{
+		$q = $this->db->prepare('
+			SELECT EXISTS(SELECT 1 FROM technologies WHERE id = ? LIMIT 1)
+		');
+		$q->execute([$id]);
+		return $q->fetchColumn();
 	}
 	function find_name($id)
 	{

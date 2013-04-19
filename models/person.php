@@ -20,6 +20,14 @@
 			GROUP BY people.id
 		');
 	}
+	function exists($id)
+	{
+		$q = $this->db->prepare('
+			SELECT EXISTS(SELECT 1 FROM people WHERE id = ? LIMIT 1)
+		');
+		$q->execute([$id]);
+		return $q->fetchColumn();
+	}
 	function find($id)
 	{
 		$q = $this->db->prepare('

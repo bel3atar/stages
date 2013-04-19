@@ -3,6 +3,14 @@
 	{
 		parent::__construct();
 	}
+	function exists($id)
+	{
+		$q = $this->db->prepare('
+			SELECT EXISTS(SELECT 1 FROM options WHERE id = ? LIMIT 1)
+		');
+		$q->execute([$id]);
+		return $q->fetchColumn();
+	}
 	function find_all()
 	{
 		return $this->db->query('
@@ -27,16 +35,18 @@
 	}
 	function find($id)
 	{
-		return $this->db->query("
+		$q = $this->db->prepare('
 			SELECT
 				id,
-				CONCAT_WS(' ', nom, prenom) AS nom,
-				ne_le,
+				CONCAT_WS(\' \', nom, prenom) AS nom,
+				ne_le AS ne_le,
 				tel,
 				email
 			FROM users
-			WHERE users.option_id = $id
-		");
+			WHERE users.option_id = ?
+		');
+		$q->execute([$id]);
+		return $q->fetch();
 	}
 	function update($params)
 	{

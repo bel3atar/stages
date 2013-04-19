@@ -33,7 +33,6 @@ class Cities extends Controller {
 	}
 	function entreprises($id)
 	{
-		$name = $this->model->find($id);
 		$this->view->title = "Entreprises à $name";
 		$this->view->ville = $name;
 		$this->view->list  = $this->model->entreprises($id);
@@ -42,6 +41,8 @@ class Cities extends Controller {
 	function edit($id)
 	{
 		$this->view->nom   = $this->model->find($id);
+		if (empty($this->view->nom))
+			header('Location: /cities');
 		$this->view->id    = $id;
 		$this->view->title = 'Modifier une ville';
 		$this->view->render('cities/edit');

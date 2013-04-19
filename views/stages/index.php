@@ -8,6 +8,7 @@
 			<th>Durée</th>
 			<th>Ville</th>
 			<th>Technologies</th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -35,8 +36,18 @@
 					<? $tids = explode(',', $stage['techids']) ?>
 					<? for ($i = sizeof($ts) - 1; $i >= 0; --$i): ?>
 						<a href="/technologies/<?= $tids[$i] ?>/stages">
-						<?= $ts[$i] ?></a><?= $i ? ', ' : null ?>
+						<?= $ts[$i] ?></a><?= $i ? ', ' : '' ?>
 					<? endfor ?>
+				</td>
+				<td>
+					<div class="btn-group">
+						<a href="/stages/<?= $stage['id'] ?>/edit" class="btn btn-warning btn-mini">
+							<i class="icon-white icon-edit"></i>
+						</a>
+						<a href="/stages/<?= $stage['id'] ?>/destroy" class="btn btn-danger btn-mini">
+							<i class="icon-white icon-trash"></i>
+						</a>
+					</div>
 				</td>
 			</tr>
 		<? endforeach ?>

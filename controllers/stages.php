@@ -25,9 +25,28 @@ class Stages extends Controller {
 	}
 	function create()
 	{
-		//print_t($_GET);
-		//exit;
 		$this->model->create($_GET);
+		header('Location: /stages');
+	}
+	function destroy($id)
+	{
+		$this->model->destroy($id);
+		header('Location: /stages');
+	}
+	function edit($id)
+	{
+		$this->view->title = 'Modifier un stage';
+		$this->view->stage = $this->model->find($id);
+		$this->view->entreprises  = $this->model->entreprises();
+		$this->view->technologies = $this->model->technologies();
+		$this->view->users        = $this->model->users();
+		$this->view->people       = $this->model->people();
+		$this->view->cities       = $this->model->cities();
+		$this->view->render('stages/edit', FALSE, FALSE);
+	}
+	function update()
+	{
+		$this->model->update($_GET);
 		header('Location: /stages');
 	}
 };

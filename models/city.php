@@ -4,9 +4,17 @@ class CityModel extends Model {
 	{
 		parent::__construct();
 	}
+	function exists($id)
+	{
+		$q = $this->db->prepare('
+			SELECT EXISTS(SELECT 1 FROM cities WHERE id = ? LIMIT 1)
+		');
+		$q->execute([$id]);
+		return $q->fetchColumn();
+	}
 	function find($id)
 	{
-		$q = $this->db->prepare('SELECT nom FROM cities WHERE id = ?');
+		$q = $this->db->prepare('SELECT nom FROM cities WHERE id = ? LIMIT 1');
 		$q->execute([$id]);
 		return $q->fetch()['nom'];
 	}
@@ -21,7 +29,7 @@ class CityModel extends Model {
 	}
 	function create()
 	{
-		$q = $this->db->prepare('INSERT INTO cities(nom) VALUES(?)');
+		$q = $this->db->prepare('INSERT INTO cities (nom) VALUES (?)');
 		return $q->execute([$_GET['nom']]);
 	}
 	function stages($id)

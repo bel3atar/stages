@@ -1,6 +1,6 @@
 <?
 class Model extends PDO {
-	protected $db;
+	public $db;
 	protected $model;
 	function __construct() {
 		$host = 'localhost'; 

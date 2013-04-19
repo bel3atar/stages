@@ -4,6 +4,14 @@ class EntrepriseModel extends Model {
 	{
 		parent::__construct();
 	}
+	function exists($id)
+	{
+		$q = $this->db->prepare('
+			SELECT EXISTS(SELECT 1 FROM entreprises WHERE id = ? LIMIT 1)
+		');
+		$q->execute([$id]);
+		return $q->fetchColumn();
+	}
 	function find_all()
 	{
 		return $this->db->query('
@@ -22,7 +30,7 @@ class EntrepriseModel extends Model {
 	function find($id)
 	{
 		$q = $this->db->prepare('
-			SELECT nom, site, logo FROM entreprises WHERE entreprises.id = ? LIMIT 1
+			SELECT id, nom, site, logo FROM entreprises WHERE entreprises.id = ? LIMIT 1
 		');
 		$q->execute([$id]);
 		return $q->fetch();
@@ -110,5 +118,25 @@ class EntrepriseModel extends Model {
 		');
 		$q->execute([$id]);
 		return $q->fetchAll();
+	}
+	function update($params)
+	{
+		$q = $this->db->prepare('
+			UPDATE
+				entreprises
+			SET
+				nom = :nom,
+				logo = :logo,
+				site = :site
+			WHERE id = :id
+			LIMIT 1
+		');
+		extract($params);
+		return $q->execute([
+			':id'   => $id,
+			':nom'  => $nom,
+			':site' => $site,
+			':logo' => $logo
+		]);	
 	}
 };

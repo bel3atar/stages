@@ -41,6 +41,7 @@ class StageModel extends Model {
 				cities.id AS idville,
 				stages.date AS date,
 				cities.nom AS ville,
+				stages.id AS id,
 				users.id AS uid
 			FROM stages
 				     JOIN cities        ON    stages.city_id     =             cities.id
@@ -82,6 +83,80 @@ class StageModel extends Model {
 		} catch (PDOException $e) {
 			$this->db->rollback();
 		}
+	}
+	function destroy($id)
+	{
+		$q = $this->db->prepare('DELETE FROM stages WHERE id = ? LIMIT 1');
+		return $q->execute([$id]);
+	}
+	function exists($id)
+	{
+		$q = $this->db->prepare('
+			SELECT EXISTS(SELECT 1 FROM stages WHERE id = ? LIMIT 1)
+		');
+		$q->execute([$id]);
+		return $q->fetchColumn();
+	}
+	function find($id)
+	{
+		$q = $this->db->prepare('
+			SELECT
+				stages.id AS id,
+				stages.date AS date,
+				stages.duree * 15 AS duree,
+				stages.student_id AS uid,
+				stages.proposer_id AS pid,
+				stages.supervisor_id AS sid,
+				stages.city_id AS ctid,
+				stages.entreprise_id AS eid,
+				GROUP_CONCAT(technologies.id SEPARATOR \',\') AS tids,
+				GROUP_CONCAT(technologies.nom SEPARATOR \',\') AS ts
+			FROM stages
+				JOIN technology_stage ON technology_stage.stage_id = stages.id
+				JOIN technologies ON technology_stage.technology_id = technologies.id
+			WHERE stages.id = ?
+			LIMIT 1
+		');
+		$q->execute([$id]);
+		return $q->fetch();
+	}
+	function update($params)
+	{
+		extract($params);
+		//print_r($formTags);
+		//exit;
+		$this->db->beginTransaction();
+		$q = $this->db->prepare('
+			UPDATE stages SET
+				entreprise_id = :eid,
+				city_id = :ctid,
+				date = :date,
+				duree = :duree,
+				student_id = :uid,
+				proposer_id = :pid,
+				supervisor_id = :sid
+			WHERE id = :id
+			LIMIT 1
+		');
+		$q->execute([
+			':eid'   => $entreprise,
+			':ctid'  => $ville,
+			':date'  => $date,
+			':duree' => $duree / 15,
+			':uid'   => $user,
+			':pid'   => $proposer,
+			':sid'   => $supervisor,
+			':id'    => $id
+		]);
+		$q = $this->db->prepare('DELETE FROM technology_stage WHERE stage_id = ?');
+		$q->execute([$id]);
+		$q = $this->db->prepare('
+			INSERT INTO technology_stage (stage_id, technology_id)
+			VALUES (?, (SELECT id FROM technologies WHERE nom = ?))
+		');
+		foreach (split(',', $formTags) as $t)
+			$q->execute([$id, $t]);
+		$this->db->commit();
 	}
 };	
 

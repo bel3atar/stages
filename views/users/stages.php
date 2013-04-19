@@ -9,8 +9,8 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr>
-			<? foreach ($this->list as $s): ?>
+		<? foreach ($this->list as $s): ?>
+			<tr>
 				<td><a href="/entreprises/<?= $s['eid'] ?>/stages"><?= $s['e'] ?></a></td>
 				<td><?= $s['date'] ?></td>
 				<td><?= $s['duree'] ?></td>
@@ -22,7 +22,7 @@
 						<?= $ts[$i] ?></a><?= $i ? ', ' : '' ?>
 					<? endfor ?>
 				</td>	
-			<? endforeach ?>
-		</tr>
+			</tr>
+		<? endforeach ?>
 	</tbody>
 </table>

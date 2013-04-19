@@ -4,14 +4,26 @@ class UserModel extends Model {
 	{
 		parent::__construct();
 	}
+	function exists($id)
+	{
+		$q = $this->db->prepare('
+			SELECT EXISTS(SELECT 1 FROM users WHERE id = ? LIMIT 1)
+		');
+		$q->execute([$id]);
+		return $q->fetchColumn();
+	}
+	function find($id)
+	{
+		$q = $this->db->prepare('SELECT id FROM users WHERE id = ? LIMIT 1');
+		return $q->execute([$id]);
+	}
 	function full_name($id)
 	{
 		$q = $this->db->prepare('
-			SELECT nom, prenom FROM users WHERE id = ? LIMIT 1
+			SELECT CONCAT_WS(\' \', nom, prenom) AS n FROM users WHERE id = ? LIMIT 1
 		');
 		$q->execute([$id]);
-		$q = $q->fetch();
-		return "{$q['nom']} {$q['prenom']}";
+		return $q = $q->fetch()['n'];
 	}
 	function findAll()
 	{
@@ -42,10 +54,10 @@ class UserModel extends Model {
 				GROUP_CONCAT(technologies.id SEPARATOR \',\') AS techids,
 				GROUP_CONCAT(technologies.nom SEPARATOR \',\') AS techs
 			FROM stages
-				JOIN entreprises ON entreprises.id = stages.entreprise_id
-				JOIN technology_stage ON technology_stage.stage_id = stages.id
-				JOIN technologies ON technologies.id = technology_stage.technology_id
-				JOIN cities ON cities.id = stages.city_id
+				LEFT JOIN entreprises ON entreprises.id = stages.entreprise_id
+				LEFT JOIN technology_stage ON technology_stage.stage_id = stages.id
+				LEFT JOIN technologies ON technologies.id = technology_stage.technology_id
+				LEFT JOIN cities ON cities.id = stages.city_id
 			WHERE stages.student_id = ?
 			GROUP BY stages.id
 		');
