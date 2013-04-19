@@ -57,10 +57,10 @@
 		');
 		extract($params);
 		$q->execute([
-			':eid'    => $entreprise,
-			':prenom' => $prenom,
-			':email'  => $email,
-			':nom'    => $nom,
+			':eid'    => strip_tags($entreprise),
+			':prenom' => strip_tags($prenom),
+			':email'  => strip_tags($email),
+			':nom'    => strip_tags($nom),
 			':id'     => $id
 		]);
 	}
@@ -73,9 +73,9 @@
 		');
 		extract($params);
 		return $q->execute([
-			':nom'    => $nom,
-			':email'  => $email,
-			':prenom' => $prenom,
+			':nom'    => strip_tags($nom),
+			':email'  => strip_tags($email),
+			':prenom' => strip_tags($prenom),
 			':eid'    => $entreprise
 		]);
 	}

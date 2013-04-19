@@ -136,7 +136,7 @@
 		<script>
 			var tags = [
 				<? for($i = sizeof($this->technologies) - 1; $i >= 0; --$i): ?>
-					'<?= $this->technologies[$i]['nom'] ?>',
+					'<?= str_replace('\'', '\\\'', $this->technologies[$i]['nom']) ?>',
 				<? endfor ?>
 			];
 			function tagValidator(tag) { 
@@ -150,7 +150,7 @@
 jQuery(".tagManager").tagsManager();
 var stags = [
 	<? foreach (split(',', $this->stage['ts']) as $t): ?>
-		'<?= $t ?>',
+		'<?= str_replace('\'', '\\\'', $t) ?>',
 	<? endforeach ?>
 ];
 for (var i = 0; i < stags.length; ++i)

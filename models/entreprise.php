@@ -53,9 +53,9 @@ class EntrepriseModel extends Model {
 			INSERT INTO entreprises (nom, logo, site) VALUES (:nom, :logo, :site)
 		');
 		$q->execute([
-			':nom'  => $params['nom'],
-			':logo' => $params['logo'],
-			':site' => $params['site']
+			':nom'  => strip_tags($params['nom']),
+			':logo' => strip_tags($params['logo']),
+			':site' => strip_tags($params['site'])
 		]);
 		$q = $this->db->prepare('
 				INSERT INTO branches (entreprise_id, city_id, adr, tel)
@@ -63,9 +63,9 @@ class EntrepriseModel extends Model {
 		');
 		$q->execute([
 			':e'   => $this->db->lastInsertId(),
-			':ct'  => $params['ville'],
-			':adr' => $params['adr'],
-			':tel' => $params['tel']
+			':ct'  => strip_tags($params['ville']),
+			':adr' => strip_tags($params['adr']),
+			':tel' => strip_tags($params['tel'])
 		]);
 		$this->db->commit();
 	}
@@ -134,9 +134,9 @@ class EntrepriseModel extends Model {
 		extract($params);
 		return $q->execute([
 			':id'   => $id,
-			':nom'  => $nom,
-			':site' => $site,
-			':logo' => $logo
+			':nom'  => strip_tags($nom),
+			':site' => strip_tags($site),
+			':logo' => strip_tags($logo)
 		]);	
 	}
 };

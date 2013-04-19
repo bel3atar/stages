@@ -30,7 +30,7 @@ class CityModel extends Model {
 	function create()
 	{
 		$q = $this->db->prepare('INSERT INTO cities (nom) VALUES (?)');
-		return $q->execute([$_GET['nom']]);
+		return $q->execute([strip_tags($_GET['nom'])]);
 	}
 	function stages($id)
 	{
@@ -55,7 +55,7 @@ class CityModel extends Model {
 	function update($params)
 	{
 		$q = $this->db->prepare('UPDATE cities SET nom = ? WHERE id = ? LIMIT 1');
-		return $q->execute([$params['nom'], $params['id']]);
+		return $q->execute([strip_tags($params['nom']), $params['id']]);
 	}
 	function destroy($id)
 	{

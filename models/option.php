@@ -23,15 +23,16 @@
 	}
 	function create()
 	{
-		return $this->db->query("
-			INSERT INTO options VALUES(NULL, '{$_GET['nom']}');
-		");
+		$q = $this->db->prepare('
+			INSERT INTO options VALUES(NULL, ?);
+		');
+		return $q->execute([strip_tags($_GET['nom'])]);
 	}
 	function name($id)
 	{
-		return $this->db->query("
-			SELECT nom FROM options WHERE id = $id
-		")->fetch()['nom'];
+		$q = $this->db->prepare('SELECT nom FROM options WHERE id = ? LIMIT 1');
+		$q->execute([$id]);
+		return $q->fetch()['nom'];
 	}
 	function find($id)
 	{
@@ -51,7 +52,7 @@
 	function update($params)
 	{
 		$q = $this->db->prepare('UPDATE options SET nom = ? WHERE id = ? LIMIT 1');
-		return $q->execute([$params['nom'], $params['id']]);
+		return $q->execute(array_map('strip_tags', [$params['nom'], $params['id']]));
 	}
 	function delete($id)
 	{

@@ -65,7 +65,7 @@ class TechnologyModel extends Model {
 	function create()
 	{
 		$q = $this->db->prepare('INSERT INTO technologies (nom) VALUES(?)');
-		return $q->execute([$_GET['nom']]);
+		return $q->execute([strip_tags($_GET['nom'])]);
 	}
 	function destroy($id)
 	{
@@ -77,6 +77,6 @@ class TechnologyModel extends Model {
 		$q = $this->db->prepare('
 			UPDATE technologies SET nom = ? WHERE id = ? LIMIT 1
 		');
-		return $q->execute([$params['nom'], $params['id']]);
+		return $q->execute(array_map('strip_tags', [$params['nom'], $params['id']]));
 	}
 };

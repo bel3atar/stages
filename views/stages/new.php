@@ -130,7 +130,7 @@
 		<script>
 			var tags = [
 				<? for($i = sizeof($this->technologies) - 1; $i >= 0; --$i): ?>
-					'<?= $this->technologies[$i]['nom'] ?>'<?= $i ? ',':'' ?>
+					'<?= str_replace('\'', '\\\'', $this->technologies[$i]['nom']) ?>',
 				<? endfor ?>
 			];
 			function tagValidator(tag) { 
