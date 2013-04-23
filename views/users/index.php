@@ -1,4 +1,4 @@
-<legend>Liste des étudiants</legend>
+<div class="page-header"><h1>Liste des étudiants</h1></div>
 <table class="table table-condensed table-striped table-hover">
 	<thead>
 		<tr>
@@ -16,19 +16,19 @@
 			<tr>
 				<td><?= $etd['id'] ?></td>
 				<td>
-					<a href="/users/<?= $etd['id'] ?>/stages">
+					<a href="<?= URL ?>users/<?= $etd['id'] ?>/stages">
 						<?= $etd['nom'] ?>
 					</a>
 				</td>
 				<td><?= $etd['ne_le'] ?></td>
 				<td>
-					<a href="/options/<?= $etd['optid'] ?>/students"><?= $etd['opt'] ?></a>
+					<a href="<?= URL ?>options/<?= $etd['optid'] ?>/students"><?= $etd['opt'] ?></a>
 				</td>
 				<td><?= $etd['tel'] ?></td>
 				<td><?= $etd['email'] ?></td>
 				<td>
 					<? if ($etd['stages']): ?>
-						<a href="/users/<?= $etd['id'] ?>/stages">
+						<a href="<?= URL ?>users/<?= $etd['id'] ?>/stages">
 							<?= $etd['stages'] ?>
 						</a>
 					<? else: ?>
@@ -39,7 +39,7 @@
 		<? endforeach ?>
 	</tbody>
 </table>
-<a href="/users/new" class="btn btn-primary">
+<a href="<?= URL ?>users/new" class="btn btn-primary">
 	<i class="icon-white icon-plus-sign"></i>
 	Nouveau
 </a>

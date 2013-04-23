@@ -1,4 +1,4 @@
-<legend>Stages effectués par <?= $this->nom ?></legend>
+<div class="page-header"><h1><?= $this->nom ?><small> Stages</small></h1></div>
 <table class="table table-condensed table-striped table-hover">
 	<thead>
 		<tr>
@@ -11,14 +11,14 @@
 	<tbody>
 		<? foreach ($this->list as $s): ?>
 			<tr>
-				<td><a href="/entreprises/<?= $s['eid'] ?>/stages"><?= $s['e'] ?></a></td>
+				<td><a href="<?= URL ?>entreprises/<?= $s['eid'] ?>/stages"><?= $s['e'] ?></a></td>
 				<td><?= $s['date'] ?></td>
 				<td><?= $s['duree'] ?></td>
 				<td>
 					<? $ts   = explode(',', $s['techs']   ) ?>
 					<? $tids = explode(',', $s['techids'] ) ?>
 					<? for ($i = sizeof($ts) - 1; $i >= 0; --$i): ?>
-						<a href="/technologies/<?= $tids[$i] ?>/stages">
+						<a href="<?= URL ?>technologies/<?= $tids[$i] ?>/stages">
 						<?= $ts[$i] ?></a><?= $i ? ', ' : '' ?>
 					<? endfor ?>
 				</td>	

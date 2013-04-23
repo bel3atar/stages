@@ -1,12 +1,6 @@
+<form class="form-horizontal" method="get" action="<?= URL ?>users/create">
+<fieldset>
 <legend>Nouvel étudiant</legend>
-<form class="form-horizontal" method="get" action="/users/create">
-
-	<div class="control-group">
-		<label class="control-label">Matricule</label>
-		<div class="controls">
-			<span class="uneditable-input"><?= $this->lastID ?></span>
-		</div>
-	</div>
 
 	<div class="control-group">
 		<label for="nom" class="control-label">Nom</label>
@@ -58,7 +52,7 @@
 			</button>
 		</div>
 	</div>
-
+</fieldset>
 </form>
 <script>
 	function generate()

@@ -1,4 +1,4 @@
-<legend>Responsables de <?= $this->entreprise ?></legend>
+<div class='page-header'><h3><?= $this->entreprise ?> <small>Liste des responsables</small></h3></div>
 <table class="table table-hover table-condensed table-striped">
 	<thead>
 		<tr>

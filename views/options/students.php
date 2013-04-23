@@ -1,4 +1,4 @@
-<legend><?= $this->title ?></legend>
+<div class="page-header"><?= $this->title ?> <small> Liste des étudiants</small></div>
 <table class="table table-condensed table-hover table-striped">
 	<thead>
 		<tr>
@@ -13,7 +13,7 @@
 		<? foreach ($this->list as $e): ?>
 			<tr>
 				<td><?= $e['id'] ?></td>
-				<td><a href="/users/<?= $e['id'] ?>/stages"><?= $e['nom'] ?></a></td>
+				<td><a href="<?= URL ?>users/<?= $e['id'] ?>/stages"><?= $e['nom'] ?></a></td>
 				<td><?= $e['ne_le'] ?></td>
 				<td><?= $e['tel'] ?></td>
 				<td><?= $e['email'] ?></td>

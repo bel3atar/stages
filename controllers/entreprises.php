@@ -33,7 +33,8 @@ class Entreprises extends Controller {
 	}
 	function destroy($id)
 	{
-		$this->model->destroy($id);
+		if (Session::get('is_admin'))
+			$this->model->destroy($id);
 		header('Location: /entreprises');
 	}
 	function stages($id)
@@ -54,12 +55,18 @@ class Entreprises extends Controller {
 	{
 		$this->view->entreprise = $this->model->find($id);
 		$this->view->title = "{$this->view->entreprise['nom']} | Modifier";
-		$this->view->title = 'Modifer une entreprise';
 		$this->view->render('entreprises/edit');
 	}
 	function update()
 	{
-		$this->model->update($_GET);
+		if (Session::get('is_admin'))
+			$this->model->update($_GET);
 		header('Location: /entreprises');
+	}
+	function show($id)
+	{
+		$this->view->entreprise = $this->model->find($id);
+		$this->view->title = $this->view->entreprise['nom'];
+		$this->view->render('entreprises/show');
 	}
 };

@@ -19,7 +19,8 @@
 	}
 	function create()
 	{
-		$this->model->create();
+		if (Session::get('logged'))
+			$this->model->create();
 		header('Location: /options');
 	}
 	function students($id)
@@ -38,12 +39,14 @@
 	}
 	function update($id)
 	{
-		$this->model->update($_GET);
+		if (Session::get('is_admin'))
+			$this->model->update($_GET);
 		header('Location: /options');
 	}
 	function destroy($id)
 	{
-		$this->model->delete($id);
+		if (Session::get('is_admin'))
+			$this->model->delete($id);
 		header('Location: /options');
 	}
 };

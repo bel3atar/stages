@@ -43,9 +43,9 @@ class CityModel extends Model {
 				GROUP_CONCAT(technologies.id SEPARATOR \',\') AS tids,
 				GROUP_CONCAT(technologies.nom SEPARATOR \',\') AS tnames
 			FROM stages
-				JOIN entreprises ON entreprises.id = stages.entreprise_id
-				JOIN technology_stage ON technology_stage.stage_id = stages.id
-				JOIN technologies ON technologies.id = technology_stage.technology_id	
+				     JOIN entreprises      ON entreprises.id = stages.entreprise_id
+				LEFT JOIN technology_stage ON technology_stage.stage_id = stages.id
+				LEFT JOIN technologies     ON technologies.id = technology_stage.technology_id	
 			WHERE stages.city_id = ?
 			GROUP BY stages.id
 		');

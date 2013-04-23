@@ -1,5 +1,6 @@
+<form class="form-horizontal" method="get" action="<?= URL ?>people/update">
+<fieldset>
 <legend>Editer les informations d'un responsable</legend>
-<form class="form-horizontal" method="get" action="/people/update">
 
 	<input type="hidden" name="id" value="<?= $this->person['id'] ?>">
 	
@@ -46,4 +47,5 @@
 		</div>
 	</div>
 
+</fieldset>
 </form>

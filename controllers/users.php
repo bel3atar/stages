@@ -22,7 +22,6 @@ class Users extends Controller {
 	function add()
 	{
 		$this->view->title = 'Nouvel étudiant';
-		$this->view->lastID = $this->model->last_id() + 1;
 		$this->require_model('option');
 		$opmodel = new OptionModel();
 		$this->view->options = $opmodel->find_all();
@@ -30,7 +29,16 @@ class Users extends Controller {
 	}
 	function create()
 	{
-		$this->model->create($_GET);
+		if (Session::get('is_admin'))
+			$this->model->create($_GET);
 		header('Location: /users');
+	}
+	function show($id)
+	{
+		$u = $this->model->find($id);
+		print_r($u);
+		exit;
+		$this->view->title = "{$u['nom']} | Profil";
+		$this->view->render('users/show');
 	}
 };

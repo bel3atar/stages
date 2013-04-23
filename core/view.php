@@ -9,12 +9,10 @@ class View {
 		'options'      => 'Options',
 		'cities'       => 'Villes'
 	];
-	function render($view, $header = TRUE, $footer = TRUE)
+	function render($view, $footer = TRUE)
 	{
-		if ($header)
-			require_once "views/_header.php";
-		require_once "views/{$view}.php";
-		if ($footer)
-			require_once "views/_footer.php";
+		             require_once "views/_header.php";
+		             require_once "views/{$view}.php";
+		if ($footer) require_once "views/_footer.php";
 	}
 };

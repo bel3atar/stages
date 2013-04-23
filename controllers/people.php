@@ -22,12 +22,14 @@
 	}
 	function create()
 	{
-		$this->model->create($_GET);
+		if (Session::get('logged'))
+			$this->model->create($_GET);
 		header('Location: /people');
 	}
 	function destroy($id)
 	{
-		$this->model->destroy($id);
+		if (Session::get('is_admin'))
+			$this->model->destroy($id);
 		header('Location: /people');
 	}
 	function edit($id)
@@ -41,7 +43,8 @@
 	}
 	function update()
 	{
-		$this->model->update($_GET);
+		if (Session::get('is_admin'))
+			$this->model->update($_GET);
 		header('Location: /people');
 	}
 };

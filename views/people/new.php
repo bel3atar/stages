@@ -1,5 +1,6 @@
+<form class="form-horizontal" method="get" action="<?= URL ?>people/create">
+<fieldset>
 <legend>Nouveau responsable</legend>
-<form class="form-horizontal" method="get" action="/people/create">
 
 	<div class="control-group">
 		<label for="nom" class="control-label">Nom</label>
@@ -42,4 +43,5 @@
 		</div>
 	</div>
 
+</fieldset>
 </form>

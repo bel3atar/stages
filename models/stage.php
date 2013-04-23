@@ -63,19 +63,22 @@ class StageModel extends Model {
 			');
 			extract($params);
 			$q->execute([
-				':sup'   => $supervisor,
+				':stdnt' => Session::get('is_admin') ? $user : Session::get('id'),
+				':sup'   => empty($supervisor) ? NULL : $supervisor,
 				':ent'   => $entreprise,
-				':pro'   => $proposer,
 				':duree' => $duree / 15,
+				':pro'   => $proposer,
 				':ctid'  => $ville,
-				':date'  => $date,
-				':stdnt' => $user
+				':date'  => $date
 			]);
 			$id = $this->db->lastInsertId();
 			require_once 'models/technology.php';
 			$t = new TechnologyModel();
 			$q = $this->db->prepare('
-				INSERT INTO technology_stage (technology_id, stage_id) VALUES (?, ?)
+				INSERT INTO technology_stage (technology_id, stage_id) 
+				VALUES (
+					(SELECT id FROM technologies WHERE 
+				)
 			');
 			foreach (split(',', $formTags) as $tag)
 				$q->execute([$t->find_id($tag), $id]);
@@ -86,8 +89,12 @@ class StageModel extends Model {
 	}
 	function destroy($id)
 	{
+		$this->db->beginTransaction();
+		$q = $this->db->prepare('DELETE FROM technology_stage WHERE stage_id = ?');
+		$q->execute([$id]);
 		$q = $this->db->prepare('DELETE FROM stages WHERE id = ? LIMIT 1');
-		return $q->execute([$id]);
+		$q->execute([$id]);
+		return $this->db->commit();
 	}
 	function exists($id)
 	{

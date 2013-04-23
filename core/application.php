@@ -5,6 +5,8 @@ class Application {
 		require_once 'model.php';
 		require_once 'view.php';
 		require_once 'controller.php';
+		require_once 'session.php';
+		session_start();
 		if (empty($url)) {
 			require_once 'controllers/stages.php';
 			$controller = new Stages();

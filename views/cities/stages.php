@@ -1,4 +1,11 @@
-<legend>Stages pour <?= $this->ville ?></legend>
+<div class='page-header'>
+	<h3><?= $this->ville ?> <small>Liste des stages</small></h3>
+</div>
+<div>
+  <nom>
+    <div></div>
+  </nom>
+</div>
 <table class="table table-hover table-condensed table-striped">
 	<thead>
 		<tr>
@@ -12,7 +19,7 @@
 		<? foreach ($this->list as $s): ?>
 			<tr>
 				<td>
-					<a href="/entreprises/<?= $s['entrepriseid'] ?>/stages">
+					<a href="<?= URL ?>entreprises/<?= $s['entrepriseid'] ?>/stages">
 						<?= $s['entreprise'] ?>
 					</a>
 				</td>
@@ -22,7 +29,7 @@
 				<? $tids = explode(',', $s['tids']) ?>
 				<td>
 					<? for ($i = sizeof($ts) - 1; $i >= 0; --$i): ?>
-							<a href="/technologies/<?= $tids[$i] ?>/stages">
+							<a href="<?= URL ?>technologies/<?= $tids[$i] ?>/stages">
 							<?= $ts[$i] ?></a><?= $i ? ', ' : null ?>
 					<? endfor ?>
 				</td>

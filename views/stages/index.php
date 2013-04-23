@@ -1,4 +1,4 @@
-<legend>Derniers stages</legend>
+<div class="page-header"><h1>Derniers stages</h1></div>
 <table class="table table-condensed table-hover">
 	<thead>
 		<tr>
@@ -8,26 +8,26 @@
 			<th>Durée</th>
 			<th>Ville</th>
 			<th>Technologies</th>
-			<th></th>
+			<? if (Session::get('is_admin')) echo '<th></th>' ?>
 		</tr>
 	</thead>
 	<tbody>
 		<? foreach ($this->list as $stage): ?>
 			<tr>
 				<td>
-					<a href="/users/<?= $stage['uid'] ?>/stages">
+					<a href="<?= URL ?>users/<?= $stage['uid'] ?>/stages">
 						<?= $stage['nom'] ?>
 					</a>
 				</td>
 				<td>
-					<a href="/entreprises/<?= $stage['eid'] ?>/stages">
+					<a href="<?= URL ?>entreprises/<?= $stage['eid'] ?>/stages">
 						<?= $stage['entreprise'] ?>
 					</a>
 				</td>
 				<td><?= $stage['date'] ?></td>
 				<td><?= $stage['duree'] ?></td>
 				<td>
-					<a href="/cities/<?= $stage['idville'] ?>/stages">
+					<a href="<?= URL ?>cities/<?= $stage['idville'] ?>/stages">
 						<?= $stage['ville'] ?>
 					</a>
 				</td>
@@ -35,25 +35,29 @@
 					<? $ts = explode(',', $stage['techs']) ?>
 					<? $tids = explode(',', $stage['techids']) ?>
 					<? for ($i = sizeof($ts) - 1; $i >= 0; --$i): ?>
-						<a href="/technologies/<?= $tids[$i] ?>/stages">
+						<a href="<?= URL ?>technologies/<?= $tids[$i] ?>/stages">
 						<?= $ts[$i] ?></a><?= $i ? ', ' : '' ?>
 					<? endfor ?>
 				</td>
-				<td>
-					<div class="btn-group">
-						<a href="/stages/<?= $stage['id'] ?>/edit" class="btn btn-warning btn-mini">
-							<i class="icon-white icon-edit"></i>
-						</a>
-						<a href="/stages/<?= $stage['id'] ?>/destroy" class="btn btn-danger btn-mini">
-							<i class="icon-white icon-trash"></i>
-						</a>
-					</div>
-				</td>
+				<? if (Session::get('is_admin')): ?>
+					<td>
+						<div class="btn-group">
+							<a href="<?= URL ?>stages/<?= $stage['id'] ?>/edit" class="btn btn-warning btn-mini">
+								<i class="icon-white icon-edit"></i>
+							</a>
+							<a href="<?= URL ?>stages/<?= $stage['id'] ?>/destroy" class="btn btn-danger btn-mini">
+								<i class="icon-white icon-trash"></i>
+							</a>
+						</div>
+					</td>
+				<? endif ?>
 			</tr>
 		<? endforeach ?>
 	</tbody>
 </table>
-<a href="/stages/new" class="btn btn-primary">
-	<i class="icon-plus-sign icon-white"></i>
-	Nouveau
-</a>
+<? if (Session::get('logged')): ?>
+	<a href="<?= URL ?>stages/new" class="pull-right btn btn-primary">
+		<i class="icon-plus-sign icon-white"></i>
+		Nouveau
+	</a>
+<? endif ?>

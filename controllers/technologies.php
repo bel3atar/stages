@@ -26,7 +26,8 @@ class Technologies extends Controller {
 	}
 	function create()
 	{
-		$this->model->create();
+		if (Session::get('logged'))
+			$this->model->create();
 		header('Location: /technologies');
 	}
 	function edit($id)
@@ -37,12 +38,14 @@ class Technologies extends Controller {
 	}
 	function update()
 	{
-		$this->model->update($_GET);
+		if (Session::get('is_admin'))
+			$this->model->update($_GET);
 		header('Location: /technologies');
 	}
 	function destroy($id)
 	{
-		$this->model->destroy($id);
+		if (Session::get('is_admin'))
+			$this->model->destroy($id);
 		header('Location: /technologies');
 	}
 };

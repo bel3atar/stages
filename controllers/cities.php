@@ -20,7 +20,8 @@ class Cities extends Controller {
 	}
 	function create()
 	{
-		$this->model->create();
+		if (Session::get('logged'))
+			$this->model->create();
 		header('Location: /cities');
 	}
 	function stages($id)
@@ -41,20 +42,21 @@ class Cities extends Controller {
 	function edit($id)
 	{
 		$this->view->nom   = $this->model->find($id);
-		if (empty($this->view->nom))
-			header('Location: /cities');
 		$this->view->id    = $id;
 		$this->view->title = 'Modifier une ville';
 		$this->view->render('cities/edit');
 	}
 	function update()
 	{
-		$this->model->update($_GET);
-		header('Location: /cities');
+		if (Session::get('is_admin'))
+			$this->model->update($_GET);
+		else
+			header('Location: /cities');
 	}
 	function destroy($id)
 	{
-		$this->model->destroy($id);
+		if (Session::get('is_admin'))
+			$this->model->destroy($id);
 		header('Location: /cities');
 	}
 };

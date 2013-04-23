@@ -1,10 +1,10 @@
-<legend>Liste des technologies</legend>
+<div class="page-header"><h1>Liste des technologies</h1></div>
 <table class="table table-condensed table-striped table-hover">
 	<thead>
 		<tr>
 			<th>Nom</th>
 			<th>Stages</th>
-			<th>Action</th>
+			<? if (Session::get('logged')) echo '<th></th>' ?>
 		</tr>
 	</thead>
 	<tbody>
@@ -12,7 +12,7 @@
 			<tr>
 				<td>
 					<? if ($t['stages']): ?>
-						<a href="/technologies/<?= $t['id'] ?>/stages">
+						<a href="<?= URL ?>technologies/<?= $t['id'] ?>/stages">
 							<?= $t['nom'] ?>
 						</a>
 					<? else: ?>
@@ -21,30 +21,32 @@
 				</td>
 				<td>
 					<? if ($t['stages']): ?>
-						<a href="/technologies/<?= $t['id'] ?>/stages">
+						<a href="<?= URL ?>technologies/<?= $t['id'] ?>/stages">
 							<?= $t['stages'] ?>
 						</a>
 					<? else: ?>
 						<?= $t['stages'] ?>
 					<? endif ?>
 				</td>
-				<td>
-					<div class="btn-group">
-						<a href="/technologies/<?= $t['id'] ?>/edit" class="btn btn-warning btn-mini">
-							<i class="icon-white icon-edit"></i>
-						</a>
-						<? if ($t['stages'] == 0): ?>
-							<a href="/technologies/<?= $t['id'] ?>/destroy" class="btn btn-danger btn-mini">
-								<i class="icon-white icon-trash"></i>
+				<? if (Session::get('is_admin')): ?>
+					<td>
+						<div class="btn-group">
+							<a href="<?= URL ?>technologies/<?= $t['id'] ?>/edit" class="btn btn-warning btn-mini">
+								<i class="icon-white icon-edit"></i>
 							</a>
-						<? endif ?>
-					</div>
-				</td>
+							<? if ($t['stages'] == 0): ?>
+								<a href="<?= URL ?>technologies/<?= $t['id'] ?>/destroy" class="btn btn-danger btn-mini">
+									<i class="icon-white icon-trash"></i>
+								</a>
+							<? endif ?>
+						</div>
+					</td>
+				<? endif ?>
 			</tr>
 		<? endforeach ?>
 	</tbody>
 </table>
-<a href="/technologies/new" class="btn btn-primary">
+<a href="<?= URL ?>technologies/new" class="pull-right btn btn-primary">
 	<i class="icon-plus-sign icon-white"></i>
 	Nouvelle
 </a>

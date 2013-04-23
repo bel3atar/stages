@@ -9,13 +9,18 @@ class Stages extends Controller {
 	}
 	function add()
 	{
-		$this->view->title = 'Nouveau stage';
+		$this->view->title        = 'Nouveau stage';
 		$this->view->entreprises  = $this->model->entreprises();
 		$this->view->technologies = $this->model->technologies();
 		$this->view->users        = $this->model->users();
 		$this->view->people       = $this->model->people();
 		$this->view->cities       = $this->model->cities();
-		$this->view->render('stages/new', FALSE, FALSE);
+		$this->view->stylesheets  = ['tagmanager/bootstrap-tagmanager'];
+		$this->view->scripts      = [
+			' src="' . URL . 'assets/tagmanager/bootstrap-tagmanager.js"',
+			'>jQuery(".tagManager").tagsManager();'
+		];
+		$this->view->render('stages/new', FALSE);
 	}
 	function index()
 	{
@@ -25,12 +30,14 @@ class Stages extends Controller {
 	}
 	function create()
 	{
-		$this->model->create($_GET);
+		if (Session::get('logged'))
+			$this->model->create($_GET);
 		header('Location: /stages');
 	}
 	function destroy($id)
 	{
-		$this->model->destroy($id);
+		if (Session::get('is_admin'))
+			$this->model->destroy($id);
 		header('Location: /stages');
 	}
 	function edit($id)
@@ -42,11 +49,17 @@ class Stages extends Controller {
 		$this->view->users        = $this->model->users();
 		$this->view->people       = $this->model->people();
 		$this->view->cities       = $this->model->cities();
-		$this->view->render('stages/edit', FALSE, FALSE);
+		$this->view->stylesheets  = ['tagmanager/bootstrap-tagmanager'];
+		$this->view->scripts      = [
+			'src="' . URL . 'assets/tagmanager/bootstrap-tagmanager.js"',
+			'jQuery(".tagManager").tagsManager();'
+		];
+		$this->view->render('stages/edit', FALSE);
 	}
 	function update()
 	{
-		$this->model->update($_GET);
+		if (Session::get('is_admin'))
+			$this->model->update($_GET);
 		header('Location: /stages');
 	}
 };

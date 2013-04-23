@@ -14,8 +14,21 @@ class UserModel extends Model {
 	}
 	function find($id)
 	{
-		$q = $this->db->prepare('SELECT id FROM users WHERE id = ? LIMIT 1');
-		return $q->execute([$id]);
+		$q = $this->db->prepare('
+			SELECT 
+				users.id,
+				CONCAT_WS(\' \', nom, prenom) AS nom,
+				COUNT(stages.id) AS stages,
+				email,
+				tel
+			FROM users 
+				JOIN stages ON stages.student_id = users.id
+			WHERE users.id = ?
+			GROUP BY users.id
+			LIMIT 1
+		');
+		$q->execute([$id]);
+		return $q->fetch();
 	}
 	function full_name($id)
 	{

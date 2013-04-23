@@ -1,4 +1,4 @@
-<legend>Liste des responsables</legend>
+<div class="page-header">Liste des responsables</div>
 <table class="table table-condensed table-striped table-hover">
 	<thead>
 		<tr>
@@ -7,7 +7,7 @@
 			<th>Entreprise</th>
 			<th>Propositions</th>
 			<th>Supervisions</th>
-			<th>Action</th>
+			<? if (Session::get('is_admin')) echo '<th></th>' ?>
 		</tr>
 	</thead>
 	<tbody>
@@ -16,29 +16,31 @@
 				<td><?= $p['nom'] ?></td>
 				<td><?= $p['email'] ?></td>
 				<td>
-					<a href="/entreprises/<?= $p['eid'] ?>/stages">
+					<a href="<?= URL ?>entreprises/<?= $p['eid'] ?>/stages">
 						<?= $p['entreprise'] ?>
 					</a>
 				</td>
 				<td><?= $p['propositions'] ?></td>
 				<td><?= $p['supervisions'] ?></td>
-				<td>
-					<div class="btn-group">
-						<a href="/people/<?= $p['id'] ?>/edit" class="btn btn-warning btn-mini">
-							<i class="icon-white icon-edit"></i>
-						</a>
-						<? if ($p['propositions'] == 0 and $p['supervisions'] == 0): ?>
-							<a href="/people/<?= $p['id'] ?>/destroy" class="btn btn-danger btn-mini">
-								<i class="icon-white icon-trash"></i>
+				<? if (Session::get('is_admin')): ?>
+					<td>
+						<div class="btn-group">
+							<a href="<?= URL ?>people/<?= $p['id'] ?>/edit" class="btn btn-warning btn-mini">
+								<i class="icon-white icon-edit"></i>
 							</a>
-						<? endif ?>
-					</div>
-				</td>
+							<? if ($p['propositions'] == 0 and $p['supervisions'] == 0): ?>
+								<a href="<?= URL ?>people/<?= $p['id'] ?>/destroy" class="btn btn-danger btn-mini">
+									<i class="icon-white icon-trash"></i>
+								</a>
+							<? endif ?>
+						</div>
+					</td>
+				<? endif ?>
 			</tr>
 		<? endforeach ?>
 	</tbody>
 </table>
-<a href="/people/new" class="btn btn-primary">
+<a href="<?= URL ?>people/new" class="pull-right btn btn-primary">
 	<i class="icon-plus-sign icon-white"></i>
 	Nouveau
 </a>
