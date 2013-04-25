@@ -35,10 +35,8 @@ class Users extends Controller {
 	}
 	function show($id)
 	{
-		$u = $this->model->find($id);
-		print_r($u);
-		exit;
-		$this->view->title = "{$u['nom']} | Profil";
+		$this->view->user  = $this->model->find($id);
+		$this->view->title = "{$this->view->user['nom']} | Profil";
 		$this->view->render('users/show');
 	}
 };

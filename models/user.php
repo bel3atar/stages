@@ -16,13 +16,17 @@ class UserModel extends Model {
 	{
 		$q = $this->db->prepare('
 			SELECT 
-				users.id,
-				CONCAT_WS(\' \', nom, prenom) AS nom,
+				users.id AS id,
+				CONCAT_WS(\' \', users.nom, prenom) AS nom,
 				COUNT(stages.id) AS stages,
 				email,
-				tel
+				tel,
+				is_admin,
+				options.nom AS opt,
+				options.id AS optid
 			FROM users 
-				JOIN stages ON stages.student_id = users.id
+				LEFT JOIN stages  ON stages.student_id = users.id
+				     JOIN options ON users.option_id   = options.id
 			WHERE users.id = ?
 			GROUP BY users.id
 			LIMIT 1
