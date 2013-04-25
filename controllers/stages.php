@@ -17,7 +17,7 @@ class Stages extends Controller {
 		$this->view->cities       = $this->model->cities();
 		$this->view->stylesheets  = ['tagmanager/bootstrap-tagmanager'];
 		$this->view->scripts      = [
-			' src="' . URL . 'assets/tagmanager/bootstrap-tagmanager.js"',
+			' src="' . URL . 'assets/tagmanager/bootstrap-tagmanager.js">',
 			'>jQuery(".tagManager").tagsManager();'
 		];
 		$this->view->render('stages/new', FALSE);
@@ -52,7 +52,7 @@ class Stages extends Controller {
 		$this->view->stylesheets  = ['tagmanager/bootstrap-tagmanager'];
 		$this->view->scripts      = [
 			'src="' . URL . 'assets/tagmanager/bootstrap-tagmanager.js"',
-			'jQuery(".tagManager").tagsManager();'
+			'>;'
 		];
 		$this->view->render('stages/edit', FALSE);
 	}
@@ -63,4 +63,3 @@ class Stages extends Controller {
 		header('Location: /stages');
 	}
 };
-	

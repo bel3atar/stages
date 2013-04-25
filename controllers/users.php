@@ -31,7 +31,7 @@ class Users extends Controller {
 	{
 		if (Session::get('is_admin'))
 			$this->model->create($_GET);
-		header('Location: /users');
+		header('Location: ' . URL . 'users');
 	}
 	function show($id)
 	{

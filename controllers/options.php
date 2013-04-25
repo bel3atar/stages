@@ -21,7 +21,7 @@
 	{
 		if (Session::get('logged'))
 			$this->model->create();
-		header('Location: /options');
+		header('Location: ' . URL . 'options');
 	}
 	function students($id)
 	{
@@ -41,12 +41,12 @@
 	{
 		if (Session::get('is_admin'))
 			$this->model->update($_GET);
-		header('Location: /options');
+		header('Location: ' . URL . 'options');
 	}
 	function destroy($id)
 	{
 		if (Session::get('is_admin'))
 			$this->model->delete($id);
-		header('Location: /options');
+		header('Location: ' . URL . 'options');
 	}
 };

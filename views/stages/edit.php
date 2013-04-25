@@ -114,6 +114,9 @@ function tagValidator(tag) {
 	return tags.indexOf(tag) != -1 ? true : false;
 }
 </script>
+<script src="<?= URL ?>assets/javascripts/jquery.js"></script>
+<script src="<?= URL ?>assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="<?= URL ?>/assets/tagmanager/bootstrap-tagmanager.js"></script>
 <script>
 jQuery(".tagManager").tagsManager();
 var stags = [
@@ -124,10 +127,5 @@ var stags = [
 for (var i = 0; i < stags.length; ++i)
 	$('.tagManager').tagsManager('pushTag', stags[i]);
 </script>
-		<script src="<?= URL ?>assets/javascripts/jquery.js"></script>
-		<script src="<?= URL ?>assets/bootstrap/js/bootstrap.min.js"></script>
-		<? if (isset($this->scripts)) foreach ($this->scripts as $s): ?>
-			<script <?= $s ?>></script>
-		<? endforeach ?>
 	</body>
 </html>

@@ -28,7 +28,7 @@ class Technologies extends Controller {
 	{
 		if (Session::get('logged'))
 			$this->model->create();
-		header('Location: /technologies');
+		header('Location: ' . URL . 'technologies');
 	}
 	function edit($id)
 	{
@@ -40,13 +40,13 @@ class Technologies extends Controller {
 	{
 		if (Session::get('is_admin'))
 			$this->model->update($_GET);
-		header('Location: /technologies');
+		header('Location: ' . URL . 'technologies');
 	}
 	function destroy($id)
 	{
 		if (Session::get('is_admin'))
 			$this->model->destroy($id);
-		header('Location: /technologies');
+		header('Location: ' . URL . 'technologies');
 	}
 };
 ?>

@@ -24,13 +24,13 @@
 	{
 		if (Session::get('logged'))
 			$this->model->create($_GET);
-		header('Location: /people');
+		header('Location: ' . URL . 'people');
 	}
 	function destroy($id)
 	{
 		if (Session::get('is_admin'))
 			$this->model->destroy($id);
-		header('Location: /people');
+		header('Location: ' . URL . 'people');
 	}
 	function edit($id)
 	{
@@ -45,6 +45,6 @@
 	{
 		if (Session::get('is_admin'))
 			$this->model->update($_GET);
-		header('Location: /people');
+		header('Location: ' . URL . 'people');
 	}
 };

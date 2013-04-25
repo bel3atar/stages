@@ -22,7 +22,7 @@ class Cities extends Controller {
 	{
 		if (Session::get('logged'))
 			$this->model->create();
-		header('Location: /cities');
+		header('Location: '. URL. 'cities');
 	}
 	function stages($id)
 	{
@@ -51,12 +51,12 @@ class Cities extends Controller {
 		if (Session::get('is_admin'))
 			$this->model->update($_GET);
 		else
-			header('Location: /cities');
+			header('Location: ' . URL . 'cities');
 	}
 	function destroy($id)
 	{
 		if (Session::get('is_admin'))
 			$this->model->destroy($id);
-		header('Location: /cities');
+		header('Location: ' . URL . 'cities');
 	}
 };

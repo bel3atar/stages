@@ -7,7 +7,7 @@
 	<? if (isset($this->stylesheets)) foreach ($this->stylesheets as $s): ?>
 		<link rel="stylesheet" href="<?= URL, 'assets/', $s, '.css' ?>">
 	<? endforeach ?>
-	<link rel="icon" href="assets/favicon.ico">
+	<link rel="icon" href="<?= URL ?>assets/favicon.ico">
 </head>
 <body>
 <div class="navbar">

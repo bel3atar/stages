@@ -29,13 +29,13 @@ class Entreprises extends Controller {
 	function create()
 	{
 		$this->model->create($_GET);
-		header('Location: /entreprises');
+		header('Location: ' . URL . 'entreprises');
 	}
 	function destroy($id)
 	{
 		if (Session::get('is_admin'))
 			$this->model->destroy($id);
-		header('Location: /entreprises');
+		header('Location: ' . URL . 'entreprises');
 	}
 	function stages($id)
 	{
@@ -61,7 +61,7 @@ class Entreprises extends Controller {
 	{
 		if (Session::get('is_admin'))
 			$this->model->update($_GET);
-		header('Location: /entreprises');
+		header('Location:' . URL . 'entreprises');
 	}
 	function show($id)
 	{

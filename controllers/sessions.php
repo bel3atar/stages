@@ -18,14 +18,14 @@
 			  $_SESSION['logged'] = TRUE;
 			     $_SESSION['nom'] = $r['nom'];
 			      $_SESSION['id'] = $r['id'];
-			header('Location: /');
+			header('Location: ' . URL);
 		} else
-			header('Location: /sessions/new');
+			header('Location: ' . URL . 'sessions/new');
 	}
 	function destroy()
 	{
 		session_unset();
 		session_destroy();
-		header('Location: /sessions/new');
+		header('Location: ' . URL . 'sessions/new');
 	}
 };
