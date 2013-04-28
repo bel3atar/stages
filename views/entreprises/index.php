@@ -54,7 +54,9 @@
 		<? endforeach ?>
 	</tbody>
 </table>
-<a href="<?= URL ?>entreprises/new" class="pull-right btn btn-primary">
-	<i class="icon-white icon-plus-sign"></i>
-	Nouvelle
-</a>
+<? if (Session::get('logged')): ?>
+	<a href="<?= URL ?>entreprises/new" class="pull-right btn btn-primary">
+		<i class="icon-white icon-plus-sign"></i>
+		Nouvelle
+	</a>
+<? endif ?>

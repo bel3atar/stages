@@ -39,7 +39,9 @@
 		<? endforeach ?>
 	</tbody>
 </table>
-<a href="<?= URL ?>users/new" class="btn btn-primary">
-	<i class="icon-white icon-plus-sign"></i>
-	Nouveau
-</a>
+<? if (Session::get('logged')): ?>
+	<a href="<?= URL ?>users/new" class="btn btn-primary">
+		<i class="icon-white icon-plus-sign"></i>
+		Nouveau
+	</a>
+<? endif ?>
