@@ -15,12 +15,12 @@
 		<? foreach ($this->list as $stage): ?>
 			<tr>
 				<td>
-					<a href="<?= URL ?>users/<?= $stage['uid'] ?>/stages">
+					<a href="<?= URL ?>users/<?= $stage['uid'] ?>">
 						<?= $stage['nom'] ?>
 					</a>
 				</td>
 				<td>
-					<a href="<?= URL ?>entreprises/<?= $stage['eid'] ?>/stages">
+					<a href="<?= URL ?>entreprises/<?= $stage['eid'] ?>">
 						<?= $stage['entreprise'] ?>
 					</a>
 				</td>

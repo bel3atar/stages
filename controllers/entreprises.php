@@ -17,24 +17,27 @@ class Entreprises extends Controller {
 	{
 		$this->view->title = 'Nouvelle entreprise';
 		$this->require_model('city');
-		$c = new CityModel();
-		$this->view->villes = $c->find_all();
-		$this->view->render('entreprises/new');
-	}
-	function branches_json($id)
-	{
-		header('Content-Type: application/json');
-		echo json_encode($this->model->branches($id));
+		$this->view->render('entreprises/new', FALSE);
 	}
 	function create()
 	{
-		$this->model->create($_GET);
+		$img = getimagesize($_FILES['logo']['tmp_name']);
+		if ($img and $this->model->create($_POST)) {
+			$callback = substr_replace($img['mime'], 'createfrom', 5, 1);
+			$img = $callback($_FILES['logo']['tmp_name']);
+			imagepng($img, "assets/images/entreprises/{$_POST['nom']}.png");
+			imagedestroy($img);
+			unlink($_FILES['logo']['tmp_name']);
+		}
 		header('Location: ' . URL . 'entreprises');
 	}
 	function destroy($id)
 	{
-		if (Session::get('is_admin'))
+		if (Session::get('is_admin')) {
+			$nom = $this->model->find($id)['nom'];
+			unlink("assets/images/entreprises/$nom.png");
 			$this->model->destroy($id);
+		}
 		header('Location: ' . URL . 'entreprises');
 	}
 	function stages($id)
@@ -59,8 +62,24 @@ class Entreprises extends Controller {
 	}
 	function update()
 	{
-		if (Session::get('is_admin'))
-			$this->model->update($_GET);
+		if (Session::get('is_admin')) {
+			$oldname = $this->model->find($_POST['id'])['nom'];
+			if ($this->model->update($_POST)) {
+				$path = 'assets/images/entreprises/';
+				rename("$path/$oldname.png", "$path/{$_POST['nom']}.png");
+				if ($_FILES['logo']) {
+					$img = getimagesize($_FILES['logo']['tmp_name']);
+					if ($img) {
+						unlink("$path/{$_POST['nom']}.png");
+						$callback = substr_replace($img['mime'], 'createfrom', 5, 1);
+						$img = $callback($_FILES['logo']['tmp_name']);
+						imagepng($img, "assets/images/entreprises/{$_POST['nom']}.png");
+						imagedestroy($img);
+						unlink($_FILES['logo']['tmp_name']);
+					}
+				}
+			}
+		}
 		header('Location:' . URL . 'entreprises');
 	}
 	function show($id)

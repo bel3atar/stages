@@ -19,7 +19,7 @@
 		<? foreach ($this->list as $s): ?>
 			<tr>
 				<td>
-					<a href="<?= URL ?>entreprises/<?= $s['entrepriseid'] ?>/stages">
+					<a href="<?= URL ?>entreprises/<?= $s['entrepriseid'] ?>">
 						<?= $s['entreprise'] ?>
 					</a>
 				</td>

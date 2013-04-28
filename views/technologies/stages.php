@@ -1,6 +1,6 @@
 <div class='page-header'>
-	<h1><?= $this->title ?></h1>
-	<small>Liste des stages</small>
+	<h1><?= $this->title ?>	<small>Stages</small>
+</h1>
 </div>
 <table class="table table-condensed table-striped">
 	<thead>
@@ -15,9 +15,9 @@
 <tbody>
 	<? foreach ($this->list as $t): ?>
 		<tr>
-			<td><a href="<?= URL ?>users/<?= $t['uid'] ?>/stages"><?= $t['etudiant'] ?></a></td>
+			<td><a href="<?= URL ?>users/<?= $t['uid'] ?>"><?= $t['etudiant'] ?></a></td>
 			<td>
-				<a href="<?= URL ?>entreprises/<?= $t['eid'] ?>/stages">
+				<a href="<?= URL ?>entreprises/<?= $t['eid'] ?>">
 					<?= $t['entreprise'] ?>
 				</a>
 			</td>

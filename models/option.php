@@ -18,6 +18,7 @@
 				options.id, options.nom, COUNT(users.id) AS etudiants
 			FROM options
 				LEFT JOIN users ON users.option_id = options.id
+			WHERE users.is_admin IS NULL
 			GROUP BY options.id
 		');
 	}
@@ -38,16 +39,18 @@
 	{
 		$q = $this->db->prepare('
 			SELECT
-				id,
+				users.id,
 				CONCAT_WS(\' \', nom, prenom) AS nom,
 				ne_le AS ne_le,
 				tel,
-				email
+				email,
+				COUNT(stages.id) AS stagecount
 			FROM users
-			WHERE users.option_id = ?
+				LEFT JOIN stages ON stages.student_id = users.id
+			WHERE users.option_id = ? AND is_admin IS NULL
 		');
 		$q->execute([$id]);
-		return $q->fetch();
+		return $q->fetchAll();
 	}
 	function update($params)
 	{

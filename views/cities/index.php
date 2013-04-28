@@ -1,5 +1,5 @@
 <div class='page-header'>
-  <h3>Liste des villes</h3>
+  <h1>Liste des villes</h1>
 </div>
 <table class="table table-hover table-striped table-condensed">
 	<thead>

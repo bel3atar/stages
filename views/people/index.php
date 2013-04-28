@@ -1,4 +1,4 @@
-<div class="page-header">Liste des responsables</div>
+<div class="page-header"><h1>Liste des responsables</h1></div>
 <table class="table table-condensed table-striped table-hover">
 	<thead>
 		<tr>
@@ -16,7 +16,7 @@
 				<td><?= $p['nom'] ?></td>
 				<td><?= $p['email'] ?></td>
 				<td>
-					<a href="<?= URL ?>entreprises/<?= $p['eid'] ?>/stages">
+					<a href="<?= URL ?>entreprises/<?= $p['eid'] ?>">
 						<?= $p['entreprise'] ?>
 					</a>
 				</td>

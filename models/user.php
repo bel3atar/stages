@@ -57,6 +57,7 @@ class UserModel extends Model {
 			FROM users
 				JOIN options ON options.id = users.option_id
 				LEFT JOIN stages  ON stages.student_id = users.id
+			WHERE users.is_admin IS NULL
 			GROUP BY users.id
 		');
 	}

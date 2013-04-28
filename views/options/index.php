@@ -1,4 +1,4 @@
-<div class='page-header'>Liste des options</div>
+<div class='page-header'><h1>Liste des options</h1></div>
 <table class="table table-hover table-condensed table-striped">
 	<thead>
 		<tr>

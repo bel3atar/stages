@@ -30,44 +30,30 @@ class EntrepriseModel extends Model {
 	function find($id)
 	{
 		$q = $this->db->prepare('
-			SELECT id, nom, site, logo FROM entreprises WHERE entreprises.id = ? LIMIT 1
+			SELECT
+				entreprises.id, 
+				entreprises.nom, 
+				site, 
+				COUNT(people.id) AS responsables, 
+				COUNT(stages.id) AS stages
+			FROM entreprises 
+				LEFT JOIN stages ON entreprises.id = stages.entreprise_id
+				LEFT JOIN people ON entreprises.id = people.entreprise_id
+			WHERE entreprises.id = ? LIMIT 1
 		');
 		$q->execute([$id]);
 		return $q->fetch();
 	}
-	function branches($id)
-	{
-		$q = $this->db->prepare('
-			SELECT tel, adr, cities.nom AS ville
-			FROM branches
-				JOIN cities ON cities.id = branches.city_id
-			WHERE entreprise_id = ?
-		');
-		$q->execute([$id]);
-		return $q->fetchAll();
-	}
 	function create($params)
 	{
-		$this->db->beginTransaction();
 		$q = $this->db->prepare('
-			INSERT INTO entreprises (nom, logo, site) VALUES (:nom, :logo, :site)
+			INSERT INTO entreprises (nom, site) VALUES (:nom, :site)
 		');
-		$q->execute([
+		return $q->execute([
 			':nom'  => strip_tags($params['nom']),
-			':logo' => strip_tags($params['logo']),
+			//':logo' => strip_tags($params['logo']),
 			':site' => strip_tags($params['site'])
 		]);
-		$q = $this->db->prepare('
-				INSERT INTO branches (entreprise_id, city_id, adr, tel)
-				VALUES (:e, :ct, :adr, :tel)
-		');
-		$q->execute([
-			':e'   => $this->db->lastInsertId(),
-			':ct'  => strip_tags($params['ville']),
-			':adr' => strip_tags($params['adr']),
-			':tel' => strip_tags($params['tel'])
-		]);
-		$this->db->commit();
 	}
 	function destroy($id)
 	{
@@ -126,7 +112,6 @@ class EntrepriseModel extends Model {
 				entreprises
 			SET
 				nom = :nom,
-				logo = :logo,
 				site = :site
 			WHERE id = :id
 			LIMIT 1
@@ -136,7 +121,6 @@ class EntrepriseModel extends Model {
 			':id'   => $id,
 			':nom'  => strip_tags($nom),
 			':site' => strip_tags($site),
-			':logo' => strip_tags($logo)
 		]);	
 	}
 };

@@ -62,11 +62,6 @@
 		<label class="control-label">Technologies</label>
 		<div class="controls">
 			<input type="text"  name="tags" data-provide="typeahead" autocomplete="off" placeholder="Technologies" class="tagManager">
-			<datalist id="technologies">
-				<? foreach ($this->technologies as $t): ?>
-					<option value="<?= $t['nom'] ?>">
-				<? endforeach ?>
-			</datalist>
 		</div>
 	</div>
 

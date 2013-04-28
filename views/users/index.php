@@ -16,7 +16,7 @@
 			<tr>
 				<td><?= $etd['id'] ?></td>
 				<td>
-					<a href="<?= URL ?>users/<?= $etd['id'] ?>/stages">
+					<a href="<?= URL ?>users/<?= $etd['id'] ?>">
 						<?= $etd['nom'] ?>
 					</a>
 				</td>

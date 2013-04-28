@@ -1,5 +1,5 @@
 <div class='page-header'>
-	<h3>Liste des entreprises</h3>
+	<h1>Liste des entreprises</h1>
 </div>
 <table class="table table-condensed table-striped table-hover">
 	<thead>
@@ -14,13 +14,9 @@
 		<? foreach ($this->liste as $e): ?>
 			<tr>
 				<td>
-					<? if ($e['stages']): ?>
-						<a href="<?= URL ?>entreprises/<?= $e['id'] ?>/stages">
-							<?= $e['nom'] ?>
-						</a>
-					<? else: ?>
+					<a href="<?= URL ?>entreprises/<?= $e['id'] ?>">
 						<?= $e['nom'] ?>
-					<? endif ?>
+					</a>
 				</td>
 				<td>
 					<? if ($e['personnel']): ?>
