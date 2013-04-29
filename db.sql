@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.8
+-- version 3.5.8.1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 13, 2013 at 06:53 PM
+-- Generation Time: Apr 29, 2013 at 04:13 AM
 -- Server version: 5.5.30-log
--- PHP Version: 5.4.13
+-- PHP Version: 5.4.14
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `cities` (
   `nom` varchar(25) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nom` (`nom`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `cities`
@@ -41,6 +41,7 @@ INSERT INTO `cities` (`id`, `nom`) VALUES
 (1, 'Asfi'),
 (5, 'Casablanca'),
 (2, 'Marrakech'),
+(6, 'Oujda'),
 (4, 'Rabat');
 
 -- --------------------------------------------------------
@@ -52,25 +53,22 @@ INSERT INTO `cities` (`id`, `nom`) VALUES
 CREATE TABLE IF NOT EXISTS `entreprises` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(64) NOT NULL,
-  `logo` varchar(255) DEFAULT NULL,
   `site` varchar(31) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nom` (`nom`),
   UNIQUE KEY `id` (`id`),
-  UNIQUE KEY `logo` (`logo`),
   UNIQUE KEY `site` (`site`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `entreprises`
 --
 
-INSERT INTO `entreprises` (`id`, `nom`, `logo`, `site`) VALUES
-(1, 'Maroc Telecom', 'http://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Maroc_telecom.png/200px-Maroc_telecom.png', 'www.iam.ma'),
-(2, 'MANAGEM', 'http://upload.wikimedia.org/wikipedia/fr/thumb/4/49/Managem.gif/220px-Managem.gif', 'www.managemgroup.com'),
-(3, 'Marjane', 'http://upload.wikimedia.org/wikipedia/en/9/98/Marjane.png', 'www.marjane.co.ma'),
-(9, 'Acima', 'http://fff.com/img.jpg', 'http://acima.ma'),
-(10, 'Microchoix', 'http://fstg.ac.ma/logo.png', 'http://fstg.ac.ma');
+INSERT INTO `entreprises` (`id`, `nom`, `site`) VALUES
+(1, 'Maroc Telecom', 'http://www.iam.ma  '),
+(2, 'MANAGEM', 'http://www.managemgroup.com'),
+(3, 'Marjanee', 'http://www.marjane.co.ma'),
+(9, 'Acima', 'http://acima.ma');
 
 -- --------------------------------------------------------
 
@@ -85,15 +83,21 @@ CREATE TABLE IF NOT EXISTS `options` (
   UNIQUE KEY `id_2` (`id`),
   UNIQUE KEY `nom` (`nom`),
   KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `options`
 --
 
 INSERT INTO `options` (`id`, `nom`) VALUES
+(5, '2IAII'),
+(4, '2IIR'),
 (2, '3IAII'),
-(1, '3IIR');
+(1, '3IIR'),
+(8, '3IRT'),
+(6, '4IIR'),
+(7, '4IRT'),
+(3, 'AP');
 
 -- --------------------------------------------------------
 
@@ -110,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `people` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   KEY `entreprise_id` (`entreprise_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `people`
@@ -118,7 +122,8 @@ CREATE TABLE IF NOT EXISTS `people` (
 
 INSERT INTO `people` (`id`, `nom`, `prenom`, `email`, `entreprise_id`) VALUES
 (6, 'AHIZOUNE', 'Abdeslam', 'abd.ah@menara.ma', 1),
-(7, 'ABARRO', 'Abdellaziz', 'managem@managemgroup.com', 2);
+(7, 'ABARRO', 'Abdellaziz', 'managem@managemgroup.com', 2),
+(10, 'LAMDAK', 'Wadii', 'lwadia@facebook.net', 3);
 
 -- --------------------------------------------------------
 
@@ -142,15 +147,15 @@ CREATE TABLE IF NOT EXISTS `stages` (
   KEY `student_id` (`student_id`),
   KEY `branch_id` (`entreprise_id`),
   KEY `city_id_2` (`city_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
 
 --
 -- Dumping data for table `stages`
 --
 
 INSERT INTO `stages` (`id`, `date`, `duree`, `entreprise_id`, `proposer_id`, `supervisor_id`, `student_id`, `city_id`) VALUES
-(3, '2012-09-01', 2, 1, 6, 6, 1, 1),
-(4, '2011-08-01', 4, 9, 7, NULL, 2, 1);
+(21, '2013-04-04', 2, 9, 6, NULL, 1, 1),
+(22, '2013-04-20', 2, 3, 6, NULL, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -163,19 +168,31 @@ CREATE TABLE IF NOT EXISTS `technologies` (
   `nom` varchar(32) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nom` (`nom`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=881 ;
 
 --
 -- Dumping data for table `technologies`
 --
 
 INSERT INTO `technologies` (`id`, `nom`) VALUES
+(28, 'Assembleur'),
+(29, 'Bash'),
+(22, 'C'),
+(25, 'C#'),
+(24, 'C++'),
+(77, 'do'),
 (9, 'Java'),
+(26, 'Javascript'),
+(33, 'L''algorithmique'),
+(32, 'OpenGL'),
 (2, 'Perl'),
 (1, 'PHP'),
 (6, 'Prolog'),
-(10, 'Unix'),
-(17, 'XML');
+(20, 'Python'),
+(27, 'Ruby'),
+(21, 'Ruby on Rails'),
+(31, 'SQL'),
+(10, 'Unix');
 
 -- --------------------------------------------------------
 
@@ -196,12 +213,9 @@ CREATE TABLE IF NOT EXISTS `technology_stage` (
 --
 
 INSERT INTO `technology_stage` (`stage_id`, `technology_id`) VALUES
-(3, 1),
-(4, 1),
-(3, 2),
-(3, 6),
-(4, 9),
-(4, 10);
+(21, 9),
+(22, 24),
+(21, 26);
 
 -- --------------------------------------------------------
 
@@ -218,20 +232,22 @@ CREATE TABLE IF NOT EXISTS `users` (
   `nom` varchar(40) DEFAULT NULL,
   `ne_le` date DEFAULT NULL,
   `option_id` int(11) DEFAULT NULL,
+  `is_admin` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
   UNIQUE KEY `email` (`email`),
   KEY `option_id` (`option_id`),
   KEY `option_id_2` (`option_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `pass`, `email`, `tel`, `prenom`, `nom`, `ne_le`, `option_id`) VALUES
-(1, '81dc9bdb52d04dc20036dbd8313ed055', 'bel3atar@aol.com', '+212600782098', 'Mohammed Ousama', 'BELATAR', '1991-05-28', 1),
-(2, '81dc9bdb52d04dc20036dbd8313ed055', 'mouhssine_wa3re@hotmail.com', '+212645962780', 'Mouhssine', 'ERRAJAI', '1991-02-01', 2);
+INSERT INTO `users` (`id`, `pass`, `email`, `tel`, `prenom`, `nom`, `ne_le`, `option_id`, `is_admin`) VALUES
+(1, '81dc9bdb52d04dc20036dbd8313ed055', 'bel3atar@aol.com', '+212600782098', 'Mohammed Ousama', 'BELATAR', '1991-05-28', 1, 1),
+(2, '81dc9bdb52d04dc20036dbd8313ed055', 'mouhssine_wa3re@hotmail.com', '+212645962780', 'Mouhssine', 'ERRAJAI', '1991-02-01', 2, NULL),
+(3, '81dc9bdb52d04dc20036dbd8313ed055', 'spirite.125@gmail.com', NULL, 'Abdessalam', 'ELAZZAM', NULL, 1, NULL);
 
 --
 -- Constraints for dumped tables
