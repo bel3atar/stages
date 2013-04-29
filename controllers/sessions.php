@@ -7,8 +7,12 @@
 	}
 	function add()
 	{
-		$this->view->title = 'Se connecter';
-		$this->view->render('sessions/new');
+		if (Session::get('logged'))
+			header('Location: ' . URL);
+		else {
+			$this->view->title = 'Se connecter';
+			$this->view->render('sessions/new');
+		}
 	}
 	function create()
 	{
