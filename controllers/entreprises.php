@@ -10,9 +10,10 @@ class Entreprises extends Controller {
 	function index()
 	{
 		$this->view->title = 'Liste des entreprises';
-		$this->view->liste = $this->model->find_all();
+		$this->view->liste = $this->model->find_all($this->page());
 		$this->view->render('entreprises/index');
 	}
+	function _count() { return $this->model->count(); }
 	function add()
 	{
 		$this->view->title = 'Nouvelle entreprise';
@@ -44,16 +45,18 @@ class Entreprises extends Controller {
 	{
 		$this->view->entreprise = $this->model->find($id)['nom'];
 		$this->view->title = "{$this->view->entreprise} | Stages";
-		$this->view->stages = $this->model->stages($id);
+		$this->view->stages = $this->model->stages($id, $this->page());
 		$this->view->render('entreprises/stages');
 	}
+	function stages_count($id) { return $this->model->stages_count($id); }
 	function people($id)
 	{
 		$this->view->entreprise = $this->model->find($id)['nom'];
 		$this->view->title = "{$this->view->entreprise} | Responsables";
-		$this->view->people = $this->model->people($id);
+		$this->view->people = $this->model->people($id, $this->page());
 		$this->view->render('entreprises/people');
 	}
+	function people_count($id) { return $this->model->people_count($id); }
 	function edit($id)
 	{
 		$this->view->entreprise = $this->model->find($id);

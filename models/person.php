@@ -3,9 +3,9 @@
 	{
 		parent::__construct();
 	}	
-	function find_all()
+	function find_all($page)
 	{
-		return $this->db->query('
+		$q = $this->db->prepare('
 			SELECT
 				people.id AS id,
 				CONCAT_WS(\' \', people.nom, prenom) AS nom,
@@ -18,7 +18,14 @@
 				LEFT JOIN entreprises on entreprises.id = people.entreprise_id
 				LEFT JOIN stages on stages.proposer_id = people.id
 			GROUP BY people.id
+			LIMIT ?, ?
 		');
+		$q->execute([($page - 1) * PAGE_SIZE, PAGE_SIZE]);
+		return $q->fetchAll();
+	}
+	function count()
+	{
+		return $this->db->query('SELECT COUNT(id) FROM people')->fetchColumn();
 	}
 	function exists($id)
 	{

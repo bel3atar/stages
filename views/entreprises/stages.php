@@ -1,4 +1,4 @@
-<div class="page-header"><?= $this->entreprise ?><small>Stages</small></div>
+<div class="page-header"><h1><?= $this->entreprise ?> <small>Stages</small></h1></div>
 <table class="table table-striped table-condensed table-hover">
 	<thead>
 		<tr>
@@ -31,3 +31,4 @@
 		<? endforeach ?>
 	</tbody>
 </table>
+<? require 'views/pager.php' ?>

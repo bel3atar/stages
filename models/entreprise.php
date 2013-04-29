@@ -12,9 +12,9 @@ class EntrepriseModel extends Model {
 		$q->execute([$id]);
 		return $q->fetchColumn();
 	}
-	function find_all()
+	function find_all($page = 1)
 	{
-		return $this->db->query('
+		$q =$this->db->prepare('
 			SELECT
 				entreprises.id AS id,
 				entreprises.nom,
@@ -25,7 +25,10 @@ class EntrepriseModel extends Model {
 				LEFT JOIN people ON people.entreprise_id = entreprises.id
 				LEFT JOIN cities ON stages.city_id       = cities.id
 			GROUP BY entreprises.id
+			LIMIT ?, ?
 		');
+		$q->execute([($page - 1) * PAGE_SIZE, PAGE_SIZE]);
+		return $q->fetchAll();
 	}
 	function find($id)
 	{
@@ -44,6 +47,10 @@ class EntrepriseModel extends Model {
 		$q->execute([$id]);
 		return $q->fetch();
 	}
+	function count()
+	{
+		return $this->db->query('SELECT COUNT(id) FROM entreprises')->fetchColumn();
+	}
 	function create($params)
 	{
 		$q = $this->db->prepare('
@@ -60,7 +67,7 @@ class EntrepriseModel extends Model {
 		$q = $this->db->prepare('DELETE FROM entreprises WHERE id = ?');
 		return $q->execute([$id]);
 	}
-	function people($id)
+	function people($id, $page)
 	{
 		$q = $this->db->prepare('
 			SELECT
@@ -70,11 +77,22 @@ class EntrepriseModel extends Model {
 			FROM people
 				JOIN entreprises ON people.entreprise_id = entreprises.id
 			WHERE entreprises.id = ?
+			LIMIT ?, ?
 		');
-		$q->execute([$id]);
+		$q->execute([$id, ($page - 1) * PAGE_SIZE, PAGE_SIZE]);
 		return $q->fetchAll();
 	}
-	function stages($id)
+	function people_count($id)
+	{
+		$q = $this->db->prepare('
+			SELECT COUNT(people.id)
+			FROM people JOIN entreprises ON people.entreprise_id = entreprises.id
+			WHERE entreprises.id = ?
+		');
+		$q->execute([$id]);
+		return $q->fetchColumn();
+	}
+	function stages($id, $page)
 	{
 		$q = $this->db->prepare('
 			SELECT
@@ -101,9 +119,21 @@ class EntrepriseModel extends Model {
 				JOIN technologies ON technologies.id = technology_stage.technology_id
 			WHERE entreprise_id = ?
 			GROUP BY stages.id
+			LIMIT ?, ?
+		');
+		$q->execute([$id, ($page - 1) * PAGE_SIZE, PAGE_SIZE]);
+		return $q->fetchAll();
+	}
+	function stages_count($id)
+	{
+		$q = $this->db->prepare('
+			SELECT COUNT(stages.id)
+			FROM stages
+				JOIN entreprises ON entreprises.id = stages.entreprise_id
+			WHERE entreprises.id = ?
 		');
 		$q->execute([$id]);
-		return $q->fetchAll();
+		return $q->fetchColumn();
 	}
 	function update($params)
 	{

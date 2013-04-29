@@ -60,3 +60,4 @@
 		Nouvelle
 	</a>
 <? endif ?>
+<? require 'views/pager.php' ?>

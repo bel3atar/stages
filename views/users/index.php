@@ -40,8 +40,9 @@
 	</tbody>
 </table>
 <? if (Session::get('logged')): ?>
-	<a href="<?= URL ?>users/new" class="btn btn-primary">
+	<a href="<?= URL ?>users/new" class="pull-right btn btn-primary">
 		<i class="icon-white icon-plus-sign"></i>
 		Nouveau
 	</a>
 <? endif ?>
+<? require 'views/pager.php' ?>

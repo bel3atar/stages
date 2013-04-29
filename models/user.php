@@ -42,9 +42,9 @@ class UserModel extends Model {
 		$q->execute([$id]);
 		return $q = $q->fetch()['n'];
 	}
-	function findAll()
+	function findAll($page)
 	{
-		return $this->db->query('
+		$q = $this->db->prepare('
 			SELECT 
 				users.id,
 				CONCAT_WS(\' \', users.nom, prenom) AS nom,
@@ -59,9 +59,12 @@ class UserModel extends Model {
 				LEFT JOIN stages  ON stages.student_id = users.id
 			WHERE users.is_admin IS NULL
 			GROUP BY users.id
+			LIMIT ?, ?
 		');
+		$q->execute([($page - 1) * PAGE_SIZE, PAGE_SIZE]);
+		return $q->fetchAll();
 	}
-	function stages($id)
+	function stages($id, $page)
 	{
 		$q = $this->db->prepare('
 			SELECT
@@ -78,13 +81,20 @@ class UserModel extends Model {
 				LEFT JOIN cities ON cities.id = stages.city_id
 			WHERE stages.student_id = ?
 			GROUP BY stages.id
+			LIMIT ?, ?
+		');
+		$q->execute([$id, ($page - 1) * PAGE_SIZE, PAGE_SIZE]);
+		return $q->fetchAll();
+	}  
+	function stages_count($id)
+	{
+		$q = $this->db->prepare('
+			SELECT COUNT(stages.id) FROM stages
+			JOIN users ON stages.student_id = users.id
+			WHERE users.id = ?
 		');
 		$q->execute([$id]);
-		return $q->fetchAll();
-	}
-	function last_id()
-	{
-		return $this->db->query('SELECT MAX(id) AS id FROM users')->fetch()['id'];
+		return $q->fetchColumn();
 	}
 	function create($params)
 	{
@@ -101,5 +111,11 @@ class UserModel extends Model {
 			':n'     => $nom,
 			':tel'   => $tel
 		]);
+	}
+	function count()
+	{
+		return $this->db->query('
+			SELECT COUNT(id) FROM users WHERE is_admin IS NULL
+		')->fetchColumn();
 	}
 };

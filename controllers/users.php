@@ -10,15 +10,17 @@ class Users extends Controller {
 	function index()
 	{
 		$this->view->title = 'Liste des étudinats';
-		$this->view->liste = $this->model->findAll();
+		$this->view->liste = $this->model->findAll($this->page());
 		$this->view->render('users/index');
 	}
 	function stages($id)
 	{
 		$this->view->nom = $this->view->title = $this->model->full_name($id);
-		$this->view->list  = $this->model->stages($id);
+		$this->view->list  = $this->model->stages($id, $this->page());
 		$this->view->render('users/stages');
 	}
+	function _count() { return $this->model->count(); }
+	function stages_count($id) { return $this->model->stages_count($id); }
 	function add()
 	{
 		$this->view->title = 'Nouvel étudiant';

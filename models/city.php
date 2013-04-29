@@ -18,21 +18,28 @@ class CityModel extends Model {
 		$q->execute([$id]);
 		return $q->fetch()['nom'];
 	}
-	function find_all()
+	function find_all($page)
 	{
-		return $this->db->query('
+		$q = $this->db->prepare('
 			SELECT 
 				cities.id AS id, cities.nom AS nom, COUNT(stages.id) AS stages
 			FROM cities LEFT JOIN stages ON stages.city_id = cities.id    
 			GROUP BY cities.id
+			LIMIT ?, ?
 		');
+		$q->execute([($page - 1) * PAGE_SIZE, PAGE_SIZE]);
+		return $q->fetchAll();
+	}
+	function count()
+	{
+		return $this->db->query('SELECT COUNT(id) FROM cities')->fetchColumn();
 	}
 	function create()
 	{
 		$q = $this->db->prepare('INSERT INTO cities (nom) VALUES (?)');
 		return $q->execute([strip_tags($_GET['nom'])]);
 	}
-	function stages($id)
+	function stages($id, $page)
 	{
 		$q = $this->db->prepare('
 			SELECT
@@ -48,9 +55,21 @@ class CityModel extends Model {
 				LEFT JOIN technologies     ON technologies.id = technology_stage.technology_id	
 			WHERE stages.city_id = ?
 			GROUP BY stages.id
+			LIMIT ?, ?
+		');
+		$q->execute([$id, ($page - 1) * PAGE_SIZE, PAGE_SIZE]);
+		return $q->fetchAll();
+	}
+	function stages_count($id)
+	{
+		$q = $this->db->prepare('
+			SELECT COUNT(stages.id)
+			FROM stages
+				JOIN cities ON cities.id = stages.city_id
+			WHERE cities.id = ?
 		');
 		$q->execute([$id]);
-		return $q->fetchAll();
+		return $q->fetchColumn();
 	}
 	function update($params)
 	{

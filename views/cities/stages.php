@@ -1,5 +1,5 @@
 <div class='page-header'>
-	<h3><?= $this->ville ?> <small>Liste des stages</small></h3>
+	<h1><?= $this->ville ?> <small>Liste des stages</small></h1>
 </div>
 <div>
   <nom>
@@ -37,3 +37,4 @@
 		<? endforeach ?>
 	</tbody>
 </table>
+<? require 'views/pager.php' ?>

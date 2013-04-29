@@ -9,9 +9,10 @@
 	function index()
 	{
 		$this->view->title = 'Liste des options';
-		$this->view->list  = $this->model->find_all();
+		$this->view->list  = $this->model->find_all($this->page());
 		$this->view->render('options/index');
 	}
+	function _count() { return $this->model->count(); }
 	function add()
 	{
 		$this->view->title = 'Nouvelle option';
@@ -27,9 +28,10 @@
 	{
 		$this->view->name = $this->model->name($id);
 		$this->view->title = "{$this->view->name} | Etudiants";
-		$this->view->list  = $this->model->find($id);
+		$this->view->list  = $this->model->find($id, $this->page());
 		$this->view->render('options/students');
 	}
+	function students_count($id) { return $this->model->students_count($id); }
 	function edit($id)
 	{
 		$this->view->nom   = $this->model->name($id);

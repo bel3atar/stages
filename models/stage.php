@@ -28,9 +28,9 @@ class StageModel extends Model {
 			SELECT id, CONCAT_WS(\' \', nom, prenom) AS nom FROM people
 		')->fetchAll();
 	}
-	function find_all()
+	function find_all($page = 1)
 	{
-		return $this->db->query('
+		$q = $this->db->prepare('
 			SELECT
 				GROUP_CONCAT(technologies.id  SEPARATOR \',\') AS techids,
 				GROUP_CONCAT(technologies.nom SEPARATOR \',\') AS techs,
@@ -51,7 +51,10 @@ class StageModel extends Model {
 				LEFT JOIN technologies ON technology_stage.technology_id=technologies.id
 			GROUP BY stages.id
 			ORDER BY stages.date DESC
+			LIMIT ?, ?
 		');
+		$q->execute([($page - 1) * PAGE_SIZE, PAGE_SIZE]);
+		return $q->fetchAll();
 	}
 	function create($params)
 	{
@@ -165,5 +168,8 @@ class StageModel extends Model {
 			$q->execute([$id, $t]);
 		$this->db->commit();
 	}
-};	
-
+	function count()
+	{
+		return $this->db->query('SELECT COUNT(id) FROM stages')->fetchColumn();
+	}
+};

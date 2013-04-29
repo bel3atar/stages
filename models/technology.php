@@ -4,20 +4,38 @@ class TechnologyModel extends Model {
 	{
 		parent::__construct();
 	}
+	function count()
+	{
+		return $this->db->query('SELECT COUNT(id) FROM technologies')->fetchColumn();
+	}
+	function stages_count($id)
+	{
+		$q = $this->db->prepare('
+			SELECT COUNT(stages.id) 
+			FROM stages JOIN technology_stage ON technology_stage.stage_id = stages.id
+			WHERE technology_id = ?
+			GROUP BY technology_id
+		');
+		$q->execute([$id]);
+		return $q->fetchColumn();
+	}
 	function find($id)
 	{
 		$q = $this->db->prepare('SELECT id FROM technologies WHERE id = ? LIMIT 1');
 		return $q->execute([$id]);
 	}
-	function find_all()
+	function find_all($page = 1)
 	{
-		return $this->db->query('
+		$q = $this->db->prepare('
 			SELECT id, nom, COUNT(technology_stage.stage_id) as stages
 			FROM technologies
 				LEFT JOIN technology_stage
 					ON technology_stage.technology_id = technologies.id
 			GROUP BY technologies.id
+			LIMIT ?, ?
 		');
+		$q->execute([PAGE_SIZE * ($page - 1), PAGE_SIZE]);
+		return $q->fetchAll();
 	}
 	function exists($id)
 	{
@@ -39,7 +57,7 @@ class TechnologyModel extends Model {
 		$q->execute([$name]);
 		return $q->fetch()['id'];
 	}
-	function stages($id)
+	function stages($id, $page = 1)
 	{
 		$q = $this->db->prepare('
 			SELECT
@@ -58,8 +76,9 @@ class TechnologyModel extends Model {
 				JOIN cities ON cities.id = stages.city_id
 				JOIN entreprises ON entreprises.id = stages.entreprise_id
 			WHERE technologies.id = ?
+			LIMIT ?, ?
 		');
-		$q->execute([$id]);
+		$q->execute([$id, ($page - 1) * PAGE_SIZE, PAGE_SIZE]);
 		return $q->fetchAll();
 	}
 	function create()

@@ -10,13 +10,13 @@ class Technologies extends Controller {
 	function index()
 	{
 		$this->view->title = 'Liste des technologies';
-		$this->view->list  = $this->model->find_all();
+		$this->view->list  = $this->model->find_all($this->page());
 		$this->view->render('technologies/index');
 	}
 	function stages($id)
 	{
 		$this->view->list = $this->model->stages($id);
-		$this->view->title = $this->model->find_name($id);
+		$this->view->title = $this->model->find_name($id, $this->page());
 		$this->view->render('technologies/stages');
 	}
 	function add()
@@ -48,5 +48,7 @@ class Technologies extends Controller {
 			$this->model->destroy($id);
 		header('Location: ' . URL . 'technologies');
 	}
+	function _count() { return $this->model->count(); }
+	function stages_count($id) { return $this->model->stages_count($id); }
 };
 ?>

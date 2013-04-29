@@ -35,7 +35,7 @@
 		$q->execute([$id]);
 		return $q->fetch()['nom'];
 	}
-	function find($id)
+	function find($id, $page)
 	{
 		$q = $this->db->prepare('
 			SELECT
@@ -48,9 +48,25 @@
 			FROM users
 				LEFT JOIN stages ON stages.student_id = users.id
 			WHERE users.option_id = ? AND is_admin IS NULL
+			LIMIT ?, ?
+		');
+		$q->execute([$id, ($page - 1) * PAGE_SIZE, PAGE_SIZE]);
+		return $q->fetchAll();
+	}
+	function count()
+	{
+		return $this->db->query('SELECT COUNT(id) FROM options')->fetchColumn();
+	}
+	function students_count($id)
+	{
+		$q = $this->db->prepare('
+			SELECT COUNT(users.id)
+			FROM users
+				JOIN options ON users.option_id = options.id
+			WHERE options.id = ?
 		');
 		$q->execute([$id]);
-		return $q->fetchAll();
+		return $q->fetchColumn();
 	}
 	function update($params)
 	{

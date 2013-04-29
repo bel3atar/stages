@@ -52,3 +52,4 @@
 		Nouvelle
 	</a>
 <? endif ?>
+<? require_once 'views/pager.php' ?>

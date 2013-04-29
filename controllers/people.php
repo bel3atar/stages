@@ -9,7 +9,7 @@
 	function index()
 	{
 		$this->view->title = 'Liste des responsables';
-		$this->view->list  = $this->model->find_all();
+		$this->view->list  = $this->model->find_all($this->page());
 		$this->view->render('people/index');
 	}
 	function add()
@@ -47,4 +47,5 @@
 			$this->model->update($_GET);
 		header('Location: ' . URL . 'people');
 	}
+	function _count() { return $this->model->count(); }
 };

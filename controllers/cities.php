@@ -10,9 +10,10 @@ class Cities extends Controller {
 	function index()
 	{
 		$this->view->title = 'Liste des villes';
-		$this->view->list  = $this->model->find_all();
+		$this->view->list  = $this->model->find_all($this->page());
 		$this->view->render('cities/index');
 	}
+	function _count() { return $this->model->count(); }
 	function add()
 	{
 		$this->view->title = 'Nouvelle ville';
@@ -29,9 +30,10 @@ class Cities extends Controller {
 		$name = $this->model->find($id);
 		$this->view->title = "Stages à $name";
 		$this->view->ville = $name;
-		$this->view->list  = $this->model->stages($id);
+		$this->view->list  = $this->model->stages($id, $this->page());
 		$this->view->render('cities/stages');
 	}
+	function stages_count($id) { return $this->model->stages_count($id); }
 	function entreprises($id)
 	{
 		$this->view->title = "Entreprises à $name";

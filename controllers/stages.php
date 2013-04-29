@@ -25,7 +25,7 @@ class Stages extends Controller {
 	function index()
 	{
 		$this->view->title = 'Liste des stages';
-		$this->view->list  = $this->model->find_all();
+		$this->view->list  = $this->model->find_all($this->page());
 		$this->view->render('stages/index');
 	}
 	function create()
@@ -62,4 +62,5 @@ class Stages extends Controller {
 			$this->model->update($_GET);
 		header('Location: /stages');
 	}
+	function _count() { return $this->model->count(); }
 };

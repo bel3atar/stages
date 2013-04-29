@@ -61,3 +61,4 @@
 		Nouveau
 	</a>
 <? endif ?>
+<? require 'views/pager.php' ?>
