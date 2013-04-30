@@ -1,8 +1,9 @@
 <? 
 $page =	$_GET['page'];
 $page_max = $_GET['page_max'];
-$init = $page % PAGER_SIZE ? floor($page / PAGER_SIZE) : $page / PAGER_SIZE - 1;
-$init = $init * PAGER_SIZE + 1;
+//$init = $page % PAGER_SIZE ? floor($page / PAGER_SIZE) : $page / PAGER_SIZE - 1;
+//$init = $init * PAGER_SIZE + 1;
+$init = $page % PAGER_SIZE ? $page - $page % PAGER_SIZE + 1 : $page - PAGER_SIZE + 1;
 $finl = min($init + PAGER_SIZE - 1, $page_max);
 $range = range($init, $finl);
 ?>
@@ -26,7 +27,7 @@ $range = range($init, $finl);
 		<? if ($init + PAGER_SIZE > $page_max): ?>
 			<li class="disabled"><a href='#'>&raquo;</a></li>
 		<? else: ?>
-			<li><a href="?page=<?= $init + 5 ?>">&raquo;</a></li>
+			<li><a href="?page=<?= $init + PAGER_SIZE ?>">&raquo;</a></li>
 		<? endif ?>
 	</ul>
 </div>

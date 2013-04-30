@@ -14,18 +14,36 @@ class Entreprises extends Controller {
 		$this->view->render('entreprises/index');
 	}
 	function _count() { return $this->model->count(); }
-	function add()
+		function add()
+		{
+			$this->view->title = 'Nouvelle entreprise';
+			$this->require_model('city');
+			$this->view->render('entreprises/new', FALSE);
+		}
+	private function resized_image($img, $h, $w)
 	{
-		$this->view->title = 'Nouvelle entreprise';
-		$this->require_model('city');
-		$this->view->render('entreprises/new', FALSE);
+		$maximum = max($h, $w);
+		if ($maximum > 300) {
+			$ratio = 300 / $maximum;
+			$new_img = imagecreatetruecolor(ceil($w * $ratio), ceil($h * $ratio));
+			imagecolortransparent($new_img, imagecolorallocate($new_img, 0, 0, 0));
+			imagecopyresampled(
+				$new_img, $img, 0, 0, 0, 0, 
+				ceil($w * $ratio), ceil($h * $ratio), $w, $h
+			);
+			imagedestroy($img);
+			$img = $new_img;
+		}
+		return $img;
 	}
 	function create()
 	{
-		$img = getimagesize($_FILES['logo']['tmp_name']);
-		if ($img and $this->model->create($_POST)) {
-			$callback = substr_replace($img['mime'], 'createfrom', 5, 1);
+		$img_info = getimagesize($_FILES['logo']['tmp_name']);
+		if ($img_info and $this->model->create($_POST)) {
+			list($w, $h) = $img_info;
+			$callback = substr_replace($img_info['mime'], 'createfrom', 5, 1);
 			$img = $callback($_FILES['logo']['tmp_name']);
+			$img = $this->resized_image($img, $h, $w);
 			imagepng($img, "assets/images/entreprises/{$_POST['nom']}.png");
 			imagedestroy($img);
 			unlink($_FILES['logo']['tmp_name']);
@@ -70,20 +88,19 @@ class Entreprises extends Controller {
 			if ($this->model->update($_POST)) {
 				$path = 'assets/images/entreprises/';
 				rename("$path/$oldname.png", "$path/{$_POST['nom']}.png");
-				if ($_FILES['logo']) {
-					$img = getimagesize($_FILES['logo']['tmp_name']);
-					if ($img) {
-						unlink("$path/{$_POST['nom']}.png");
-						$callback = substr_replace($img['mime'], 'createfrom', 5, 1);
-						$img = $callback($_FILES['logo']['tmp_name']);
-						imagepng($img, "assets/images/entreprises/{$_POST['nom']}.png");
-						imagedestroy($img);
-						unlink($_FILES['logo']['tmp_name']);
-					}
+				//si une image est attachée
+				if ($img_info = getimagesize($_FILES['logo']['tmp_name'])) {
+					list($w, $h) = $img_info;
+					$callback = substr_replace($img_info['mime'], 'createfrom', 5, 1);
+					$img = $callback($_FILES['logo']['tmp_name']);
+					$img = $this->resized_image($img, $h, $w);
+					imagepng($img, "assets/images/entreprises/{$_POST['nom']}.png");
+					imagedestroy($img);
+					unlink($_FILES['logo']['tmp_name']);
 				}
 			}
 		}
-		header('Location:' . URL . 'entreprises');
+		header('Location: ' . URL . 'entreprises');
 	}
 	function show($id)
 	{
