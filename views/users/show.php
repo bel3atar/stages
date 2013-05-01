@@ -11,9 +11,12 @@
 		</div>
 		<div class='span6'>
 			<address>
-				<strong><?= $this->user['nom'] ?></strong><br>
+				<strong><?= $this->user['nom'] ?></strong> 
+				<? if (Session::get('id') == $this->user['id'] or Session::get('is_admin')): ?>
+					<a href="<?= URL, 'users/', $this->user['id'], '/edit' ?>"><i class='icon-pencil'></i></a>
+				<? endif ?>
+				<br>
 				<a href='mailto:<?= $this->user['email'] ?>'><?= $this->user['email'] ?></a><br>
-				<abbr title='Téléphone'>Tél.:</abbr><?= $this->user['tel'] ?><br>
 				<? if ($this->user['is_admin']): ?>
 					<p class='badge badge-warning'>Administrateur</p>
 				<? else: ?>
