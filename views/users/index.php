@@ -2,29 +2,26 @@
 <table class="table table-condensed table-striped table-hover">
 	<thead>
 		<tr>
-			<th>#</th>
 			<th>Nom complet</th>
-			<th>Né(e) le</th>
-			<th>Opt.</th>
-			<th>Téléphone</th>
+			<th>Option</th>
 			<th>Email</th>
 			<th>Stages</th>
+			<? if (Session::get('is_admin')): ?>
+				<th></th>
+			<? endif ?>
 		</tr>
 	</thead>
 	<tbody>
 		<? foreach ($this->liste as $etd): ?>
 			<tr>
-				<td><?= $etd['id'] ?></td>
 				<td>
 					<a href="<?= URL ?>users/<?= $etd['id'] ?>">
 						<?= $etd['nom'] ?>
 					</a>
 				</td>
-				<td><?= $etd['ne_le'] ?></td>
 				<td>
 					<a href="<?= URL ?>options/<?= $etd['optid'] ?>/students"><?= $etd['opt'] ?></a>
 				</td>
-				<td><?= $etd['tel'] ?></td>
 				<td><?= $etd['email'] ?></td>
 				<td>
 					<? if ($etd['stages']): ?>
@@ -35,6 +32,20 @@
 						0
 					<? endif ?>
 				</td>
+				<? if (Session::get('is_admin')): ?>
+					<td>
+						<div class="btn-group">
+							<a href="<?= URL ?>users/<?= $etd['id'] ?>/edit" class="btn btn-warning btn-mini">
+								<i class="icon-white icon-edit"></i>
+							</a>
+							<? if ($etd['stages'] == 0 and Session::get('is_admin')): ?>
+								<a href="<?= URL ?>users/<?= $etd['id'] ?>/destroy" class="btn btn-danger btn-mini">
+									<i class="icon-white icon-trash"></i>
+								</a>
+							<? endif ?>
+						</div>
+					</td>
+				<? endif ?>
 			</tr>
 		<? endforeach ?>
 	</tbody>

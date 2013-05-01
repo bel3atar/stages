@@ -18,9 +18,10 @@ class UserModel extends Model {
 			SELECT 
 				users.id AS id,
 				CONCAT_WS(\' \', users.nom, prenom) AS nom,
+				users.nom AS unom,
+				users.prenom AS uprenom,
 				COUNT(stages.id) AS stages,
 				email,
-				tel,
 				is_admin,
 				options.nom AS opt,
 				options.id AS optid
@@ -37,10 +38,10 @@ class UserModel extends Model {
 	function full_name($id)
 	{
 		$q = $this->db->prepare('
-			SELECT CONCAT_WS(\' \', nom, prenom) AS n FROM users WHERE id = ? LIMIT 1
+			SELECT CONCAT_WS(\' \', nom, prenom) FROM users WHERE id = ? LIMIT 1
 		');
 		$q->execute([$id]);
-		return $q = $q->fetch()['n'];
+		return $q->fetchColumn();
 	}
 	function findAll($page)
 	{
@@ -49,8 +50,6 @@ class UserModel extends Model {
 				users.id,
 				CONCAT_WS(\' \', users.nom, prenom) AS nom,
 				email,
-				tel,
-				ne_le,
 				options.nom AS opt,
 				options.id AS optid,
 				COUNT(stages.id) AS stages
@@ -99,17 +98,16 @@ class UserModel extends Model {
 	function create($params)
 	{
 		$q = $this->db->prepare('
-			INSERT INTO users (nom, prenom, email, tel, pass, option_id)
-			           VALUES (:n, :pn, :email, :tel, MD5(:pass), :optn)
+			INSERT INTO users (nom, prenom, email, pass, option_id)
+			           VALUES (UPPER(:n), :pn, :email, MD5(:pass), :optn)
 		');
 		extract($params);
 		return $q->execute([
 			':pass'  => $password,
 			':optn'  => $option,
-			':pn'    => $prenom,
+			':pn'    => ucfirst($prenom),
 			':email' => $email,
 			':n'     => $nom,
-			':tel'   => $tel
 		]);
 	}
 	function count()
@@ -117,5 +115,34 @@ class UserModel extends Model {
 		return $this->db->query('
 			SELECT COUNT(id) FROM users WHERE is_admin IS NULL
 		')->fetchColumn();
+	}
+	function destroy($id)
+	{
+		$q = $this->db->prepare('DELETE FROM users WHERE id = ? LIMIT 1');
+		return $q->execute([$id]);
+	}
+	function update($params)
+	{
+		extract($params);
+		$sql = '
+			UPDATE users SET
+				nom = UPPER(:n),
+				prenom = :pn,
+				email = :mail,
+				option_id = :opt ';
+		$p = [
+			':n'    => $nom, 
+			':pn'    => ucfirst($prenom),
+			':mail' => $email,
+			':id'   => $id,
+			':opt'  => $option
+		];
+		if (!empty($password) and strlen($password) >= 4) {
+			$sql .= ', pass = MD5(:pwd) ';
+			$p[':pwd'] = $password;
+		}
+		$sql .= 'WHERE id = :id LIMIT 1';
+		$q = $this->db->prepare($sql);
+		$q->execute($p);
 	}
 };

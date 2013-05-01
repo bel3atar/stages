@@ -19,7 +19,10 @@ class StageModel extends Model {
 	function users()
 	{
 		return $this->db->query('
-			SELECT id, CONCAT_WS(\' \', nom, prenom) AS nom FROM users
+			SELECT
+				id, CONCAT_WS(\' \', nom, prenom) AS nom
+			FROM users
+			WHERE is_admin IS NULL
 		');
 	}
 	function people()
@@ -49,6 +52,7 @@ class StageModel extends Model {
 				     JOIN entreprises     ON  stages.entreprise_id     =  entreprises.id
 				LEFT JOIN technology_stage ON technology_stage.stage_id   =    stages.id
 				LEFT JOIN technologies ON technology_stage.technology_id=technologies.id
+			WHERE users.is_admin IS NULL
 			GROUP BY stages.id
 			ORDER BY stages.date DESC
 			LIMIT ?, ?

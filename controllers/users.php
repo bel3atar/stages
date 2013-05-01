@@ -41,4 +41,28 @@ class Users extends Controller {
 		$this->view->title = "{$this->view->user['nom']} | Profil";
 		$this->view->render('users/show');
 	}
+	function destroy($id)
+	{
+		if (Session::get('is_admin'))
+			$this->model->destroy($id);
+		header('Location: ' . URL . 'users');
+	}
+	function edit($id)
+	{
+		$this->view->title = 'Modifier un utilisateur';
+		$this->view->user = $this->model->find($id);
+		$this->require_model('option');
+		$opmodel = new OptionModel();
+		$this->view->options = $opmodel->find_all();
+		$this->view->render('users/edit');
+	}
+	function update()
+	{
+		if (Session::get('logged'))
+			if (Session::get('is_admin') or Session::get('id') == $_POST['id']) {
+				$this->model->update($_POST);
+				$_SESSION['nom'] = $this->model->full_name($_SESSION['id']);
+			}
+		header('Location: ' . URL . 'users');
+	}
 };
