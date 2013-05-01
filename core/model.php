@@ -1,13 +1,12 @@
 <?
 class Model extends PDO {
 	public $db;
-	protected $model;
 	function __construct() {
-		$host = 'localhost'; 
-		$engine = 'mysql'; 
-		$db = 'stages'; 
-		$user = 'root'; 
-		$pass = '1234'; 
+		$engine = DB_ENGINE;
+		$user = DB_USER;
+		$pass = DB_PASS;
+		$host = DB_HOST;
+		$db = DB_NAME;
 		//date source name
 		$dsn = "{$engine}:dbname={$db};host={$host};charset=utf8";
 		$this->db = new PDO($dsn, $user, $pass);
