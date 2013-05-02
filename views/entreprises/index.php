@@ -60,4 +60,4 @@
 		Nouvelle
 	</a>
 <? endif ?>
-<? require 'views/pager.php' ?>
+<? $this->render_('pager') ?>

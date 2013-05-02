@@ -11,8 +11,12 @@ class View {
 	];
 	function render($view, $footer = TRUE)
 	{
-		             require_once "views/_header.php";
+		             require_once "views/shared/_header.php";
 		             require_once "views/{$view}.php";
-		if ($footer) require_once "views/_footer.php";
+		if ($footer) require_once "views/shared/_footer.php";
+	}
+	function render_($partial)
+	{
+		require "views/shared/_{$partial}.php";
 	}
 };

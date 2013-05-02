@@ -26,4 +26,4 @@
 		<? endforeach ?>
 	</tbody>
 </table>
-<? require 'views/pager.php' ?>
+<? $this->render_('pager') ?>
