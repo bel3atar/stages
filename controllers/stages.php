@@ -16,10 +16,6 @@ class Stages extends Controller {
 		$this->view->people       = $this->model->people();
 		$this->view->cities       = $this->model->cities();
 		$this->view->stylesheets  = ['tagmanager/bootstrap-tagmanager'];
-		$this->view->scripts      = [
-			' src="' . URL . 'assets/tagmanager/bootstrap-tagmanager.js">',
-			'>jQuery(".tagManager").tagsManager();'
-		];
 		$this->view->render('stages/new', FALSE);
 	}
 	function index()
@@ -31,14 +27,20 @@ class Stages extends Controller {
 	function create()
 	{
 		if (Session::get('logged'))
-			$this->model->create($_GET);
-		header('Location: /stages');
+			if ($this->model->create($_GET))
+				Flash::success('Stage enregistré.');
+			else
+				Flash::error('Création du stage non effectuée.');
+		header('Location: ' . URL . 'stages');
 	}
 	function destroy($id)
 	{
 		if (Session::get('is_admin'))
-			$this->model->destroy($id);
-		header('Location: /stages');
+			if ($this->model->destroy($id))
+				Flash::success('Le stage a bien été supprimé.');
+			else
+				Flash::error('La suppression du stage n\'a pas abouti.');
+		header('Location: ' . URL . 'stages');
 	}
 	function edit($id)
 	{
@@ -50,17 +52,16 @@ class Stages extends Controller {
 		$this->view->people       = $this->model->people();
 		$this->view->cities       = $this->model->cities();
 		$this->view->stylesheets  = ['tagmanager/bootstrap-tagmanager'];
-		$this->view->scripts      = [
-			'src="' . URL . 'assets/tagmanager/bootstrap-tagmanager.js"',
-			'>;'
-		];
 		$this->view->render('stages/edit', FALSE);
 	}
 	function update()
 	{
 		if (Session::get('is_admin'))
-			$this->model->update($_GET);
-		header('Location: /stages');
+			if ($this->model->update($_GET))
+				Flash::success('Stage mis à jour avec succès');
+			else
+				Flass::error('La mise à jour n\'a pas été effectuée.');
+		header('Location: ' . URL . 'stages');
 	}
 	function _count() { return $this->model->count(); }
 };

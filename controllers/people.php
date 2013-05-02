@@ -23,13 +23,19 @@
 	function create()
 	{
 		if (Session::get('logged'))
-			$this->model->create($_GET);
+			if ($this->model->create($_GET))
+				Flash::success('Responsable ajouté.');
+			else
+				Flash::error('Echec de l\'ajout du responsable.');
 		header('Location: ' . URL . 'people');
 	}
 	function destroy($id)
 	{
 		if (Session::get('is_admin'))
-			$this->model->destroy($id);
+			if ($this->model->destroy($id))
+				Flash::success('Responsable supprimé');
+			else
+				Flash::error('Echec de la suppression du responsable.');
 		header('Location: ' . URL . 'people');
 	}
 	function edit($id)
@@ -44,7 +50,10 @@
 	function update()
 	{
 		if (Session::get('is_admin'))
-			$this->model->update($_GET);
+			if ($this->model->update($_GET))
+				Flash::success('Modifications enregistrées.');
+			else
+				Flash::error('Mise à jour non effectuée.');
 		header('Location: ' . URL . 'people');
 	}
 	function _count() { return $this->model->count(); }

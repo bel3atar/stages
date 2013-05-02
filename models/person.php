@@ -53,6 +53,7 @@
 	}
 	function update($params)
 	{
+		extract($params);
 		$q = $this->db->prepare('
 			UPDATE people SET
 				nom = :nom,
@@ -62,8 +63,7 @@
 			WHERE id = :id
 			LIMIT 1
 		');
-		extract($params);
-		$q->execute([
+		return $q->execute([
 			':eid'    => strip_tags($entreprise),
 			':prenom' => strip_tags($prenom),
 			':email'  => strip_tags($email),

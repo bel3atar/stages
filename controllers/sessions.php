@@ -22,14 +22,17 @@
 			  $_SESSION['logged'] = TRUE;
 			     $_SESSION['nom'] = $r['nom'];
 			      $_SESSION['id'] = $r['id'];
+			Flash::info('Bienvenue.');
 			header('Location: ' . URL);
-		} else
+		} else {
+			Flash::error('Mauvais Email ou mot de passe.');
 			header('Location: ' . URL . 'sessions/new');
+		}
 	}
 	function destroy()
 	{
 		session_unset();
-		session_destroy();
+		Flash::info('Merci pour votre visite.');
 		header('Location: ' . URL . 'sessions/new');
 	}
 };

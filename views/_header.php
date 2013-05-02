@@ -70,3 +70,4 @@
 			</ul>
 		</div>
 		<div class="span10">
+<? require 'views/_notice.php' ?>

@@ -32,7 +32,10 @@ class Users extends Controller {
 	function create()
 	{
 		if (Session::get('is_admin'))
-			$this->model->create($_GET);
+			if ($this->model->create($_GET))
+				Flash::success('L\'utilisateur a bien été créé.');	
+			else
+				Flash::error('L\'utilisateur n\'a pas été créé.');
 		header('Location: ' . URL . 'users');
 	}
 	function show($id)
@@ -44,7 +47,10 @@ class Users extends Controller {
 	function destroy($id)
 	{
 		if (Session::get('is_admin'))
-			$this->model->destroy($id);
+			if ($this->model->destroy($id))
+				Flash::success('La suppression de l\'utilisateur a bien été effectuée.');
+			else
+				Flash::error('La suppression de l\'utilisateur n\'a pas abouti.');
 		header('Location: ' . URL . 'users');
 	}
 	function edit($id)
@@ -58,11 +64,14 @@ class Users extends Controller {
 	}
 	function update()
 	{
-		if (Session::get('logged'))
-			if (Session::get('is_admin') or Session::get('id') == $_POST['id']) {
-				$this->model->update($_POST);
+		if (Session::get('is_admin') or Session::get('id') == $_POST['id']) {
+			if ($this->model->update($_POST)) {
 				$_SESSION['nom'] = $this->model->full_name($_SESSION['id']);
-			}
+				Flash::success('Profil utilisateur mis à jour.');
+			} else
+				Flash::error('La mise à jour du profil utilisateur n\'a pas été effectuée.');
+		else
+			Flash::error('Opération de mise à jour non autorisée.')
 		header('Location: ' . URL . 'users');
 	}
 };

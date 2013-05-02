@@ -62,37 +62,33 @@ class StageModel extends Model {
 	}
 	function create($params)
 	{
-		try {
-			$this->db->beginTransaction();
-			$q = $this->db->prepare('
-				INSERT INTO stages 
-					VALUES (NULL, :date, :duree, :ent, :pro, :sup, :stdnt, :ctid)
-			');
-			extract($params);
-			$q->execute([
-				':stdnt' => Session::get('is_admin') ? $user : Session::get('id'),
-				':sup'   => empty($supervisor) ? NULL : $supervisor,
-				':ent'   => $entreprise,
-				':duree' => $duree / 15,
-				':pro'   => $proposer,
-				':ctid'  => $ville,
-				':date'  => $date
-			]);
-			$id = $this->db->lastInsertId();
-			require_once 'models/technology.php';
-			$t = new TechnologyModel();
-			$q = $this->db->prepare('
-				INSERT INTO technology_stage (technology_id, stage_id) 
-				VALUES (
-					(SELECT id FROM technologies WHERE 
-				)
-			');
-			foreach (split(',', $formTags) as $tag)
-				$q->execute([$t->find_id($tag), $id]);
-			$this->db->commit();
-		} catch (PDOException $e) {
-			$this->db->rollback();
-		}
+		$this->db->beginTransaction();
+		$q = $this->db->prepare('
+			INSERT INTO stages 
+				VALUES (NULL, :date, :duree, :ent, :pro, :sup, :stdnt, :ctid)
+		');
+		extract($params);
+		$q->execute([
+			':stdnt' => Session::get('is_admin') ? $user : Session::get('id'),
+			':sup'   => empty($supervisor) ? NULL : $supervisor,
+			':ent'   => $entreprise,
+			':duree' => $duree / 15,
+			':pro'   => $proposer,
+			':ctid'  => $ville,
+			':date'  => $date
+		]);
+		$id = $this->db->lastInsertId();
+		require_once 'models/technology.php';
+		$t = new TechnologyModel();
+		$q = $this->db->prepare('
+			INSERT INTO technology_stage (technology_id, stage_id) 
+			VALUES (
+				(SELECT id FROM technologies WHERE 
+			)
+		');
+		foreach (split(',', $formTags) as $tag)
+			$q->execute([$t->find_id($tag), $id]);
+		return $this->db->commit();
 	}
 	function destroy($id)
 	{
@@ -170,7 +166,7 @@ class StageModel extends Model {
 		');
 		foreach (split(',', $formTags) as $t)
 			$q->execute([$id, $t]);
-		$this->db->commit();
+		return $this->db->commit();
 	}
 	function count()
 	{

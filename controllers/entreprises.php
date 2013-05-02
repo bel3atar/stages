@@ -14,12 +14,12 @@ class Entreprises extends Controller {
 		$this->view->render('entreprises/index');
 	}
 	function _count() { return $this->model->count(); }
-		function add()
-		{
-			$this->view->title = 'Nouvelle entreprise';
-			$this->require_model('city');
-			$this->view->render('entreprises/new', FALSE);
-		}
+	function add()
+	{
+		$this->view->title = 'Nouvelle entreprise';
+		$this->require_model('city');
+		$this->view->render('entreprises/new', FALSE);
+	}
 	private function resized_image($img, $h, $w)
 	{
 		$maximum = max($h, $w);
@@ -47,7 +47,9 @@ class Entreprises extends Controller {
 			imagepng($img, "assets/images/entreprises/{$_POST['nom']}.png");
 			imagedestroy($img);
 			unlink($_FILES['logo']['tmp_name']);
-		}
+			Flash::success('L\'entreprise a bien été ajoutée.');
+		} else
+			Flash::error('L\'entreprise n\'a pas été ajoutée.');
 		header('Location: ' . URL . 'entreprises');
 	}
 	function destroy($id)
@@ -56,6 +58,7 @@ class Entreprises extends Controller {
 			$nom = $this->model->find($id)['nom'];
 			unlink("assets/images/entreprises/$nom.png");
 			$this->model->destroy($id);
+			Flash::success('L\'entreprise a bien été supprimée.');
 		}
 		header('Location: ' . URL . 'entreprises');
 	}
@@ -98,6 +101,7 @@ class Entreprises extends Controller {
 					imagedestroy($img);
 					unlink($_FILES['logo']['tmp_name']);
 				}
+				Flash::success('Les détails de l\'entreprise ont bien été mis à jour.');
 			}
 		}
 		header('Location: ' . URL . 'entreprises');

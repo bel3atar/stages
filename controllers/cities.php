@@ -22,7 +22,10 @@ class Cities extends Controller {
 	function create()
 	{
 		if (Session::get('logged'))
-			$this->model->create();
+			if ($this->model->create())
+				Flash::success('Ville ajoutée avec succès');
+			else
+				Flash::error('La ville n\'a pas été ajoutée');
 		header('Location: '. URL. 'cities');
 	}
 	function stages($id)
@@ -50,10 +53,11 @@ class Cities extends Controller {
 	}
 	function update()
 	{
-		if (Session::get('is_admin'))
-			$this->model->update($_GET);
-		else
-			header('Location: ' . URL . 'cities');
+		if (Session::get('is_admin')) {
+			if ($this->model->update($_GET))
+				Flash::success('Modification réussie.');
+		}
+		header('Location: ' . URL . 'cities');
 	}
 	function destroy($id)
 	{

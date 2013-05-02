@@ -143,6 +143,6 @@ class UserModel extends Model {
 		}
 		$sql .= 'WHERE id = :id LIMIT 1';
 		$q = $this->db->prepare($sql);
-		$q->execute($p);
+		return $q->execute($p);
 	}
 };

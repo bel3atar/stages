@@ -27,7 +27,10 @@ class Technologies extends Controller {
 	function create()
 	{
 		if (Session::get('logged'))
-			$this->model->create();
+			if ($this->model->create())
+				Flash::success('La technologie a bien été ajoutée.');
+			else
+				Flash::error('La technologie n\'a pas été ajoutée.');
 		header('Location: ' . URL . 'technologies');
 	}
 	function edit($id)
@@ -39,13 +42,19 @@ class Technologies extends Controller {
 	function update()
 	{
 		if (Session::get('is_admin'))
-			$this->model->update($_GET);
+			if ($this->model->update($_GET))
+				Flash::success('La mise à jour a bien été effectuée.');
+			else
+				Flash::error('La mise à jour n\'a pas été effectuée.');
 		header('Location: ' . URL . 'technologies');
 	}
 	function destroy($id)
 	{
 		if (Session::get('is_admin'))
-			$this->model->destroy($id);
+			if ($this->model->destroy($id))
+				Flash::success('La technologie a bien été supprimée.');
+			else
+				Flash::error('La technologie n\'a pas été supprimée.');
 		header('Location: ' . URL . 'technologies');
 	}
 	function _count() { return $this->model->count(); }

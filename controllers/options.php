@@ -21,7 +21,10 @@
 	function create()
 	{
 		if (Session::get('logged'))
-			$this->model->create();
+			if ($this->model->create())
+				Flash::success('Option ajoutée.');
+			else
+				Flash::error('L\'option n\'a pas été ajoutée.');
 		header('Location: ' . URL . 'options');
 	}
 	function students($id)
@@ -42,13 +45,17 @@
 	function update($id)
 	{
 		if (Session::get('is_admin'))
-			$this->model->update($_GET);
+			if ($this->model->update($_GET))
+				Flash::success('Option mise à jour.');
 		header('Location: ' . URL . 'options');
 	}
 	function destroy($id)
 	{
 		if (Session::get('is_admin'))
-			$this->model->delete($id);
+			if ($this->model->delete($id))
+				Flash::success('Options supprimée.');
+			else
+				Flash::error('L\'options n\'a pas été supprimée.');
 		header('Location: ' . URL . 'options');
 	}
 };
