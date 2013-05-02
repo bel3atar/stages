@@ -34,16 +34,18 @@
 		</div>
 	</div>
 
-	<div class="control-group">
-		<label class="control-label">Option</label>
-		<div class="controls">
-			<select required name="option">
-				<? foreach ($this->options as $o): ?>
-					<option <? if ($o['id'] == $this->user['optid']) echo 'selected' ?> value="<?= $o['id'] ?>"><?= $o['nom'] ?></option>
-				<? endforeach ?>
-			</select>
+	<? if (Session::get('is_admin') == FALSE): ?>
+		<div class="control-group">
+			<label class="control-label">Option</label>
+			<div class="controls">
+				<select required name="option">
+					<? foreach ($this->options as $o): ?>
+						<option <? if ($o['id'] == $this->user['optid']) echo 'selected' ?> value="<?= $o['id'] ?>"><?= $o['nom'] ?></option>
+					<? endforeach ?>
+				</select>
+			</div>
 		</div>
-	</div>
+	<? endif ?>
 
 	<div class="control-group">
 		<div class="controls">

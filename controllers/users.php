@@ -70,8 +70,8 @@ class Users extends Controller {
 				Flash::success('Profil utilisateur mis à jour.');
 			} else
 				Flash::error('La mise à jour du profil utilisateur n\'a pas été effectuée.');
-		else
-			Flash::error('Opération de mise à jour non autorisée.')
+		} else
+			Flash::error('Opération de mise à jour non autorisée.');
 		header('Location: ' . URL . 'users');
 	}
 };
