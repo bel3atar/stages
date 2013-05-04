@@ -56,13 +56,18 @@ class Cities extends Controller {
 		if (Session::get('is_admin')) {
 			if ($this->model->update($_GET))
 				Flash::success('Modification réussie.');
+			else
+				Flash::success('La modification n\'a pas été effectuée.');
 		}
 		header('Location: ' . URL . 'cities');
 	}
 	function destroy($id)
 	{
-		if (Session::get('is_admin'))
+		if (Session::get('is_admin')) {
 			$this->model->destroy($id);
+			Flash::success('La ville a bien été supprimée.');
+		} else 
+			Flash::error('Vous n\'avez pas le droit de supprimer cette ville.');
 		header('Location: ' . URL . 'cities');
 	}
 };

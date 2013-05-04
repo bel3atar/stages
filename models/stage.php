@@ -62,12 +62,12 @@ class StageModel extends Model {
 	}
 	function create($params)
 	{
+		extract($params);
 		$this->db->beginTransaction();
 		$q = $this->db->prepare('
-			INSERT INTO stages 
-				VALUES (NULL, :date, :duree, :ent, :pro, :sup, :stdnt, :ctid)
+			INSERT INTO stages (date, duree, entreprise_id, proposer_id, supervisor_id, student_id, city_id)
+				VALUES (:date, :duree, :ent, :pro, :sup, :stdnt, :ctid)
 		');
-		extract($params);
 		$q->execute([
 			':stdnt' => Session::get('is_admin') ? $user : Session::get('id'),
 			':sup'   => empty($supervisor) ? NULL : $supervisor,
@@ -82,12 +82,10 @@ class StageModel extends Model {
 		$t = new TechnologyModel();
 		$q = $this->db->prepare('
 			INSERT INTO technology_stage (technology_id, stage_id) 
-			VALUES (
-				(SELECT id FROM technologies WHERE 
-			)
+			VALUES ((SELECT id FROM technologies WHERE nom = ? LIMIT 1), ?)
 		');
 		foreach (split(',', $formTags) as $tag)
-			$q->execute([$t->find_id($tag), $id]);
+			$q->execute([$tag, $id]);
 		return $this->db->commit();
 	}
 	function destroy($id)
@@ -119,11 +117,28 @@ class StageModel extends Model {
 				stages.supervisor_id AS sid,
 				stages.city_id AS ctid,
 				stages.entreprise_id AS eid,
+				entreprises.nom AS e,
 				GROUP_CONCAT(technologies.id SEPARATOR \',\') AS tids,
-				GROUP_CONCAT(technologies.nom SEPARATOR \',\') AS ts
+				GROUP_CONCAT(technologies.nom SEPARATOR \',\') AS ts,
+				CONCAT_WS(\' \', users.nom, users.prenom) AS u,
+				(
+					SELECT CONCAT_WS(\' \', nom, prenom) 
+					FROM people 
+					WHERE id = stages.proposer_id
+				) AS p,
+				(SELECT email FROM people WHERE id = stages.proposer_id) AS pemail,
+				(
+					SELECT CONCAT_WS(\' \', nom, prenom)
+					FROM people
+					WHERE id = stages.supervisor_id
+				) AS s,
+				(SELECT email FROM people WHERE id = stages.supervisor_id) AS semail,
+				stages.description AS description
 			FROM stages
 				JOIN technology_stage ON technology_stage.stage_id = stages.id
 				JOIN technologies ON technology_stage.technology_id = technologies.id
+				JOIN users ON users.id = stages.student_id
+				JOIN entreprises ON entreprises.id = stages.entreprise_id
 			WHERE stages.id = ?
 			LIMIT 1
 		');
@@ -135,41 +150,50 @@ class StageModel extends Model {
 		extract($params);
 		//print_r($formTags);
 		//exit;
-		$this->db->beginTransaction();
-		$q = $this->db->prepare('
-			UPDATE stages SET
-				entreprise_id = :eid,
-				city_id = :ctid,
-				date = :date,
-				duree = :duree,
-				student_id = :uid,
-				proposer_id = :pid,
-				supervisor_id = :sid
-			WHERE id = :id
-			LIMIT 1
-		');
-		$q->execute([
-			':eid'   => $entreprise,
-			':ctid'  => $ville,
-			':date'  => $date,
-			':duree' => $duree / 15,
-			':uid'   => $user,
-			':pid'   => $proposer,
-			':sid'   => $supervisor,
-			':id'    => $id
-		]);
-		$q = $this->db->prepare('DELETE FROM technology_stage WHERE stage_id = ?');
-		$q->execute([$id]);
-		$q = $this->db->prepare('
-			INSERT INTO technology_stage (stage_id, technology_id)
-			VALUES (?, (SELECT id FROM technologies WHERE nom = ?))
-		');
-		foreach (split(',', $formTags) as $t)
-			$q->execute([$id, $t]);
-		return $this->db->commit();
+		try {
+			$this->db->beginTransaction();
+			$q = $this->db->prepare('
+				UPDATE stages SET
+					entreprise_id = :eid,
+					city_id = :ctid,
+					date = :date,
+					duree = :duree,
+					student_id = :uid,
+					proposer_id = :pid,
+					supervisor_id = :sid
+				WHERE id = :id
+				LIMIT 1
+			');
+			$q->execute([
+				':eid'   => $entreprise,
+				':ctid'  => $ville,
+				':date'  => $date,
+				':duree' => $duree / 15,
+				':uid'   => $user,
+				':pid'   => $proposer,
+				':sid'   => $supervisor,
+				':id'    => $id
+			]);
+			$q = $this->db->prepare('DELETE FROM technology_stage WHERE stage_id = ?');
+			$q->execute([$id]);
+			$q = $this->db->prepare('
+				INSERT INTO technology_stage (stage_id, technology_id)
+				VALUES (?, (SELECT id FROM technologies WHERE nom = ?))
+			');
+			foreach (split(',', $formTags) as $t)
+				$q->execute([$id, $t]);
+			return $this->db->commit();
+		} catch (PDOException $e) {
+			$this->db->rollBack();
+			return FALSE;
+		}
 	}
 	function count()
 	{
 		return $this->db->query('SELECT COUNT(id) FROM stages')->fetchColumn();
+	}
+	function lastID()
+	{
+		return $this->db->query('SELECT MAX(id) FROM stages LIMIT 1')->fetchColumn();
 	}
 };

@@ -34,7 +34,7 @@
 		</div>
 	</div>
 
-	<? if (Session::get('is_admin') == FALSE): ?>
+	<? if ($this->user['is_admin'] == FALSE): ?>
 		<div class="control-group">
 			<label class="control-label">Option</label>
 			<div class="controls">

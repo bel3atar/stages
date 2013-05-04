@@ -20,7 +20,7 @@
 				<? if ($this->user['is_admin']): ?>
 					<p class='badge badge-warning'>Administrateur</p>
 				<? else: ?>
-					<a href="<?= URL, 'options/', $this->user['optid'] ?>">
+					<a href="<?= URL, 'options/', $this->user['optid'] ?>/students">
 						<span class='badge badge-info'><?= $this->user['opt'] ?></span>
 					</a>
 					<? if ($this->user['stages']): ?>

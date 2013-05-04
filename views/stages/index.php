@@ -8,6 +8,7 @@
 			<th>Durée</th>
 			<th>Ville</th>
 			<th>Technologies</th>
+			<th></th>
 			<? if (Session::get('is_admin')) echo '<th></th>' ?>
 		</tr>
 	</thead>
@@ -38,6 +39,11 @@
 						<a href="<?= URL ?>technologies/<?= $tids[$i] ?>/stages">
 						<?= $ts[$i] ?></a><?= $i ? ', ' : '' ?>
 					<? endfor ?>
+				</td>
+				<td>
+					<a href='<?= URL, 'stages/', $stage['id'] ?>' class='btn btn-mini btn-info'>
+						<i class='icon-eye-open icon'></i>
+					</a>
 				</td>
 				<? if (Session::get('is_admin')): ?>
 					<td>

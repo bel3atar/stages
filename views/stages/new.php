@@ -1,4 +1,4 @@
-<form class="form-horizontal" method="get" action="<?= URL ?>stages/create">
+<form enctype='multipart/form-data' class="form-horizontal" method="post" action="<?= URL ?>stages/create">
 <fieldset>
 <legend>Archiver un nouveau stage</legend>
 
@@ -54,7 +54,7 @@
 	<div class="control-group">
 		<label for="duree" class="control-label">Durée</label>
 		<div class="controls">
-			<input id="duree" type="number" min="15" max="90" step="15" value="30" name="duree">
+			<input id="duree" type="number" min="15" max="240" step="15" value="30" name="duree">
 		</div>
 	</div>
 
@@ -88,6 +88,14 @@
 	</div>
 
 	<div class="control-group">
+		<label class="control-label">Rapport</label>
+		<div class="controls">
+			<input type="hidden" name="MAX_FILE_SIZE" value="524288">
+			<input type='file' name='report'>
+		</div>
+	</div>
+
+	<div class="control-group">
 		<div class="controls">
 			<button type="submit" class="btn btn-primary">
 				<i class="icon-ok icon-white"></i>
@@ -103,20 +111,21 @@
 				</div>
 			</div>
 		</div>
-<script>
-	var tags = [
-		<? for($i = sizeof($this->technologies) - 1; $i >= 0; --$i): ?>
-			'<?= str_replace('\'', '\\\'', $this->technologies[$i]['nom']) ?>',
-		<? endfor ?>
-	];
-	function tagValidator(tag) { 
-		return tags.indexOf(tag) != -1 ? true : false;
-	}
-</script>
 		<script src="<?= URL ?>assets/javascripts/jquery.js"></script>
 		<script src="<?= URL ?>assets/bootstrap/js/bootstrap.min.js"></script>
-		<? if (isset($this->scripts)) foreach ($this->scripts as $s): ?>
-			<script<?= $s ?></script>
-		<? endforeach ?>
+		<script src="<?= URL ?>assets/javascripts/bootstrap-filestyle-0.1.0.min.js"></script>
+		<script>$(":file").filestyle({buttonText: 'Parcourir...', icon: true})</script>
+		<script src="<?= URL ?>assets/tagmanager/bootstrap-tagmanager.js"></script>
+		<script>
+			var tags = [
+				<? for($i = sizeof($this->technologies) - 1; $i >= 0; --$i): ?>
+					'<?= addcslashes($this->technologies[$i]['nom'], "'\\") ?>',
+				<? endfor ?>
+			];
+			function tagValidator(tag) { 
+				return tags.indexOf(tag) != -1 ? true : false;
+			}
+			jQuery(".tagManager").tagsManager();
+		</script>
 	</body>
 </html>

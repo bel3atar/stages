@@ -10,4 +10,4 @@ define('DB_ENGINE', 'mysql');
 define('DB_NAME', 'stages');
 
 define('DB_USER', 'root');
-define('DB_PASS', '1234');
+define('DB_PASS', '');

@@ -1,4 +1,4 @@
-<form class="form-horizontal" method="get" action="<?= URL ?>/stages/update">
+<form enctype="multipart/form-data" class="form-horizontal" method="post" action="<?= URL ?>stages/update">
 	<fieldset>
 	<legend>Modifier un stage</legend>
 	<input type="hidden" name="id" value="<?= $this->stage['id'] ?>">
@@ -67,7 +67,7 @@
 		<div class="controls">
 			<select name="proposer">
 				<? foreach ($this->people as $p): ?>
-					<option value="<?= $p['id'] ?>"><?= $p['nom'] ?></option>
+					<option value="<?= $p['id'] ?>" <? if ($p['id'] == $this->stage['pid']) echo 'selected' ?>><?= $p['nom'] ?></option>
 				<? endforeach ?>
 			</select>
 		</div>
@@ -78,9 +78,17 @@
 			<select name="supervisor">
 				<option value=""></option>
 				<? foreach ($this->people as $p): ?>
-					<option value="<?= $p['id'] ?>"><?= $p['nom'] ?></option>
+					<option value="<?= $p['id'] ?>" <? if ($p['id'] == $this->stage['sid']) echo 'selected' ?>><?= $p['nom'] ?></option>
 				<? endforeach ?>
 			</select>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label">Rapport</label>
+		<div class="controls">
+			<input type="hidden" name="MAX_FILE_SIZE" value="524288">
+			<input type="file" name="rapport">
 		</div>
 	</div>
 
@@ -102,7 +110,7 @@
 <script>
 var tags = [
 <? for($i = sizeof($this->technologies) - 1; $i >= 0; --$i): ?>
-'<?= str_replace('\'', '\\\'', $this->technologies[$i]['nom']) ?>',
+'<?= addcslashes($this->technologies[$i]['nom'], "'\\") ?>',
 	<? endfor ?>
 	];
 function tagValidator(tag) { 
@@ -111,6 +119,8 @@ function tagValidator(tag) {
 </script>
 <script src="<?= URL ?>assets/javascripts/jquery.js"></script>
 <script src="<?= URL ?>assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="<?= URL ?>assets/javascripts/bootstrap-filestyle-0.1.0.min.js"></script>
+<script>$(":file").filestyle({buttonText: 'Parcourir...', icon: true})</script>
 <script src="<?= URL ?>/assets/tagmanager/bootstrap-tagmanager.js"></script>
 <script>
 jQuery(".tagManager").tagsManager();
