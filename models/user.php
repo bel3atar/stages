@@ -97,11 +97,11 @@ class UserModel extends Model {
 	}
 	function create($params)
 	{
+		extract($params);
 		$q = $this->db->prepare('
 			INSERT INTO users (nom, prenom, email, pass, option_id)
 			           VALUES (UPPER(:n), :pn, :email, MD5(:pass), :optn)
 		');
-		extract($params);
 		return $q->execute([
 			':pass'  => $password,
 			':optn'  => $option,

@@ -73,12 +73,12 @@
 	}
 	function create($params)
 	{
+		extract($params);
 		$q = $this->db->prepare('
 			INSERT INTO people
 				(nom, prenom, email, entreprise_id)
 				VALUES(:nom, :prenom, :email, :eid)
 		');
-		extract($params);
 		return $q->execute([
 			':nom'    => strip_tags($nom),
 			':email'  => strip_tags($email),

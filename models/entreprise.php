@@ -137,6 +137,7 @@ class EntrepriseModel extends Model {
 	}
 	function update($params)
 	{
+		extract($params);
 		$q = $this->db->prepare('
 			UPDATE
 				entreprises
@@ -146,7 +147,6 @@ class EntrepriseModel extends Model {
 			WHERE id = :id
 			LIMIT 1
 		');
-		extract($params);
 		return $q->execute([
 			':id'   => $id,
 			':nom'  => strip_tags($nom),
