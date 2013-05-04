@@ -38,19 +38,22 @@ class Entreprises extends Controller {
 	}
 	function create()
 	{
-		$img_info = getimagesize($_FILES['logo']['tmp_name']);
-		if ($img_info and $this->model->create($_POST)) {
-			list($w, $h) = $img_info;
-			$callback = substr_replace($img_info['mime'], 'createfrom', 5, 1);
-			$img = $callback($_FILES['logo']['tmp_name']);
-			$img = $this->resized_image($img, $h, $w);
-			imagepng($img, "assets/images/entreprises/{$_POST['nom']}.png");
-			imagedestroy($img);
-			unlink($_FILES['logo']['tmp_name']);
-			Flash::success('L\'entreprise a bien été ajoutée.');
+		if (Session::get('logged')) {
+			$img_info = getimagesize($_FILES['logo']['tmp_name']);
+			if ($img_info and $this->model->create($_POST)) {
+				list($w, $h) = $img_info;
+				$callback = substr_replace($img_info['mime'], 'createfrom', 5, 1);
+				$img = $callback($_FILES['logo']['tmp_name']);
+				$img = $this->resized_image($img, $h, $w);
+				imagepng($img, "assets/images/entreprises/{$_POST['nom']}.png");
+				imagedestroy($img);
+				unlink($_FILES['logo']['tmp_name']);
+				Flash::success('L\'entreprise a bien été ajoutée.');
+			} else
+				Flash::error('L\'entreprise n\'a pas été ajoutée.');
+			header('Location: ' . URL . 'entreprises');
 		} else
-			Flash::error('L\'entreprise n\'a pas été ajoutée.');
-		header('Location: ' . URL . 'entreprises');
+			$this->unauthorised();
 	}
 	function destroy($id)
 	{
@@ -59,8 +62,9 @@ class Entreprises extends Controller {
 			unlink("assets/images/entreprises/$nom.png");
 			$this->model->destroy($id);
 			Flash::success('L\'entreprise a bien été supprimée.');
-		}
-		header('Location: ' . URL . 'entreprises');
+			header('Location: ' . URL . 'entreprises');
+		} else
+			$this->unauthorised();
 	}
 	function stages($id)
 	{
@@ -103,8 +107,9 @@ class Entreprises extends Controller {
 				}
 				Flash::success('Les détails de l\'entreprise ont bien été mis à jour.');
 			}
-		}
-		header('Location: ' . URL . 'entreprises');
+			header('Location: ' . URL . 'entreprises');
+		} else
+			$this->unauthorised();
 	}
 	function show($id)
 	{

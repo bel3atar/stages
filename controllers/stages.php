@@ -51,7 +51,7 @@ class Stages extends Controller {
 	}
 	function create()
 	{
-		if (Session::get('logged')) {
+		if (Session::get('is_admin') or Session::get('id') === $_POST['user']) {
 			$ext = NULL;
 			$f = $_FILES['report']['tmp_name'];
 			if (is_uploaded_file($f))
@@ -65,17 +65,20 @@ class Stages extends Controller {
 					Flash::success('Stage enregistré sans rapport.');
 			} else
 				Flash::error('Création du stage non effectuée.');
-		}
-		header('Location: ' . URL . 'stages');
+			header('Location: ' . URL . 'stages');
+		} else
+			$this->unauthorised();
 	}
 	function destroy($id)
 	{
-		if (Session::get('is_admin'))
+		if (Session::get('is_admin')) {
 			if ($this->model->destroy($id))
 				Flash::success('Le stage a bien été supprimé.');
 			else
 				Flash::error('La suppression du stage n\'a pas abouti.');
-		header('Location: ' . URL . 'stages');
+			header('Location: ' . URL . 'stages');
+		} else
+			$this->unauthorised();
 	}
 	function edit($id)
 	{
@@ -91,7 +94,7 @@ class Stages extends Controller {
 	}
 	function update()
 	{
-		if (Session::get('is_admin')) {
+		if (Session::get('is_admin') or $_POST['user'] === Session::get('id')) {
 			$ext = NULL;
 			$f = $_FILES['rapport']['tmp_name'];
 			if (is_uploaded_file($f))
@@ -106,8 +109,9 @@ class Stages extends Controller {
 					Flash::success('Stage mis à jour avec succès (pas de mise à jour du rapport).');
 			} else
 				Flass::error('La mise à jour n\'a pas été effectuée.');
-		}
-		header('Location: ' . URL . 'stages');
+			header('Location: ' . URL . 'stages');
+		} else
+			$this->unauthorised();
 	}
 	function _count() { return $this->model->count(); }
 };

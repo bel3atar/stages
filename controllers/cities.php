@@ -21,12 +21,14 @@ class Cities extends Controller {
 	}
 	function create()
 	{
-		if (Session::get('logged'))
+		if (Session::get('logged')) {
 			if ($this->model->create())
 				Flash::success('Ville ajoutée avec succès');
 			else
 				Flash::error('La ville n\'a pas été ajoutée');
-		header('Location: '. URL. 'cities');
+			header('Location: '. URL. 'cities');
+		} else
+			$this->unauthorised();
 	}
 	function stages($id)
 	{
@@ -58,16 +60,19 @@ class Cities extends Controller {
 				Flash::success('Modification réussie.');
 			else
 				Flash::success('La modification n\'a pas été effectuée.');
-		}
-		header('Location: ' . URL . 'cities');
+			header('Location: ' . URL . 'cities');
+		} else
+			$this->unauthorised();
 	}
 	function destroy($id)
 	{
 		if (Session::get('is_admin')) {
-			$this->model->destroy($id);
-			Flash::success('La ville a bien été supprimée.');
-		} else 
-			Flash::error('Vous n\'avez pas le droit de supprimer cette ville.');
-		header('Location: ' . URL . 'cities');
+			if ($this->model->destroy($id))
+				Flash::success('La ville a bien été supprimée.');
+			else
+				Flash::error('La ville n\'a pas été supprimée.');
+			header('Location: ' . URL . 'cities');
+		} else
+			$this->unauthorised();
 	}
 };

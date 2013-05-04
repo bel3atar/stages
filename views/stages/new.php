@@ -17,6 +17,7 @@
 		<div class="control-group">
 			<label class="control-label">Etudiant</label>
 			<div class="controls">
+				<input type="hidden" name="user" value="<?= Session::get('id') ?>">
 				<span class="uneditable-input"><?= Session::get('nom') ?></span>
 			</div>
 		</div>

@@ -20,12 +20,14 @@
 	}
 	function create()
 	{
-		if (Session::get('logged'))
+		if (Session::get('logged')) {
 			if ($this->model->create())
 				Flash::success('Option ajoutée.');
 			else
 				Flash::error('L\'option n\'a pas été ajoutée.');
-		header('Location: ' . URL . 'options');
+			header('Location: ' . URL . 'options');
+		} else
+			$this->unauthorised();
 	}
 	function students($id)
 	{
@@ -44,18 +46,22 @@
 	}
 	function update($id)
 	{
-		if (Session::get('is_admin'))
+		if (Session::get('is_admin')) {
 			if ($this->model->update($_GET))
 				Flash::success('Option mise à jour.');
-		header('Location: ' . URL . 'options');
+			header('Location: ' . URL . 'options');
+		} else
+			$this->unauthorised();
 	}
 	function destroy($id)
 	{
-		if (Session::get('is_admin'))
+		if (Session::get('is_admin')) {
 			if ($this->model->delete($id))
 				Flash::success('Options supprimée.');
 			else
 				Flash::error('L\'options n\'a pas été supprimée.');
-		header('Location: ' . URL . 'options');
+			header('Location: ' . URL . 'options');
+		} else
+			$this->unauthorised();
 	}
 };

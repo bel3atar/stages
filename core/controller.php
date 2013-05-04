@@ -29,4 +29,9 @@ class Controller {
 		}
 		return $_GET['page'];
 	}
+	function unauthorised()
+	{
+		Flash::error('Cette opération ne vous est pas autorisée. Identifiez-vous d\'abord!');
+		header('Location: ' . URL . 'sessions/new');
+	}
 };

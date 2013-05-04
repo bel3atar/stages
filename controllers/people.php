@@ -22,21 +22,25 @@
 	}
 	function create()
 	{
-		if (Session::get('logged'))
+		if (Session::get('logged')) {
 			if ($this->model->create($_GET))
 				Flash::success('Responsable ajouté.');
 			else
 				Flash::error('Echec de l\'ajout du responsable.');
-		header('Location: ' . URL . 'people');
+			header('Location: ' . URL . 'people');
+		} else
+			$this->unauthorised();
 	}
 	function destroy($id)
 	{
-		if (Session::get('is_admin'))
+		if (Session::get('is_admin')) {
 			if ($this->model->destroy($id))
 				Flash::success('Responsable supprimé');
 			else
 				Flash::error('Echec de la suppression du responsable.');
-		header('Location: ' . URL . 'people');
+			header('Location: ' . URL . 'people');
+		} else
+			$this->unauthorised();
 	}
 	function edit($id)
 	{
@@ -49,12 +53,14 @@
 	}
 	function update()
 	{
-		if (Session::get('is_admin'))
+		if (Session::get('is_admin')) {
 			if ($this->model->update($_GET))
 				Flash::success('Modifications enregistrées.');
 			else
 				Flash::error('Mise à jour non effectuée.');
-		header('Location: ' . URL . 'people');
+			header('Location: ' . URL . 'people');
+		} else
+			$this->unauthorised();
 	}
 	function _count() { return $this->model->count(); }
 };

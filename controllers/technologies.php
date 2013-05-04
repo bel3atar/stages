@@ -26,12 +26,14 @@ class Technologies extends Controller {
 	}
 	function create()
 	{
-		if (Session::get('logged'))
+		if (Session::get('logged')) {
 			if ($this->model->create())
 				Flash::success('La technologie a bien été ajoutée.');
 			else
 				Flash::error('La technologie n\'a pas été ajoutée.');
-		header('Location: ' . URL . 'technologies');
+			header('Location: ' . URL . 'technologies');
+		} else
+			$this->unauthorised();
 	}
 	function edit($id)
 	{
@@ -41,21 +43,25 @@ class Technologies extends Controller {
 	}
 	function update()
 	{
-		if (Session::get('is_admin'))
+		if (Session::get('is_admin')) {
 			if ($this->model->update($_GET))
 				Flash::success('La mise à jour a bien été effectuée.');
 			else
 				Flash::error('La mise à jour n\'a pas été effectuée.');
-		header('Location: ' . URL . 'technologies');
+			header('Location: ' . URL . 'technologies');
+		} else
+			$this->unauthorised();
 	}
 	function destroy($id)
 	{
-		if (Session::get('is_admin'))
+		if (Session::get('is_admin')) {
 			if ($this->model->destroy($id))
 				Flash::success('La technologie a bien été supprimée.');
 			else
 				Flash::error('La technologie n\'a pas été supprimée.');
-		header('Location: ' . URL . 'technologies');
+			header('Location: ' . URL . 'technologies');
+		} else
+			$this->unauthorised();
 	}
 	function _count() { return $this->model->count(); }
 	function stages_count($id) { return $this->model->stages_count($id); }
