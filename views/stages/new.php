@@ -24,6 +24,13 @@
 	<? endif ?>
 
 	<div class="control-group">
+		<label for="description" class="control-label">Description</label>
+		<div class="controls">
+			<input id="description" type="text" name="description">
+		</div>
+	</div>
+
+	<div class="control-group">
 		<label for="entreprise" class="control-label">Entreprise</label>
 		<div class="controls">
 			<select id="entreprise" name="entreprise">

@@ -7,6 +7,8 @@
 
 	<dt>Entreprise</dt><dd><a href='<?= URL, 'entreprises/', $eid ?>'><?= $e ?></a></dd>
 
+	<dt>Description</dt><dd><?= $description ?></dd>
+
 	<dt>Date</dt><dd><?= $date ?></dd>
 
 	<dt>Durée</dt><dd><?= $duree ?></dd>

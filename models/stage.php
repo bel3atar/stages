@@ -66,14 +66,15 @@ class StageModel extends Model {
 		try {
 			$this->db->beginTransaction();
 			$q = $this->db->prepare('
-				INSERT INTO stages (date, duree, entreprise_id, proposer_id, supervisor_id, student_id, city_id)
-					VALUES (:date, :duree, :ent, :pro, :sup, :stdnt, :ctid)
+				INSERT INTO stages (description, date, duree, entreprise_id, proposer_id, supervisor_id, student_id, city_id)
+					VALUES (:desc, :date, :duree, :ent, :pro, :sup, :stdnt, :ctid)
 			');
 			$q->execute([
 				':stdnt' => Session::get('is_admin') ? $user : Session::get('id'),
 				':sup'   => empty($supervisor) ? NULL : $supervisor,
 				':ent'   => $entreprise,
 				':duree' => $duree / 15,
+				':desc'  => $description,
 				':pro'   => $proposer,
 				':ctid'  => $ville,
 				':date'  => $date
@@ -127,6 +128,7 @@ class StageModel extends Model {
 				stages.supervisor_id AS sid,
 				stages.city_id AS ctid,
 				stages.entreprise_id AS eid,
+				description,
 				entreprises.nom AS e,
 				GROUP_CONCAT(technologies.id SEPARATOR \',\') AS tids,
 				GROUP_CONCAT(technologies.nom SEPARATOR \',\') AS ts,
@@ -168,7 +170,8 @@ class StageModel extends Model {
 					duree = :duree,
 					student_id = :uid,
 					proposer_id = :pid,
-					supervisor_id = :sid
+					supervisor_id = :sid,
+					description = :desc
 				WHERE id = :id
 				LIMIT 1
 			');
@@ -180,6 +183,7 @@ class StageModel extends Model {
 				':uid'   => $user,
 				':pid'   => $proposer,
 				':sid'   => $supervisor,
+				':desc'  => $description,
 				':id'    => $id
 			]);
 			$q = $this->db->prepare('DELETE FROM technology_stage WHERE stage_id = ?');

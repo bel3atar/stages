@@ -29,6 +29,13 @@
 	</div>
 
 	<div class="control-group">
+		<label for="description" class="control-label">Description</label>
+		<div class="controls">
+			<input id="description" type="text" name="description" value="<?= $this->stage['description'] ?>">
+		</div>
+	</div>
+
+	<div class="control-group">
 		<label for="date" class="control-label">Date</label>
 		<div class="controls">
 			<input value = "<?= $this->stage['date'] ?>" id="date" type="date" name="date" required>
@@ -42,18 +49,28 @@
 		</div>
 	</div>
 
-	<div class="control-group">
-		<label class="control-label">Etudiant</label>
-		<div class="controls">
-			<select required name="user">
-				<? foreach ($this->users as $u): ?>
-					<option value="<?= $u['id'] ?>" <?= $u['id'] === $this->stage['uid'] ? 'selected' : '' ?>>
-						<?= $u['nom'] ?>
-					</option>
-				<? endforeach ?>
-			</select>
+	<? if (Session::get('is_admin')): ?>
+		<div class="control-group">
+			<label class="control-label">Etudiant</label>
+			<div class="controls">
+				<select required name="user">
+					<? foreach ($this->users as $u): ?>
+						<option value="<?= $u['id'] ?>" <?= $u['id'] === $this->stage['uid'] ? 'selected' : '' ?>>
+							<?= $u['nom'] ?>
+						</option>
+					<? endforeach ?>
+				</select>
+			</div>
 		</div>
-	</div>
+	<? else: ?>
+		<div class="control-group">
+			<label class="control-label">Etudiant</label>
+			<div class="controls">
+				<input type="hidden" name="user" value="<?= Session::get('id') ?>">
+				<span class="uneditable-input"><?= Session::get('nom') ?></span>
+			</div>
+		</div>
+	<? endif ?>
 
 	<div class="control-group">
 		<label class="control-label">Technologies</label>

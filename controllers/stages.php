@@ -11,9 +11,9 @@ class Stages extends Controller {
 	{
 		$this->view->title = 'Détails du stage';
 		$ls = glob("assets/reports/$id.*");
-		if ($ls)
-			$this->view->rapport = $ls[0];
 		$this->view->stage = $this->model->find($id);
+		if ($ls)
+			$this->view->stage['rapport'] = $ls[0];
 		$this->view->render('stages/show');
 	}
 	function add()
