@@ -25,6 +25,7 @@ class EntrepriseModel extends Model {
 				LEFT JOIN people ON people.entreprise_id = entreprises.id
 				LEFT JOIN cities ON stages.city_id       = cities.id
 			GROUP BY entreprises.id
+			ORDER BY entreprises.nom
 			LIMIT ?, ?
 		');
 		$q->execute([($page - 1) * PAGE_SIZE, PAGE_SIZE]);

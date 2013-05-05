@@ -18,6 +18,7 @@
 				LEFT JOIN entreprises on entreprises.id = people.entreprise_id
 				LEFT JOIN stages on stages.proposer_id = people.id
 			GROUP BY people.id
+			ORDER BY nom
 			LIMIT ?, ?
 		');
 		$q->execute([($page - 1) * PAGE_SIZE, PAGE_SIZE]);

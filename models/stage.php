@@ -54,7 +54,7 @@ class StageModel extends Model {
 				LEFT JOIN technologies ON technology_stage.technology_id=technologies.id
 			WHERE users.is_admin IS NULL
 			GROUP BY stages.id
-			ORDER BY stages.date DESC
+			ORDER BY stages.id DESC
 			LIMIT ?, ?
 		');
 		$q->execute([($page - 1) * PAGE_SIZE, PAGE_SIZE]);

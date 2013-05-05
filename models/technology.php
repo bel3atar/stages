@@ -32,6 +32,7 @@ class TechnologyModel extends Model {
 				LEFT JOIN technology_stage
 					ON technology_stage.technology_id = technologies.id
 			GROUP BY technologies.id
+			ORDER BY nom
 			LIMIT ?, ?
 		');
 		$q->execute([PAGE_SIZE * ($page - 1), PAGE_SIZE]);

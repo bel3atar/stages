@@ -25,6 +25,7 @@ class CityModel extends Model {
 				cities.id AS id, cities.nom AS nom, COUNT(stages.id) AS stages
 			FROM cities LEFT JOIN stages ON stages.city_id = cities.id    
 			GROUP BY cities.id
+			ORDER BY nom
 			LIMIT ?, ?
 		');
 		$q->execute([($page - 1) * PAGE_SIZE, PAGE_SIZE]);

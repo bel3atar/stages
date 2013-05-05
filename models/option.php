@@ -19,6 +19,7 @@
 			FROM options
 				LEFT JOIN users ON users.option_id = options.id
 			WHERE users.is_admin IS NULL
+			ORDER BY options.nom
 			GROUP BY options.id
 		');
 	}

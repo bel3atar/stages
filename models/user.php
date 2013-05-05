@@ -30,6 +30,7 @@ class UserModel extends Model {
 				     JOIN options ON users.option_id   = options.id
 			WHERE users.id = ?
 			GROUP BY users.id
+			ORDER BY nom
 			LIMIT 1
 		');
 		$q->execute([$id]);
