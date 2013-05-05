@@ -6,6 +6,7 @@
 			<th>Date</th>
 			<th>Durée</th>
 			<th>Technologies</th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -22,6 +23,10 @@
 						<?= $ts[$i] ?></a><?= $i ? ', ' : '' ?>
 					<? endfor ?>
 				</td>	
+				<td>
+					<a href="<?= URL, 'stages/', $s['id'] ?>" class="btn btn-mini btn-info"><i class='icon-eye-open'></i>
+					</a>
+				</td>
 			</tr>
 		<? endforeach ?>
 	</tbody>

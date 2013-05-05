@@ -24,7 +24,7 @@ class TechnologyModel extends Model {
 		$q = $this->db->prepare('SELECT id FROM technologies WHERE id = ? LIMIT 1');
 		return $q->execute([$id]);
 	}
-	function find_all($page = 1)
+	function find_all($page)
 	{
 		$q = $this->db->prepare('
 			SELECT id, nom, COUNT(technology_stage.stage_id) as stages
@@ -66,6 +66,7 @@ class TechnologyModel extends Model {
 				entreprises.nom AS entreprise, 
 				stages.duree * 15 AS duree,
 				stages.date AS date,
+				stages.id AS stid,
 				cities.nom AS ville,
 				cities.id  AS ctid,
 				CONCAT_WS(\' \', users.nom, users.prenom) AS etudiant,
@@ -77,6 +78,7 @@ class TechnologyModel extends Model {
 				JOIN cities ON cities.id = stages.city_id
 				JOIN entreprises ON entreprises.id = stages.entreprise_id
 			WHERE technologies.id = ?
+			ORDER BY stages.id DESC
 			LIMIT ?, ?
 		');
 		$q->execute([$id, ($page - 1) * PAGE_SIZE, PAGE_SIZE]);

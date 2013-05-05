@@ -18,8 +18,6 @@ class UserModel extends Model {
 			SELECT 
 				users.id AS id,
 				CONCAT_WS(\' \', users.nom, prenom) AS nom,
-				users.nom AS unom,
-				users.prenom AS uprenom,
 				COUNT(stages.id) AS stages,
 				email,
 				is_admin,
@@ -30,7 +28,6 @@ class UserModel extends Model {
 				     JOIN options ON users.option_id   = options.id
 			WHERE users.id = ?
 			GROUP BY users.id
-			ORDER BY nom
 			LIMIT 1
 		');
 		$q->execute([$id]);
@@ -71,6 +68,7 @@ class UserModel extends Model {
 				entreprises.id AS eid,
 				entreprises.nom AS e,
 				stages.date AS date,
+				stages.id AS id,
 				stages.duree * 15 AS duree,
 				GROUP_CONCAT(technologies.id SEPARATOR \',\') AS techids,
 				GROUP_CONCAT(technologies.nom SEPARATOR \',\') AS techs
@@ -80,7 +78,7 @@ class UserModel extends Model {
 				LEFT JOIN technologies ON technologies.id = technology_stage.technology_id
 				LEFT JOIN cities ON cities.id = stages.city_id
 			WHERE stages.student_id = ?
-			GROUP BY stages.id
+			ORDER BY stages.id DESC
 			LIMIT ?, ?
 		');
 		$q->execute([$id, ($page - 1) * PAGE_SIZE, PAGE_SIZE]);

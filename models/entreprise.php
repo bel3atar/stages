@@ -12,7 +12,7 @@ class EntrepriseModel extends Model {
 		$q->execute([$id]);
 		return $q->fetchColumn();
 	}
-	function find_all($page = 1)
+	function find_all($page)
 	{
 		$q =$this->db->prepare('
 			SELECT
@@ -97,6 +97,7 @@ class EntrepriseModel extends Model {
 	{
 		$q = $this->db->prepare('
 			SELECT
+				stages.id AS stid,
 				stages.date AS date,
 				stages.duree * 15 AS duree,
 				cities.nom AS ville,
@@ -119,7 +120,7 @@ class EntrepriseModel extends Model {
 				JOIN technology_stage ON technology_stage.stage_id = stages.id
 				JOIN technologies ON technologies.id = technology_stage.technology_id
 			WHERE entreprise_id = ?
-			GROUP BY stages.id
+			ORDER BY stages.id DESC
 			LIMIT ?, ?
 		');
 		$q->execute([$id, ($page - 1) * PAGE_SIZE, PAGE_SIZE]);

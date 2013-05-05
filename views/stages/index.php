@@ -42,7 +42,7 @@
 				</td>
 				<td>
 					<a href='<?= URL, 'stages/', $stage['id'] ?>' class='btn btn-mini btn-info'>
-						<i class='icon-eye-open icon'></i>
+						<i class='icon-eye-open'></i>
 					</a>
 				</td>
 				<? if (Session::get('is_admin')): ?>

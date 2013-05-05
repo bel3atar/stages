@@ -47,6 +47,7 @@ class CityModel extends Model {
 				entreprises.nom AS entreprise,
 				entreprises.id AS entrepriseid,
 				stages.date AS date,
+				stages.id AS stageid,
 				stages.duree * 15 AS duree,
 				GROUP_CONCAT(technologies.id SEPARATOR \',\') AS tids,
 				GROUP_CONCAT(technologies.nom SEPARATOR \',\') AS tnames
@@ -56,6 +57,7 @@ class CityModel extends Model {
 				LEFT JOIN technologies     ON technologies.id = technology_stage.technology_id	
 			WHERE stages.city_id = ?
 			GROUP BY stages.id
+			ORDER BY stages.id DESC
 			LIMIT ?, ?
 		');
 		$q->execute([$id, ($page - 1) * PAGE_SIZE, PAGE_SIZE]);

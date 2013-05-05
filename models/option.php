@@ -11,17 +11,20 @@
 		$q->execute([$id]);
 		return $q->fetchColumn();
 	}
-	function find_all()
+	function find_all($p)
 	{
-		return $this->db->query('
+		$q = $this->db->prepare('
 			SELECT 
 				options.id, options.nom, COUNT(users.id) AS etudiants
 			FROM options
 				LEFT JOIN users ON users.option_id = options.id
 			WHERE users.is_admin IS NULL
-			ORDER BY options.nom
 			GROUP BY options.id
+			ORDER BY options.nom
+			LIMIT ?, ?
 		');
+		$q->execute([($p - 1) * PAGE_SIZE, PAGE_SIZE]);
+		return $q->fetchAll();
 	}
 	function create()
 	{
@@ -34,7 +37,7 @@
 	{
 		$q = $this->db->prepare('SELECT nom FROM options WHERE id = ? LIMIT 1');
 		$q->execute([$id]);
-		return $q->fetch()['nom'];
+		return $q->fetchColumn();
 	}
 	function find($id, $page)
 	{
@@ -42,13 +45,12 @@
 			SELECT
 				users.id,
 				CONCAT_WS(\' \', nom, prenom) AS nom,
-				ne_le AS ne_le,
-				tel,
 				email,
 				COUNT(stages.id) AS stagecount
 			FROM users
 				LEFT JOIN stages ON stages.student_id = users.id
 			WHERE users.option_id = ? AND is_admin IS NULL
+			GROUP BY nom
 			LIMIT ?, ?
 		');
 		$q->execute([$id, ($page - 1) * PAGE_SIZE, PAGE_SIZE]);

@@ -10,6 +10,7 @@
 			<th>Date</th>
 			<th>Durée</th>
 			<th>Ville</th>
+			<th></th>
 		</tr>
 	</thead>
 <tbody>
@@ -24,6 +25,7 @@
 			<td><?= $t['date']  ?></td>
 			<td><?= $t['duree'] ?></td>
 			<td><a href="<?= URL ?>cities/<?= $t['ctid'] ?>/stages"><?= $t['ville'] ?></a></td>
+			<td><a class='btn btn-mini btn-info' href="<?= URL, 'stages/', $t['stid'] ?>"><i class='icon-eye-open'></i></a></td>
 		</tr>
 	<? endforeach ?>
 </tbody>

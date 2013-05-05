@@ -31,7 +31,7 @@ class StageModel extends Model {
 			SELECT id, CONCAT_WS(\' \', nom, prenom) AS nom FROM people
 		')->fetchAll();
 	}
-	function find_all($page = 1)
+	function find_all($page)
 	{
 		$q = $this->db->prepare('
 			SELECT

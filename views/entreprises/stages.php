@@ -27,6 +27,11 @@
 						<a href="<?= URL ?>technologies/<?= $tids[$i] ?>/stages"><?= $ts[$i] ?></a><?= $i ? ', ' : '' ?>
 					<? endfor ?>
 				</td>
+				<td>
+					<a href='<?= URL, 'stages/', $s['stid'] ?>' class='btn btn-mini btn-info'>
+						<i class='icon-eye-open'></i>
+					</a>
+				</td>
 			</tr>	
 		<? endforeach ?>
 	</tbody>

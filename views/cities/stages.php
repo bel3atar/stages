@@ -1,11 +1,6 @@
 <div class='page-header'>
 	<h1><?= $this->ville ?> <small>Liste des stages</small></h1>
 </div>
-<div>
-  <nom>
-    <div></div>
-  </nom>
-</div>
 <table class="table table-hover table-condensed table-striped">
 	<thead>
 		<tr>
@@ -13,6 +8,7 @@
 			<th>Date</th>
 			<th>Durée</th>
 			<th>Technologies</th>
+				<th></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -33,6 +29,7 @@
 							<?= $ts[$i] ?></a><?= $i ? ', ' : null ?>
 					<? endfor ?>
 				</td>
+				<td><a class='btn btn-info btn-mini' href='<?= URL, 'stages/', $s['stageid'] ?>'><i class='icon-eye-open'></i></a></td>
 			</tr>
 		<? endforeach ?>
 	</tbody>

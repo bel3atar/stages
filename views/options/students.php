@@ -4,8 +4,6 @@
 		<tr>
 			<th>#</th>
 			<th>Nom complet</th>
-			<th>Né(e) le</th>
-			<th>Téléphone</th>
 			<th>Email</th>
 			<th>Stages</th>
 		</tr>
@@ -15,8 +13,6 @@
 			<tr>
 				<td><?= $e['id'] ?></td>
 				<td><a href="<?= URL ?>users/<?= $e['id'] ?>"><?= $e['nom'] ?></a></td>
-				<td><?= $e['ne_le'] ?></td>
-				<td><?= $e['tel'] ?></td>
 				<td><?= $e['email'] ?></td>
 				<td>
 					<? if ($e['stagecount']): ?>
