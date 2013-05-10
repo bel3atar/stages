@@ -143,8 +143,8 @@ function tagValidator(tag) {
 jQuery(".tagManager").tagsManager();
 var stags = [
 	<? foreach (split(',', $this->stage['ts']) as $t): ?>
-	'<?= str_replace('\'', '\\\'', $t) ?>',
-		<? endforeach ?>
+		'<?= addcslashes($t, "'\\") ?>',
+	<? endforeach ?>
 		];
 for (var i = 0; i < stags.length; ++i)
 	$('.tagManager').tagsManager('pushTag', stags[i]);

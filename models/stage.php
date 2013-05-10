@@ -128,6 +128,7 @@ class StageModel extends Model {
 				stages.supervisor_id AS sid,
 				stages.city_id AS ctid,
 				stages.entreprise_id AS eid,
+				cities.nom AS ville,
 				description,
 				entreprises.nom AS e,
 				GROUP_CONCAT(technologies.id SEPARATOR \',\') AS tids,
@@ -151,6 +152,7 @@ class StageModel extends Model {
 				JOIN technologies ON technology_stage.technology_id = technologies.id
 				JOIN users ON users.id = stages.student_id
 				JOIN entreprises ON entreprises.id = stages.entreprise_id
+				JOIN cities ON cities.id = stages.city_id
 			WHERE stages.id = ?
 			LIMIT 1
 		');

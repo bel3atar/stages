@@ -72,8 +72,11 @@ class Stages extends Controller {
 	function destroy($id)
 	{
 		if (Session::get('is_admin')) {
-			if ($this->model->destroy($id))
+			if ($this->model->destroy($id)) {
+				$rapport = glob("assets/reports/$id.*");
+				unlink($rapport[0]);
 				Flash::success('Le stage a bien été supprimé.');
+			}
 			else
 				Flash::error('La suppression du stage n\'a pas abouti.');
 			header('Location: ' . URL . 'stages');

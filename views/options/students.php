@@ -2,7 +2,6 @@
 <table class="table table-condensed table-hover table-striped">
 	<thead>
 		<tr>
-			<th>#</th>
 			<th>Nom complet</th>
 			<th>Email</th>
 			<th>Stages</th>
@@ -11,7 +10,6 @@
 	<tbody>
 		<? foreach ($this->list as $e): ?>
 			<tr>
-				<td><?= $e['id'] ?></td>
 				<td><a href="<?= URL ?>users/<?= $e['id'] ?>"><?= $e['nom'] ?></a></td>
 				<td><?= $e['email'] ?></td>
 				<td>

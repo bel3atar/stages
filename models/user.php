@@ -18,6 +18,8 @@ class UserModel extends Model {
 			SELECT 
 				users.id AS id,
 				CONCAT_WS(\' \', users.nom, prenom) AS nom,
+				users.nom AS unom,
+				users.prenom AS uprenom,
 				COUNT(stages.id) AS stages,
 				email,
 				is_admin,
