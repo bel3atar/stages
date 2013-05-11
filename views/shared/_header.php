@@ -12,7 +12,7 @@
 <body>
 <div class="navbar">
 	<div class="navbar-inner">
-		<a class="brand" href="">Archive de stages</a>
+		<a class="brand" href="<?= URL ?>">Archive de stages</a>
 			<div class="nav-toolbar pull-right">
 				<? if (Session::get('logged')): ?>
 					<div class='btn-group'>
@@ -67,7 +67,9 @@
 						<li><a href="<?= URL, $k ?>"><?= $v ?></a></li>
 					<? endforeach ?>
 				<? endif ?>
+				<li class='nav-header'>Autres</li>
+				<li <? if (isset($this->controller) and $this->controller === 'search') echo 'class=\'active\'' ?>><a  href='<?= URL, 'search' ?>'>Recherche</a></li> 
 			</ul>
 		</div>
 		<div class="span10">
-<? $this->render_('notice') ?>
+			<? $this->render_('notice') ?>
