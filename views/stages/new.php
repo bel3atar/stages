@@ -69,7 +69,7 @@
 	<div class="control-group">
 		<label class="control-label">Technologies</label>
 		<div class="controls">
-			<input type="text"  name="tags" data-provide="typeahead" autocomplete="off" placeholder="Technologies" class="tagManager">
+			<input type="text" name="tags" data-provide="typeahead" autocomplete="off" placeholder="Technologies" class="tagManager">
 		</div>
 	</div>
 
