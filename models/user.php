@@ -27,7 +27,7 @@ class UserModel extends Model {
 				options.id AS optid
 			FROM users 
 				LEFT JOIN stages  ON stages.student_id = users.id
-				     JOIN options ON users.option_id   = options.id
+				LEFT JOIN options ON users.option_id   = options.id
 			WHERE users.id = ?
 			GROUP BY users.id
 			LIMIT 1
@@ -84,7 +84,8 @@ class UserModel extends Model {
 			LIMIT ?, ?
 		');
 		$q->execute([$id, ($page - 1) * PAGE_SIZE, PAGE_SIZE]);
-		return $q->fetchAll();
+		$ret = $q->fetchAll();
+		return $ret[0]['id'] ? $ret : FALSE;
 	}  
 	function stages_count($id)
 	{
@@ -101,7 +102,7 @@ class UserModel extends Model {
 		extract($params);
 		$q = $this->db->prepare('
 			INSERT INTO users (nom, prenom, email, pass, option_id)
-			           VALUES (UPPER(:n), :pn, :email, MD5(:pass), :optn)
+			           VALUES (UPPER(:n), :pn, :email, SHA1(:pass), :optn)
 		');
 		return $q->execute([
 			':pass'  => $password,
@@ -139,7 +140,7 @@ class UserModel extends Model {
 			':opt'  => $option
 		];
 		if (!empty($password) and strlen($password) >= 4) {
-			$sql .= ', pass = MD5(:pwd) ';
+			$sql .= ', pass = SHA1(:pwd) ';
 			$p[':pwd'] = $password;
 		}
 		$sql .= 'WHERE id = :id LIMIT 1';

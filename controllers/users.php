@@ -15,9 +15,13 @@ class Users extends Controller {
 	}
 	function stages($id)
 	{
-		$this->view->nom = $this->view->title = $this->model->full_name($id);
-		$this->view->list  = $this->model->stages($id, $this->page());
-		$this->view->render('users/stages');
+		$this->view->nom  = $this->view->title = $this->model->full_name($id);
+		if ($this->view->list = $this->model->stages($id, $this->page()))
+			$this->view->render('users/stages');
+		else {
+			Flash::error('Cet étudiant n\'a pas de stages.');
+			header('Location: '. URL . "users/$id");
+		}
 	}
 	function _count() { return $this->model->count(); }
 	function stages_count($id) { return $this->model->stages_count($id); }
