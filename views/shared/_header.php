@@ -51,25 +51,42 @@
 			</div>
 	</div>
 </div>
+<!-- end of navbar -->
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="span2">
 			<ul class="nav nav-list">
-				<li class="nav-header">Menu</li>
+				<li class="nav-header">Rubriques</li>
 				<? if (isset($this->controller)): ?>
 					<? foreach ($this->controllers as $k => $v): ?>
 						<li class="<?= $k === $this->controller ? 'active' : '' ?>">
-							<a href="<?= URL, $k ?>"><?= $v ?></a>
+							<a href="<?= URL, $k ?>">
+								<i class='<?= $v['icon']?>'></i>
+								<?= $v['label'] ?>
+							</a>
 						</li>
 					<? endforeach ?>
 				<? else: ?>
 					<? foreach ($this->controllers as $k => $v): ?>
-						<li><a href="<?= URL, $k ?>"><?= $v ?></a></li>
+						<li>
+							<a href="<?= URL, $k ?>">
+								<i class='<?= $v['icon'] ?>'></i>
+								<?= $v['label'] ?>
+							</a>
+						</li>
 					<? endforeach ?>
 				<? endif ?>
 				<li class='nav-header'>Autres</li>
-				<li <? if (isset($this->controller) and $this->controller === 'search') echo 'class=\'active\'' ?>><a  href='<?= URL, 'search' ?>'>Recherche</a></li> 
-			</ul>
+				<? if (!Session::get('logged')): ?>
+					<li><a href='<?= URL, 'sessions/new' ?>'><i class='icon-lock'></i> Se connecter</a></li>
+				<? endif ?>
+				<li <? if (isset($this->controller) and $this->controller === 'search') echo 'class=\'active\'' ?>>
+					<a  href='<?= URL, 'search' ?>'>
+						<i class='icon-search'></i>
+						Recherche
+					</a>
+				</li> 
+			</ul> <!-- end of nav -->
 		</div>
 		<div class="span10">
 			<? $this->render_('notice') ?>
