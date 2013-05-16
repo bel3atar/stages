@@ -16,8 +16,7 @@
 	{
 		$this->view->title = 'Nouveau responsable';
 		$this->require_model('entreprise');
-		$e = new EntrepriseModel();
-		$this->view->entreprises = $e->find_all();
+		$this->view->entreprises = $this->model->entreprises();
 		$this->view->render('people/new');
 	}
 	function create()
@@ -45,8 +44,7 @@
 	function edit($id)
 	{
 		$this->require_model('entreprise');
-		$e = new EntrepriseModel();
-		$this->view->entreprises = $e->find_all();
+		$this->view->entreprises = $this->model->entreprises();
 		$this->view->person      = $this->model->find($id);
 		$this->view->title       = $this->view->person['nom'];
 		$this->view->render('people/edit');

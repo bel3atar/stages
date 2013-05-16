@@ -11,9 +11,9 @@
 		$q->execute([$id]);
 		return $q->fetchColumn();
 	}
-	function find_all($p = NULL)
+	function find_all($p)
 	{
-		$sql = '
+		$q = $this->db->prepare('
 			SELECT 
 				options.id, options.nom, COUNT(users.id) AS etudiants
 			FROM options
@@ -21,10 +21,8 @@
 			WHERE users.is_admin IS NULL
 			GROUP BY options.id
 			ORDER BY options.nom
-		';
-		if ($p)
-			$sql .= 'LIMIT ?, ?';
-		$q = $this->db->prepare($sql);
+			LIMIT ?, ?
+		');
 		$q->execute($p ? [($p - 1) * PAGE_SIZE, PAGE_SIZE] : NULL);
 		return $q->fetchAll();
 	}

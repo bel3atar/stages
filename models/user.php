@@ -4,6 +4,10 @@ class UserModel extends Model {
 	{
 		parent::__construct();
 	}
+	function options()
+	{
+		return $this->db->query('SELECT id, nom FROM options');
+	}
 	function exists($id)
 	{
 		$q = $this->db->prepare('

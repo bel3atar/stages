@@ -28,9 +28,7 @@ class Users extends Controller {
 	function add()
 	{
 		$this->view->title = 'Nouvel étudiant';
-		$this->require_model('option');
-		$opmodel = new OptionModel();
-		$this->view->options = $opmodel->find_all();
+		$this->view->options = $this->model->options();
 		$this->view->render('users/new');
 	}
 	function create()

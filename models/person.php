@@ -24,6 +24,10 @@
 		$q->execute([($page - 1) * PAGE_SIZE, PAGE_SIZE]);
 		return $q->fetchAll();
 	}
+	function entreprises()
+	{
+		return $this->db->query('SELECT id, nom FROM entreprises');
+	}
 	function count()
 	{
 		return $this->db->query('SELECT COUNT(id) FROM people')->fetchColumn();
