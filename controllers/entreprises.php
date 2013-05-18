@@ -25,12 +25,13 @@ class Entreprises extends Controller {
 		$maximum = max($h, $w);
 		if ($maximum > 300) {
 			$ratio = 300 / $maximum;
-			$new_img = imagecreatetruecolor(ceil($w * $ratio), ceil($h * $ratio));
-			imagecolortransparent($new_img, imagecolorallocate($new_img, 0, 0, 0));
-			imagecopyresampled(
-				$new_img, $img, 0, 0, 0, 0, 
-				ceil($w * $ratio), ceil($h * $ratio), $w, $h
-			);
+			list($nw, $nh) = [ceil($w * $ratio), ceil($h * $ratio)];
+			$new_img = imagecreatetruecolor($nw, $nh);
+			imagealphablending($new_img, FALSE);
+			imagesavealpha($new_img, TRUE);
+			$transparent = imagecolorallocatealpha($new_img, 255, 255, 255, 127);
+			imagefilledrectangle($new_img, 0, 0, $nw, $nh, $transparent);
+			imagecopyresampled($new_img, $img, 0, 0, 0, 0, $nw, $nh, $w, $h);
 			imagedestroy($img);
 			$img = $new_img;
 		}
