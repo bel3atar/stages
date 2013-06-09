@@ -63,9 +63,7 @@ class Users extends Controller {
 	{
 		$this->view->title = 'Modifier un utilisateur';
 		$this->view->user = $this->model->find($id);
-		$this->require_model('option');
-		$opmodel = new OptionModel();
-		$this->view->options = $opmodel->find_all();
+		$this->view->options = $this->model->options();
 		$this->view->render('users/edit');
 	}
 	function update()

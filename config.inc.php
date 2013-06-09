@@ -1,6 +1,6 @@
 <?
 
-define('URL', 'http://localhost/'); //must end with a slash
+define('URL', 'http://stages/'); //must end with a slash
 
 define('PAGE_SIZE', 10); //how many items does a page hold
 define('PAGER_SIZE', 3); 
