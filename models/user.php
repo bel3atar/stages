@@ -106,10 +106,11 @@ class UserModel extends Model {
 		extract($params);
 		$q = $this->db->prepare('
 			INSERT INTO users (nom, prenom, email, pass, option_id)
-			           VALUES (UPPER(:n), :pn, :email, SHA1(:pass), :optn)
+			           VALUES (UPPER(:n), :pn, :email, :pass, :optn)
 		');
+		require 'core/password.php';
 		return $q->execute([
-			':pass'  => $password,
+			':pass'  => password_hash($password, PASSWORD_BCRYPT),
 			':optn'  => $option,
 			':pn'    => ucfirst($prenom),
 			':email' => $email,
@@ -144,8 +145,9 @@ class UserModel extends Model {
 			':opt'  => $option
 		];
 		if (!empty($password) and strlen($password) >= 4) {
-			$sql .= ', pass = SHA1(:pwd) ';
-			$p[':pwd'] = $password;
+			$sql .= ', pass = :pwd ';
+			require 'core/password.php';
+			$p[':pwd'] = password_hash($password, PASSWORD_BCRYPT);
 		}
 		$sql .= 'WHERE id = :id LIMIT 1';
 		$q = $this->db->prepare($sql);

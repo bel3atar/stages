@@ -6,12 +6,18 @@
 	function find($login, $pass)
 	{
 		$q = $this->db->prepare('
-			SELECT id, is_admin, CONCAT_WS(\' \', nom, prenom) AS nom
+			SELECT 
+				id, is_admin, CONCAT_WS(\' \', nom, prenom) AS nom, pass
 			FROM users
-			WHERE email = ? AND pass = SHA1(?)
+			WHERE email = ?
 			LIMIT 1
 		');
-		$q->execute([$login, $pass]);
-		return $q->fetch();
+		$q->execute([$login]);
+		$row = $q->fetch();
+		require 'core/password.php';
+		if ($q->rowCount() and password_verify($pass, $row['pass']))
+			return $row;
+		else
+			return FALSE;
 	}
 };
