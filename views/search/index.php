@@ -5,8 +5,8 @@
 			<label class='control-label'>Ville</label>
 			<div class='controls'>
 				<select name='city'>
+					<option value='%'></option>
 					<? foreach ($this->cities as $ct): ?>
-						<option value='%'></option>
 						<option value='<?= $ct['id'] ?>'>
 							<?= $ct['nom'] ?>
 						</option>	
