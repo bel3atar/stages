@@ -9,8 +9,8 @@ class Application {
 		require_once 'flash.php';
 		session_start();
 		if (empty($url)) {
-			require_once 'controllers/stages.php';
-			$controller = new Stages();
+			require_once 'controllers/stats.php';
+			$controller = new Stats();
 			$controller->index();
 		} else {
 			/* bits    0     1    2
@@ -29,24 +29,24 @@ class Application {
 				$controller = $bits[0];
 				$controller = new $controller();
 				switch (sizeof($bits)) {
-					case 1: $action = 'index'; break;
-					case 2:
-						if (preg_match('/^\d+$/', $bits[1])) {
-							if ($controller->model->exists($bits[1]) == 0)
-								throw new Exception();
-							$action = 'show';
-						} else
-							$action = $bits[1] === 'new' ? 'add' : $bits[1];
-						break;
-					case 3: 
-						if (preg_match('/^\d+$/', $bits[1])) {
-							if ($controller->model->exists($bits[1]) == 0)
-								throw new Exception();
-							$action = $bits[2];
-						} else
+				case 1: $action = 'index'; break;
+				case 2:
+					if (preg_match('/^\d+$/', $bits[1])) {
+						if ($controller->model->exists($bits[1]) == 0)
 							throw new Exception();
-						break;
-					default: throw new Exception();
+						$action = 'show';
+					} else
+						$action = $bits[1] === 'new' ? 'add' : $bits[1];
+					break;
+				case 3: 
+					if (preg_match('/^\d+$/', $bits[1])) {
+						if ($controller->model->exists($bits[1]) == 0)
+							throw new Exception();
+						$action = $bits[2];
+					} else
+						throw new Exception();
+					break;
+				default: throw new Exception();
 				}
 				if (!method_exists($controller, $action))
 					throw new Exception();

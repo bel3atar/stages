@@ -1,4 +1,4 @@
-<form class='form-horizontal' method='get' action='<?= URL, 'search/run' ?>'>
+<form class='form-horizontal' method='post' action='<?= URL, 'search/run' ?>'>
 	<fieldset>
 		<legend>Nouvelle recherche</legend>
 		<div class='control-group'>

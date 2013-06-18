@@ -66,8 +66,11 @@ class StageModel extends Model {
 		try {
 			$this->db->beginTransaction();
 			$q = $this->db->prepare('
-				INSERT INTO stages (description, date, duree, entreprise_id, proposer_id, supervisor_id, student_id, city_id)
-					VALUES (:desc, :date, :duree, :ent, :pro, :sup, :stdnt, :ctid)
+				INSERT INTO stages 
+					(description, date, duree, entreprise_id, proposer_id, supervisor_id,
+					student_id, city_id)
+				VALUES 
+					(:desc, :date, :duree, :ent, :pro, :sup, :stdnt, :ctid)
 			');
 			$q->execute([
 				':stdnt' => Session::get('is_admin') ? $user : Session::get('id'),

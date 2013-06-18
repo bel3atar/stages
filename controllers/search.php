@@ -17,7 +17,7 @@
 	function run()
 	{
 		$this->view->title = 'Résultats de la recherche';
-		$this->view->list  = $this->model->find($_GET);
+		$this->view->list  = $this->model->find($_POST);
 		$this->view->render('search/show');
 	}
 };

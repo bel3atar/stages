@@ -1,7 +1,8 @@
 <? 
 $page =	$_GET['page'];
 $page_max = $_GET['page_max'];
-$init = $page % PAGER_SIZE ? $page - $page % PAGER_SIZE + 1 : $page - PAGER_SIZE + 1;
+$init = 
+	$page % PAGER_SIZE ? $page - $page % PAGER_SIZE + 1 : $page - PAGER_SIZE + 1;
 $finl = min($init + PAGER_SIZE - 1, $page_max ? $page_max : 1);
 $range = range($init, $finl);
 ?>
