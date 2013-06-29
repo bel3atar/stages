@@ -24,8 +24,10 @@
 					<? endfor ?>
 				</td>	
 				<td>
-					<a href="<?= URL, 'stages/', $s['id'] ?>" class="btn btn-mini btn-info"><i class='icon-eye-open'></i>
-					</a>
+<div class='btn-group'>
+					<a href="<?= URL, 'stages/', $s['id'] ?>" class="btn btn-mini btn-info"><i class='icon-eye-open'></i></a>
+					<a href="<?= URL, 'stages/', $s['id'] ?>/edit" class="btn btn-mini btn-warning"><i class='icon-edit'></i></a>
+</div>
 				</td>
 			</tr>
 		<? endforeach ?>

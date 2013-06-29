@@ -51,7 +51,7 @@ class Stages extends Controller {
 	}
 	function create()
 	{
-		if (Session::get('is_admin') or Session::get('id') === $_POST['user']) {
+		if (Session::get('is_admin') or Session::get('id') == $_POST['user']) {
 			$ext = NULL;
 			$f = $_FILES['report']['tmp_name'];
 			if (is_uploaded_file($f))
@@ -97,7 +97,7 @@ class Stages extends Controller {
 	}
 	function update()
 	{
-		if (Session::get('is_admin') or $_POST['user'] === Session::get('id')) {
+		if (Session::get('is_admin') or $_POST['user'] == Session::get('id')) {
 			$ext = NULL;
 			$f = $_FILES['rapport']['tmp_name'];
 			if (is_uploaded_file($f))

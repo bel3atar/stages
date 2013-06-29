@@ -41,22 +41,22 @@
 					<? endfor ?>
 				</td>
 				<td>
-					<a href='<?= URL, 'stages/', $stage['id'] ?>' class='btn btn-mini btn-info'>
-						<i class='icon-eye-open'></i>
-					</a>
-				</td>
-				<? if (Session::get('is_admin')): ?>
-					<td>
-						<div class="btn-group">
+					<div class="btn-group">
+						<a href='<?= URL, 'stages/', $stage['id'] ?>' class='btn btn-mini btn-info'>
+							<i class='icon-eye-open'></i>
+						</a>
+						<? if (Session::get('is_admin') or Session::get('id') == $stage['uid']): ?>
 							<a href="<?= URL ?>stages/<?= $stage['id'] ?>/edit" class="btn btn-warning btn-mini">
 								<i class="icon-white icon-edit"></i>
 							</a>
-							<a href="<?= URL ?>stages/<?= $stage['id'] ?>/destroy" class="btn btn-danger btn-mini">
-								<i class="icon-white icon-trash"></i>
-							</a>
+							<? if (Session::get('is_admin')): ?>
+								<a href="<?= URL ?>stages/<?= $stage['id'] ?>/destroy" class="btn btn-danger btn-mini">
+									<i class="icon-white icon-trash"></i>
+								</a>
+							<? endif ?>
 						</div>
-					</td>
-				<? endif ?>
+					<? endif ?>
+				</td>
 			</tr>
 		<? endforeach ?>
 	</tbody>
